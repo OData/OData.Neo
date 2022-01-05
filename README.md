@@ -92,6 +92,20 @@ The new implementation of OData will be strictly following [The Standard](https:
 
 I'm going to document every single step of the way with blogs, videos and pull requests to help newcomers and contributors understand where we were, and where we are today and where we are headed with this technology.
 
+## 3. Roadmap
+Now, let's discuss the roadmap for OData NxT. This prilimanary roadmap will set the initial tentative expectations for deliverables as follows:
+
+<br />
+    <div align=center>
+        <img src="https://user-images.githubusercontent.com/1453985/148167448-f99e1d59-e898-447b-b731-a10d4f6cd73b.png" />
+    </div>
+<br />
+
+There are few things that I need everyone to understand about this roadmap, which are as follows:
+1. Quality over quantity. If we need more time to make something right, covering more scenarios we will adjust as we go.
+2. The roadmap is only there to help us and our community of engineers understand what the next step may be. It is a subject to change and enhance as needed.
+3. This roadmap is very high-level. There will be a further breakdown in our sessions (weekly standup) to breakdown the timeline into more detailed deliverables.
+
 And With the aforementioned priorities we believe that we can explore new realms of software integration where OData can have an even further reach than what it already has today from the smallest APIs and applications to the largest enterprise-size platforms that already serve millions of customers today.
 
 If you have any questions, comments or followups please reach out to me (@hassanhabib) or Sam Xu (@xuzhg).
