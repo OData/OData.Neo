@@ -55,6 +55,23 @@ The substrate will handle communicating with listeners to the `Query` event and 
 
 This way, the API client can send events to any number of subscribers without having to know anything about these subscribers or their contracts. The same thing goes for the subscribers with the publishers. Software engineers now may develop components that plug into the substrate, listen to events in the system and act on it.
 
+#### 1.1 APIs
+[Exposure](https://github.com/hassanhabib/The-Standard/blob/master/3.%20Exposers/3.%20Exposers.md) components like the exposed APIs from the core library will mainly focusing on two basic functionality:
+ - String to Expression Capability
+ - Expression to String Capability
+
+ Both are very important to allow engineers to fully control incoming OData queries or generate ones out of simple expressions in the system so they can push it further to other systems.
+
+ APIs shall be easily mockable for N-Tier system architecture engineers but also modular to allow for expansion in the future for further capabilities.
+
+ #### 1.2 Services
+ [Services](https://github.com/hassanhabib/The-Standard/blob/master/2.%20Services/2.%20Services.md) are the core business logic of OData NxT. Services will contain all the routines and sub-routines needed to digest and map an OData query into expressions, and strongly typed collections or collection interfaces so they are easily consumable by API developers.
+
+ Services can be of three different types, Foundations that hold primitive operations. Processing that holds higher-order business logic and lastly Orchestrations that combine multiple entity types for processing with a unified contract.
+
+ #### 1.3 Brokers
+ [Brokers](https://github.com/hassanhabib/The-Standard/blob/master/1.%20Brokers/1.%20Brokers.md) will abstract away native or external dependencies the OData NxT core functions may need so they are replaceable down the road with better dependencies without changing the business logic of the library.
+
 Modularity as a second priority will allow OData NxT Marketplace to expand beyond it's current capabilities, and we can't wait to see how our community is going to form their own modules to make OData NxT suitable perfectly for their businesses.
 
 
