@@ -1,6 +1,6 @@
 # OData.NxT
 
-![Discord Shield](https://discordapp.com/api/guilds/934133164790644777/widget.png?style=shield)
+[![Discord Shield](https://discordapp.com/api/guilds/934133164790644777/widget.png?style=shield)](https://discord.gg/9A8gRGT6)
 
 This is OData NxT. The next generation of OData Protocol implementation for the .NET ecosystem. This implementation will incorporate three new fundamental design capabilities to OData.NET. These capabilities are:
 
