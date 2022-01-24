@@ -1,25 +1,25 @@
-name: .NET
-
+name: OData Neo Build
 on:
   push:
-    branches: [ main ]
+    branches:
+    - main
   pull_request:
-    branches: [ main ]
-
+    branches:
+    - main
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+    runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Checking out code
+      uses: actions/checkout@v2
+    - name: Setting up DotNet version
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.100
-    - name: Restore dependencies
+        include-prerelease: false
+    - name: Restoring Nuget Packages
       run: dotnet restore
-    - name: Build
+    - name: Building Solution
       run: dotnet build --no-restore
-    - name: Test
+    - name: Testing
       run: dotnet test --no-build --verbosity normal
