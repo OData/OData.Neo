@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using OData.Neo.Core.Models;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
@@ -12,7 +13,32 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
     {
         public ONode Tokenize(string rawQuery)
         {
-            throw new NotImplementedException();
+            var items = rawQuery.Split('=');
+            var parameter = items[0];
+            var property = items[1];
+            return new ONode
+            {
+                Type = ONodeType.Root,
+                Value = rawQuery,
+
+                Children = new List<ONode>
+                {
+                    new ONode
+                    {
+                        Type = ONodeType.Operator,
+                        Value = parameter,
+
+                        Children = new List<ONode>
+                        {
+                            new ONode
+                            {
+                                Type = ONodeType.Property,
+                                Value = property
+                            }
+                        }
+                    }
+                }
+            };
         }
     }
 }
