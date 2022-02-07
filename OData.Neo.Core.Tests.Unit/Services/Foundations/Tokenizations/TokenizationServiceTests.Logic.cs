@@ -52,5 +52,46 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             // then
             actualNode.Should().BeEquivalentTo(expectedNode);
         }
+
+        [Fact]
+        public void ShouldTokenizeMultipleRawQuery()
+        {
+            // given
+            (string parameter, string operand, string property) =
+                GetRandomQueryParameters();
+
+            string inputQuery = $"{parameter}{operand}{property},{property}";
+
+            var expectedNode = new ONode
+            {
+                Type = ONodeType.Root,
+                Value = inputQuery,
+
+                Children = new List<ONode>
+                {
+                    new ONode
+                    {
+                        Type = ONodeType.Operator,
+                        Value = parameter,
+
+                        Children = new List<ONode>
+                        {
+                            new ONode
+                            {
+                                Type = ONodeType.Property,
+                                Value = property
+                            }
+                        }
+                    }
+                }
+            };
+
+            // when
+            ONode actualNode =
+                this.tokenizationService.Tokenize(inputQuery);
+
+            // then
+            actualNode.Should().BeEquivalentTo(expectedNode);
+        }
     }
 }
