@@ -25,23 +25,17 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             var expectedNode = new ONode
             {
                 Type = ONodeType.Root,
-                Value = inputQuery,
-
                 Children = new List<ONode>
                 {
                     new ONode
                     {
                         Type = ONodeType.Parameter,
                         Value = parameter,
-
-                        Children = new List<ONode>
-                        {
-                            new ONode
-                            {
-                                Type = ONodeType.Property,
-                                Value = property
-                            }
-                        }
+                    },
+                    new ONode
+                    {
+                        Type = ONodeType.Property,
+                        Value = property
                     }
                 }
             };
