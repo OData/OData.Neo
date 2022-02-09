@@ -85,7 +85,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             {
                 Type = ONodeType.Root,
                 Value = inputQuery,
-
                 Children = rootChildren
             };
 
