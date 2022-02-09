@@ -10,7 +10,7 @@ namespace OData.Neo.Core.Models
     public class ONode
     {
         public object Type { get; set; }
-        public object Value { get; set; }
+        public string Value { get; set; }
         public IEnumerable<ONode> Children { get; set; }
     }
 }

@@ -3,7 +3,6 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using OData.Neo.Core.Models;
 
@@ -16,6 +15,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             var items = rawQuery.Split('=');
             var parameter = items[0];
             var property = items[1];
+
             return new ONode
             {
                 Type = ONodeType.Root,

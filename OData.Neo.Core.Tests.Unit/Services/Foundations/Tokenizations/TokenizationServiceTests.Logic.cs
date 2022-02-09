@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using OData.Neo.Core.Models;
 using Xunit;
@@ -57,33 +58,35 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         public void ShouldTokenizeMultipleRawQuery()
         {
             // given
-            (string parameter, string operand, string property) =
-                GetRandomQueryParameters();
+            (string parameter, string operand, string[] properties) =
+                GetRandomQueryWithMultipleProperties();
 
-            string inputQuery = $"{parameter}{operand}{property},{property}";
+            string propertiesArray = string.Join(',', properties);
+            string inputQuery = $"{parameter}{operand}{propertiesArray}";
+
+            var rootChildren = new List<ONode> {
+                new ONode
+                {
+                    Type = ONodeType.Parameter,
+                    Value = parameter
+                }};
+
+            List<ONode> childrenNodes =
+                properties.Select(property =>
+                    new ONode
+                    {
+                        Type = ONodeType.Property,
+                        Value = property
+                    }).ToList();
+
+            rootChildren.AddRange(childrenNodes);
 
             var expectedNode = new ONode
             {
                 Type = ONodeType.Root,
                 Value = inputQuery,
 
-                Children = new List<ONode>
-                {
-                    new ONode
-                    {
-                        Type = ONodeType.Operator,
-                        Value = parameter,
-
-                        Children = new List<ONode>
-                        {
-                            new ONode
-                            {
-                                Type = ONodeType.Property,
-                                Value = property
-                            }
-                        }
-                    }
-                }
+                Children = rootChildren
             };
 
             // when
