@@ -31,7 +31,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 {
                     new ONode
                     {
-                        Type = ONodeType.Operator,
+                        Type = ONodeType.Parameter,
                         Value = parameter,
 
                         Children = new List<ONode>
@@ -84,7 +84,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             var expectedNode = new ONode
             {
                 Type = ONodeType.Root,
-                Value = inputQuery,
                 Children = rootChildren
             };
 
