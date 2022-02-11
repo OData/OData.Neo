@@ -41,6 +41,15 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             return (randomParameter, "=", randomProperties);
         }
 
+        public static (
+            (string Parameter, string Operand, string[] Property) Inner,
+            (string Parameter, string Operand, string[] Property) Outer
+        )
+            GetRandomQueryWithMultipleNestedProperties() => (
+                GetRandomQueryWithMultipleProperties(),
+                GetRandomQueryWithMultipleProperties()
+            );
+
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
     }
