@@ -14,6 +14,62 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
     public partial class TokenizationServiceTests
     {
         [Fact]
+        public void ShouldTokenizeMultipleRawQueryWithNestedQuery()
+        {
+            var (inner, outer) = GetRandomQueryWithMultipleNestedProperties();
+
+            string query = $"{outer.Parameter}{outer.Operand}{string.Join(",", outer.Property)}" +
+                $"({inner.Parameter}{inner.Operand}{string.Join(",", inner.Property)})";
+
+            var rootChildren = new List<ONode> {
+                new ONode {
+                    Type = ONodeType.Parameter,
+                    Value = outer.Parameter
+                }};
+
+            var childrenNodes = outer.Property
+                .Select(property =>
+                    new ONode {
+                        Type = ONodeType.Property,
+                        Value = property
+                    });
+
+            rootChildren.AddRange(childrenNodes);
+
+            var lastChildRoot = new List<ONode> {
+                new ONode {
+                    Type = ONodeType.Parameter,
+                    Value = inner.Parameter
+                }};
+
+            var lastChildNodes = inner.Property
+                .Select(property =>
+                    new ONode {
+                        Type = ONodeType.Property,
+                        Value = property
+                    });
+
+            lastChildRoot.AddRange(lastChildNodes);
+
+            rootChildren.Last().Children = lastChildRoot;
+
+            var expectedNode = new ONode {
+                Type = ONodeType.Root,
+                Children = rootChildren
+            };
+
+            // when
+            ONode actualNode = this
+                .tokenizationService
+                .Tokenize(query);
+
+            // then
+            actualNode
+                .Should()
+                .BeEquivalentTo(expectedNode);
+        }
+
+        [Fact]
         public void ShouldTokenizeRawQuery()
         {
             // given
