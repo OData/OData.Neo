@@ -9,6 +9,7 @@ using System.Linq;
 using OData.Neo.Core.Models;
 using OData.Neo.Core.Services.Foundations.Tokenizations;
 using Tynamix.ObjectFiller;
+using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 {
@@ -18,5 +19,23 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 
         public TokenizationServiceTests() => 
             this.tokenizationService = new TokenizationService();
+
+        public static TheoryData AllPossibleTokens()
+        {
+            return new TheoryData<OToken>
+            {
+                new OToken
+                {
+                    Value = "eq",
+                    Type = OTokenType.Operand
+                },
+
+                new OToken
+                {
+                    Value = "ge",
+                    Type = OTokenType.Operand
+                }
+            };
+        }
     }
 }

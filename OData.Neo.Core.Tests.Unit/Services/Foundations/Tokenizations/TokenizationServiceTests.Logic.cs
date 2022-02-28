@@ -12,19 +12,16 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 {
     public partial class TokenizationServiceTests
     {
-        [Fact]
-        public void ShouldTokenizeQuery()
+        [Theory]
+        [MemberData(nameof(AllPossibleTokens))]
+        public void ShouldTokenizeQuery(OToken possibleToken)
         {
             // given
-            string rawQuery = "eq";
+            string rawQuery = possibleToken.Value;
 
             var expectedTokens = new OToken[]
             {
-                new OToken
-                {
-                    Value = "eq",
-                    Type = OTokenType.Operand
-                }
+                possibleToken
             };
 
             // when
