@@ -7,10 +7,9 @@ using System.Collections.Generic;
 
 namespace OData.Neo.Core.Models
 {
-    public class ONode
+    public class OToken
     {
-        public object Type { get; set; }
+        public OTokenType Type { get; set; }
         public string Value { get; set; }
-        public IEnumerable<ONode> Children { get; set; }
     }
 }

@@ -5,12 +5,8 @@
 
 namespace OData.Neo.Core.Models
 {
-    public enum ONodeType
+    public enum OTokenType
     {
-        Root,
-        Parameter,
-        Operator,
-        Property,
-        Constant
+        Operand
     }
 }
