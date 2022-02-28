@@ -13,7 +13,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
     public partial class TokenizationServiceTests
     {
         [Theory]
-        [MemberData(nameof(AllPossibleTokens))]
+        [MemberData(nameof(BasicTokens))]
         public void ShouldTokenizeQuery(OToken possibleToken)
         {
             // given
