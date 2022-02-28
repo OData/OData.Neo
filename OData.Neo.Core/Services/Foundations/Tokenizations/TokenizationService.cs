@@ -12,13 +12,20 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
     {
         public OToken[] Tokenize(string rawQuery)
         {
-            return new OToken[]
-            {
-                new OToken
-                {
-                    Value = "eq",
-                    Type = OTokenType.Operand
-                }
+            // Switch on the query.
+            return new OToken[] {
+                rawQuery switch {
+                    "eq" => new OToken
+                    {
+                        Type = OTokenType.Operand,
+                        Value = rawQuery
+                    },
+                    "ge" => new OToken
+                    {
+                        Type = OTokenType.Operand,
+                        Value = rawQuery
+                    },
+            }
             };
         }
     }
