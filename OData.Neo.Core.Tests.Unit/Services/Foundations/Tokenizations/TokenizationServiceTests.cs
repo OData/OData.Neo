@@ -34,6 +34,12 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 {
                     Value = "ge",
                     Type = OTokenType.Operand
+                },
+
+                new OToken
+                {
+                    Value = " ",
+                    Type = OTokenType.Whitespace
                 }
             };
         }

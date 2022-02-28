@@ -7,6 +7,7 @@ namespace OData.Neo.Core.Models
 {
     public enum OTokenType
     {
-        Operand
+        Operand,
+        Whitespace
     }
 }
