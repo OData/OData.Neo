@@ -12,7 +12,14 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
     {
         public OToken[] Tokenize(string rawQuery)
         {
-            throw new NotImplementedException();
+            return new OToken[]
+            {
+                new OToken
+                {
+                    Value = "eq",
+                    Type = OTokenType.Operand
+                }
+            };
         }
     }
 }
