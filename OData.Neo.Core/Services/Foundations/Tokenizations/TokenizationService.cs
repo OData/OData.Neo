@@ -25,7 +25,12 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                         Type = OTokenType.Operand,
                         Value = rawQuery
                     },
-            }
+                    " " => new OToken
+                    {
+                        Type = OTokenType.Whitespace,
+                        Value = rawQuery
+                    },
+                }
             };
         }
     }
