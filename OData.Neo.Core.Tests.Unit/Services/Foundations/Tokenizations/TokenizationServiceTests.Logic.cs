@@ -31,5 +31,25 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             // then
             actualTokens.Should().BeEquivalentTo(expectedTokens);
         }
+
+        [Theory]
+        [MemberData(nameof(ComplexTokens))]
+        public void ShouldTokenizeQueryComplex(OToken possibleToken)
+        {
+            // given
+            string rawQuery = possibleToken.Value;
+
+            var expectedTokens = new OToken[]
+            {
+                possibleToken
+            };
+
+            // when
+            OToken[] actualTokens =
+                this.tokenizationService.Tokenize(rawQuery);
+
+            // then
+            actualTokens.Should().BeEquivalentTo(expectedTokens);
+        }
     }
 }

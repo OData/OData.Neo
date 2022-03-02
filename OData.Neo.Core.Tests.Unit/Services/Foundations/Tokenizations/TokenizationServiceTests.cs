@@ -13,7 +13,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
     {
         private readonly ITokenizationService tokenizationService;
 
-        public TokenizationServiceTests() => 
+        public TokenizationServiceTests() =>
             this.tokenizationService = new TokenizationService();
 
         public static TheoryData BasicTokens()
@@ -48,7 +48,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             };
         }
 
-        
         public static TheoryData ComplexTokens()
         {
             return new TheoryData<OToken>
