@@ -65,11 +65,6 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                         Type = OTokenType.Hyphen,
                         Value = rawQuery
                     },
-                    "." => new OToken
-                    {
-                        Type = OTokenType.Dot,
-                        Value = rawQuery
-                    },
                     "'" => new OToken
                     {
                         Type = OTokenType.Quote,
