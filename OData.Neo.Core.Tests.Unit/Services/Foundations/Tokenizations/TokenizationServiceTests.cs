@@ -37,7 +37,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 new OToken { Value = ")", Type = OTokenType.EndScope },
                 new OToken { Value = "=", Type = OTokenType.Equals },
                 new OToken { Value = "-", Type = OTokenType.Hyphen },
-                new OToken { Value = ".", Type = OTokenType.Dot },
                 new OToken { Value = "'", Type = OTokenType.Quote },
                 new OToken { Value = "*", Type = OTokenType.Star },
                 new OToken { Value = "[", Type = OTokenType.OpenBracket },
