@@ -16,18 +16,22 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         public TokenizationServiceTests() =>
             this.tokenizationService = new TokenizationService();
 
-        public static TheoryData BasicTokens()
+        public static TheoryData OperandTokens()
         {
             return new TheoryData<OToken>
             {
-                // operands
                 new OToken { Value = "eq", Type = OTokenType.Operand },
                 new OToken { Value = "ge", Type = OTokenType.Operand },
                 new OToken { Value = "gt", Type = OTokenType.Operand },
                 new OToken { Value = "lt", Type = OTokenType.Operand },
                 new OToken { Value = "le", Type = OTokenType.Operand },
+            };
+        }
 
-                // special
+        public static TheoryData SpecialTokens()
+        {
+            return new TheoryData<OToken>
+            {
                 new OToken { Value = " ", Type = OTokenType.Whitespace },
                 new OToken { Value = "(", Type = OTokenType.BeginScope },
                 new OToken { Value = ")", Type = OTokenType.EndScope },
@@ -45,32 +49,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 new OToken { Value = "$", Type = OTokenType.Dollar },
                 new OToken { Value = "/", Type = OTokenType.Slash },
                 new OToken { Value = "\\", Type = OTokenType.BackSlash }
-            };
-        }
-
-        public static TheoryData ComplexTokens()
-        {
-            return new TheoryData<OToken>
-            {
-                // These will need randomizing when tested for ...
-                new OToken { Value = "$word", Type = OTokenType.ODataParameter },
-                new OToken { Value = "$word123", Type = OTokenType.ODataParameter },
-                new OToken { Value = "$123word", Type = OTokenType.ODataParameter },
-                new OToken { Value = "$w1o2r3d", Type = OTokenType.ODataParameter },
-                new OToken { Value = "word", Type = OTokenType.Word },
-                new OToken { Value = "123", Type = OTokenType.Number },
-                new OToken { Value = "123.456", Type = OTokenType.Number },
-                new OToken { Value = "-123", Type = OTokenType.Number },
-                new OToken { Value = "-123.456", Type = OTokenType.Number },
-                new OToken { Value = "AAAAA-BBBBB-CCCCC-DDDDDDD", Type = OTokenType.Guid },
-
-                // booleans are all these acceptable ? ...
-                new OToken { Value = "true", Type = OTokenType.Boolean },
-                new OToken { Value = "false", Type = OTokenType.Boolean },
-                new OToken { Value = "TRUE", Type = OTokenType.Boolean },
-                new OToken { Value = "TRUE", Type = OTokenType.Boolean },
-                new OToken { Value = "True", Type = OTokenType.Boolean },
-                new OToken { Value = "False", Type = OTokenType.Boolean }
             };
         }
     }
