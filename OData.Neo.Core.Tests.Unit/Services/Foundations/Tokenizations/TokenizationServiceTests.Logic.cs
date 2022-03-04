@@ -14,27 +14,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
     {
         [Theory]
         [MemberData(nameof(BasicTokens))]
-        public void ShouldTokenizeQuery(OToken possibleToken)
-        {
-            // given
-            string rawQuery = possibleToken.Value;
-
-            var expectedTokens = new OToken[]
-            {
-                possibleToken
-            };
-
-            // when
-            OToken[] actualTokens =
-                this.tokenizationService.Tokenize(rawQuery);
-
-            // then
-            actualTokens.Should().BeEquivalentTo(expectedTokens);
-        }
-
-        [Theory]
         [MemberData(nameof(ComplexTokens))]
-        public void ShouldTokenizeQueryComplex(OToken possibleToken)
+        public void ShouldTokenizeQuery(OToken possibleToken)
         {
             // given
             string rawQuery = possibleToken.Value;
