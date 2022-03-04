@@ -15,6 +15,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         [Theory]
         [MemberData(nameof(OperandTokens))]
         [MemberData(nameof(SpecialTokens))]
+        [MemberData(nameof(ComplexTokens))]
         public void ShouldTokenizeQuery(OToken possibleToken)
         {
             // given

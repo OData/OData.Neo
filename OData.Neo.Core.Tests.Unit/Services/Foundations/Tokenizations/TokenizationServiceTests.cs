@@ -5,6 +5,7 @@
 
 using OData.Neo.Core.Models;
 using OData.Neo.Core.Services.Foundations.Tokenizations;
+using Tynamix.ObjectFiller;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
@@ -48,6 +49,18 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 new OToken { Value = "$", Type = OTokenType.Dollar },
                 new OToken { Value = "/", Type = OTokenType.Slash },
                 new OToken { Value = "\\", Type = OTokenType.BackSlash }
+            };
+        }
+
+        public static TheoryData ComplexTokens()
+        {
+            string randomLiteral = new MnemonicString().GetValue();
+            int randomNumber = new IntRange().GetValue();
+
+            return new TheoryData<OToken>
+            {
+                new OToken { Value = $"${randomLiteral}", Type = OTokenType.ODataParameter },
+                new OToken { Value = $"{randomNumber}", Type = OTokenType.Number }
             };
         }
     }
