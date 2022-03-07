@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using OData.Neo.Core.Models;
 using OData.Neo.Core.Services.Foundations.Tokenizations;
 using Tynamix.ObjectFiller;
@@ -56,11 +57,13 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         {
             string randomLiteral = new MnemonicString().GetValue();
             int randomNumber = new IntRange().GetValue();
+            Guid randomGuid = Guid.NewGuid();
 
             return new TheoryData<OToken>
             {
                 new OToken { Value = $"${randomLiteral}", Type = OTokenType.ODataParameter },
-                new OToken { Value = $"{randomNumber}", Type = OTokenType.Number }
+                new OToken { Value = $"{randomNumber}", Type = OTokenType.Number },
+                new OToken { Value = $"{randomGuid}", Type = OTokenType.Guid }
             };
         }
     }
