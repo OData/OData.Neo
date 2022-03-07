@@ -58,12 +58,14 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             string randomLiteral = new MnemonicString().GetValue();
             int randomNumber = new IntRange().GetValue();
             Guid randomGuid = Guid.NewGuid();
+            DateTimeOffset randomDto = DateTimeOffset.Now;
 
             return new TheoryData<OToken>
             {
                 new OToken { Value = $"${randomLiteral}", Type = OTokenType.ODataParameter },
                 new OToken { Value = $"{randomNumber}", Type = OTokenType.Number },
-                new OToken { Value = $"{randomGuid}", Type = OTokenType.Guid }
+                new OToken { Value = $"{randomGuid}", Type = OTokenType.Guid },
+                new OToken { Value = $"{randomDto}", Type = OTokenType.DateTimeOffset },
             };
         }
     }

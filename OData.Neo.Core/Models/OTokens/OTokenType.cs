@@ -29,6 +29,7 @@ namespace OData.Neo.Core.Models
         Boolean,
         Slash,
         BackSlash,
-        Guid
+        Guid,
+        DateTimeOffset
     }
 }
