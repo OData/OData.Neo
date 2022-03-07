@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using OData.Neo.Core.Models;
+using System;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
@@ -124,6 +125,12 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                     new OToken
                     {
                         Type = OTokenType.Number,
+                        Value = rawQuery
+                    },
+                    _ when Guid.TryParse(rawQuery, out _) =>
+                    new OToken
+                    {
+                        Type = OTokenType.Guid,
                         Value = rawQuery
                     },
                     _ => new OToken
