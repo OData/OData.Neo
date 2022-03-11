@@ -145,11 +145,18 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                         Type = OTokenType.Boolean,
                         Value = rawQuery
                     },
-                    _ => new OToken
-                    {
-                        Type = OTokenType.ODataParameter,
-                        Value = rawQuery
-                    }
+                    _ when rawQuery.StartsWith('$')  =>
+                        new OToken
+                        {
+                            Type = OTokenType.ODataParameter,
+                            Value = rawQuery
+                        },
+                    _ =>
+                        new OToken
+                        {
+                            Type = OTokenType.Word,
+                            Value = rawQuery
+                        }
                 }
             };
         }
