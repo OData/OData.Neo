@@ -139,6 +139,12 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                         Type = OTokenType.DateTimeOffset,
                         Value = rawQuery
                     },
+                    _ when bool.TryParse(rawQuery, out _) =>
+                    new OToken
+                    {
+                        Type = OTokenType.Boolean,
+                        Value = rawQuery
+                    },
                     _ => new OToken
                     {
                         Type = OTokenType.ODataParameter,
