@@ -56,7 +56,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         public static TheoryData ComplexTokens()
         {
             string randomLiteral = new MnemonicString().GetValue();
-            int randomNumber = new IntRange().GetValue();
+            object randomNumber = GetRandomNumberType();
             Guid randomGuid = Guid.NewGuid();
             DateTimeOffset randomDto = DateTimeOffset.Now;
             bool randomBoolean = new SequenceGeneratorBoolean().GetValue();
@@ -68,6 +68,17 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 new OToken { Value = $"{randomGuid}", Type = OTokenType.Guid },
                 new OToken { Value = $"{randomDto}", Type = OTokenType.DateTimeOffset },
                 new OToken { Value = $"{randomBoolean}", Type = OTokenType.Boolean },
+            };
+        }
+
+        private static object GetRandomNumberType()
+        { 
+            var selector = new IntRange(min: 0, max: 3).GetValue();
+            return selector switch
+            {
+                0 => new IntRange().GetValue(),
+                1 => new FloatRange().GetValue(),
+                _ => new DoubleRange().GetValue()
             };
         }
     }
