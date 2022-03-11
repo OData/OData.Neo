@@ -68,6 +68,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 new OToken { Value = $"{randomGuid}", Type = OTokenType.Guid },
                 new OToken { Value = $"{randomDto}", Type = OTokenType.DateTimeOffset },
                 new OToken { Value = $"{randomBoolean}", Type = OTokenType.Boolean },
+                new OToken { Value = randomLiteral, Type = OTokenType.Word },
             };
         }
 
