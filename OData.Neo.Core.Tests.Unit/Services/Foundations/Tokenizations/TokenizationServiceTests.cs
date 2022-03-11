@@ -59,6 +59,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             int randomNumber = new IntRange().GetValue();
             Guid randomGuid = Guid.NewGuid();
             DateTimeOffset randomDto = DateTimeOffset.Now;
+            bool randomBoolean = new SequenceGeneratorBoolean().GetValue();
 
             return new TheoryData<OToken>
             {
@@ -66,6 +67,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 new OToken { Value = $"{randomNumber}", Type = OTokenType.Number },
                 new OToken { Value = $"{randomGuid}", Type = OTokenType.Guid },
                 new OToken { Value = $"{randomDto}", Type = OTokenType.DateTimeOffset },
+                new OToken { Value = $"{randomBoolean}", Type = OTokenType.Boolean },
             };
         }
     }
