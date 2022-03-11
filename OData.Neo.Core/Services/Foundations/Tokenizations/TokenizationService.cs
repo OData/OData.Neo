@@ -121,7 +121,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                         Type = OTokenType.BackSlash,
                         Value = rawQuery
                     },
-                    _ when int.TryParse(rawQuery,out _) => 
+                    _ when int.TryParse(rawQuery,out _) =>
                     new OToken
                     {
                         Type = OTokenType.Number,
@@ -131,6 +131,12 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                     new OToken
                     {
                         Type = OTokenType.Guid,
+                        Value = rawQuery
+                    },
+                    _ when DateTimeOffset.TryParse(rawQuery, out _) =>
+                    new OToken
+                    {
+                        Type = OTokenType.DateTimeOffset,
                         Value = rawQuery
                     },
                     _ => new OToken
