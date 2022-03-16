@@ -3,10 +3,10 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using OData.Neo.Core.Models;
 using OData.Neo.Core.Services.Foundations.Tokenizations;
+using System;
+using System.Collections.Generic;
 using Tynamix.ObjectFiller;
 using Xunit;
 
@@ -66,8 +66,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             {
                 new OToken { Value = $"${randomLiteral}", Type = OTokenType.ODataParameter },
                 new OToken { Value = $"{randomNumber}", Type = OTokenType.Number },
-                new OToken { Value = $"{randomGuid}", Type = OTokenType.Guid },
-                new OToken { Value = $"{randomDto}", Type = OTokenType.DateTimeOffset },
+                new OToken { Value = $"{randomGuid:D}", Type = OTokenType.Guid },
+                new OToken { Value = $"{randomDto:O}", Type = OTokenType.DateTimeOffset },
                 new OToken { Value = $"{randomBoolean}", Type = OTokenType.Boolean },
                 new OToken { Value = randomLiteral, Type = OTokenType.Word },
             };
