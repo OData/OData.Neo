@@ -121,7 +121,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                         Type = OTokenType.BackSlash,
                         Value = rawQuery
                     },
-                    _ when int.TryParse(rawQuery,out _) =>
+                    _ when double.TryParse(rawQuery,out _) =>
                     new OToken
                     {
                         Type = OTokenType.Number,

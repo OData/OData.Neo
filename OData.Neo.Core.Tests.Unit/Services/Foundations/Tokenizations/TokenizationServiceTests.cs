@@ -75,6 +75,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         private static object GetRandomNumberType()
         { 
             var selector = new IntRange(min: 0, max: 3).GetValue();
+
             return selector switch
             {
                 0 => new IntRange().GetValue(),
