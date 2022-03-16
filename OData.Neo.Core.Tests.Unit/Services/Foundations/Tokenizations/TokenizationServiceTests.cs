@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using OData.Neo.Core.Models;
 using OData.Neo.Core.Services.Foundations.Tokenizations;
 using Tynamix.ObjectFiller;
@@ -73,7 +74,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         }
 
         private static object GetRandomNumberType()
-        { 
+        {
             var selector = new IntRange(min: 0, max: 3).GetValue();
 
             return selector switch
@@ -82,6 +83,23 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 1 => new FloatRange().GetValue(),
                 _ => new DoubleRange().GetValue()
             };
+        }
+
+        private static OToken[] CreateRandomOTokens()
+        {
+            string randomLiteral = new MnemonicString().GetValue();
+            object randomNumber = GetRandomNumberType();
+
+            return new List<OToken>
+                {
+                    new OToken { Value = $"${randomLiteral}", Type = OTokenType.ODataParameter },
+                    new OToken { Value = $"=", Type = OTokenType.Equals },
+                    new OToken { Value = randomLiteral, Type = OTokenType.Word },
+                    new OToken { Value = " ", Type = OTokenType.Whitespace },
+                    new OToken { Value = "eq", Type = OTokenType.Operand },
+                    new OToken { Value = " ", Type = OTokenType.Whitespace },
+                    new OToken { Value = $"{randomNumber}", Type = OTokenType.Number }
+                }.ToArray();
         }
     }
 }
