@@ -101,5 +101,34 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                     new OToken { Value = $"{randomNumber}", Type = OTokenType.Number }
                 }.ToArray();
         }
+
+        private static OToken[] CreateRandomOTokensWithQuotes()
+        {
+            string randomLiteral = new MnemonicString().GetValue();
+            object randomNumber = GetRandomNumberType();
+
+            return new List<OToken>
+            {
+                new OToken { Value = $"${randomLiteral}", Type = OTokenType.ODataParameter },
+                new OToken { Value = $"=", Type = OTokenType.Equals },
+                new OToken { Value = randomLiteral, Type = OTokenType.Word },
+                new OToken { Value = " ", Type = OTokenType.Whitespace },
+                new OToken { Value = "eq", Type = OTokenType.Operand },
+                new OToken { Value = " ", Type = OTokenType.Whitespace },
+
+                new OToken { Value = $"'", Type = OTokenType.Quote },
+                new OToken { Value = $"${randomLiteral}={randomLiteral} eq \'{randomNumber}\'", Type = OTokenType.Word },
+                new OToken { Value = $"'", Type = OTokenType.Quote }
+            }.ToArray();
+        }
+
+        public static TheoryData MultipleOTokens()
+        {
+            return new TheoryData<OToken[]>
+            {
+                CreateRandomOTokens(),
+                CreateRandomOTokensWithQuotes()
+            };
+        }
     }
 }

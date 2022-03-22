@@ -35,11 +35,12 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             actualTokens.Should().BeEquivalentTo(expectedTokens);
         }
 
-        [Fact]
-        public void ShouldTokenizeMultiTokenQuery()
+        [Theory]
+        [MemberData(nameof(MultipleOTokens))]
+        public void ShouldTokenizeMultiTokenQuery(OToken[] possibleTokens)
         {
             // given
-            OToken[] randomOTokens = CreateRandomOTokens();
+            OToken[] randomOTokens = possibleTokens;
             OToken[] expectedTokens = randomOTokens;
 
             var allTokenValues =
