@@ -3,12 +3,9 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using OData.Neo.Core.Models;
+using System.Linq;
 using Xunit;
 
 
@@ -38,18 +35,19 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             actualTokens.Should().BeEquivalentTo(expectedTokens);
         }
 
-        [Fact]
-        public void ShouldTokenizeMultiTokenQuery()
+        [Theory]
+        [MemberData(nameof(MultipleOTokens))]
+        public void ShouldTokenizeMultiTokenQuery(OToken[] possibleTokens)
         {
             // given
-            OToken[] randomOTokens = CreateRandomOTokens();
+            OToken[] randomOTokens = possibleTokens;
             OToken[] expectedTokens = randomOTokens;
 
             var allTokenValues =
                 randomOTokens.Select(token => token.Value);
 
             string inputQuery =
-                String.Join(separator: null, values: allTokenValues);
+                string.Join(separator: null, values: allTokenValues);
 
             // when
             OToken[] actualTokens =
