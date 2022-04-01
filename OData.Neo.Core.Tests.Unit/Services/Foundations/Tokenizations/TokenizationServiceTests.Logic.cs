@@ -35,7 +35,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             actualTokens.Should().BeEquivalentTo(expectedTokens);
         }
 
-        [Theory(Skip = "Temporarily until single scenarios are covered")]
+        [Theory]
         [MemberData(nameof(MultipleOTokens))]
         public void ShouldTokenizeMultiTokenQuery(OToken[] possibleTokens)
         {
@@ -48,67 +48,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 
             string inputQuery =
                 string.Join(separator: null, values: allTokenValues);
-
-            // when
-            OToken[] actualTokens =
-                this.tokenizationService.Tokenize(inputQuery);
-
-            // then
-            actualTokens.Should().BeEquivalentTo(expectedTokens);
-        }
-
-        [Fact]
-        public void ShouldTokenizeFilterOnLiteralScenario()
-        {
-            // given
-            string randomValue = GetRandomWord();
-            string randomProperty = GetRandomWord();
-            string inputQuery = $"$filter={randomProperty} eq '{randomValue}'";
-
-            var expectedTokens = new OToken[]
-            {
-                new OToken
-                {
-                    Type = OTokenType.ODataParameter,
-                    Value = "$filter"
-                },
-
-                new OToken
-                {
-                    Type = OTokenType.Equals,
-                    Value = "="
-                },
-
-                new OToken
-                {
-                    Type = OTokenType.Word,
-                    Value = randomProperty
-                },
-
-                new OToken
-                {
-                    Type = OTokenType.Whitespace,
-                    Value = " "
-                },
-
-                new OToken
-                {
-                    Type = OTokenType.Operand,
-                    Value = "eq"
-                },
-
-                new OToken
-                {
-                    Type = OTokenType.Whitespace,
-                    Value = " "
-                },
-
-                new OToken
-                {
-                    Type = OTokenType.Literal,
-                    Value = $"'{randomValue}'"
-                },
-            };
 
             // when
             OToken[] actualTokens =
