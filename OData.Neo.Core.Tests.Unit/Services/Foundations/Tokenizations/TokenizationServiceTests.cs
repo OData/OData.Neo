@@ -64,6 +64,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 
             return new TheoryData<OToken>
             {
+                new OToken { Value = $"'{randomLiteral}'", Type = OTokenType.Literal },
                 new OToken { Value = $"${randomLiteral}", Type = OTokenType.ODataParameter },
                 new OToken { Value = $"{randomNumber}", Type = OTokenType.Number },
                 new OToken { Value = $"{randomGuid:D}", Type = OTokenType.Guid },
