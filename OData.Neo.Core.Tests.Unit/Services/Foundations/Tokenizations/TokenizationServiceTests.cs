@@ -115,12 +115,14 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 new OToken { Value = " ", Type = OTokenType.Whitespace },
                 new OToken { Value = "eq", Type = OTokenType.Operand },
                 new OToken { Value = " ", Type = OTokenType.Whitespace },
-
                 new OToken { Value = $"'", Type = OTokenType.Quote },
                 new OToken { Value = $"${randomLiteral}={randomLiteral} eq \'{randomNumber}\'", Type = OTokenType.Word },
                 new OToken { Value = $"'", Type = OTokenType.Quote }
             }.ToArray();
         }
+
+        private static string GetRandomWord() =>
+            new MnemonicString().GetValue();
 
         public static TheoryData MultipleOTokens()
         {

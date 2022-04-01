@@ -30,6 +30,7 @@ namespace OData.Neo.Core.Models
         Slash,
         BackSlash,
         Guid,
-        DateTimeOffset
+        DateTimeOffset,
+        Literal
     }
 }
