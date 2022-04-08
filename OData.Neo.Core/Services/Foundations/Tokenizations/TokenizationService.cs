@@ -26,17 +26,16 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                 {
                     if (wordBuilder.Length > 0)
                     {
-                        result.Add(new OToken
-                        {
-                            Value = wordBuilder.ToString(),
-                            Type = OTokenType.Word,
-                        });
+                        result.Add(new OToken(OTokenType.Word, wordBuilder.ToString()));
                         wordBuilder.Clear();
                     }
 
-                    result.Add(new OToken { Value = @char.ToString(), Type = OTokenType.Separator });
+                    result.Add(new OToken(OTokenType.Separator, @char.ToString()));
                 }
-                else wordBuilder.Append(@char);
+                else
+                {
+                    wordBuilder.Append(@char);
+                }
             }
 
             return result.ToArray();

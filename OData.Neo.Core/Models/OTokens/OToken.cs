@@ -11,5 +11,11 @@ namespace OData.Neo.Core.Models
     {
         public OTokenType Type { get; set; }
         public string Value { get; set; }
+
+        public OToken(OTokenType type, string value)
+        {
+            Type = type;
+            Value = value;
+        }
     }
 }
