@@ -16,7 +16,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         public void ShouldTokenizeQuery()
         {
             // given
-            string query = "$filter=Name eq 'Sam\'s   ";
+            string query = "$filter=Name eq 'Sam\\'s   ";
 
             var expectedTokens = new OToken[]
             {
