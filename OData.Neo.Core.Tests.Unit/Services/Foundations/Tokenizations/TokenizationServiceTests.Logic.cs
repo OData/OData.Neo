@@ -20,76 +20,20 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 
             var expectedTokens = new OToken[]
             {
-                new OToken
-                {
-                    Value = "$filter",
-                    Type = OTokenType.Word
-                },
-                new OToken
-                {
-                    Value = "=",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = "Name",
-                    Type = OTokenType.Word
-                },
-                new OToken
-                {
-                    Value = " ",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = "eq",
-                    Type = OTokenType.Word
-                },
-                new OToken
-                {
-                    Value = " ",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = "'",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = "Sam",
-                    Type = OTokenType.Word
-                },
-                new OToken
-                {
-                    Value = "\\",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = "'",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = "s",
-                    Type = OTokenType.Word
-                },
-                new OToken
-                {
-                    Value = " ",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = " ",
-                    Type = OTokenType.Separator
-                },
-                new OToken
-                {
-                    Value = " ",
-                    Type = OTokenType.Separator
-                },
+                new OToken(OTokenType.Word, "$filter"),
+                new OToken(OTokenType.Separator, "="),
+                new OToken(OTokenType.Word, "Name"),
+                new OToken(OTokenType.Separator, " "),
+                new OToken(OTokenType.Word,"eq"),
+                new OToken(OTokenType.Separator," "),
+                new OToken(OTokenType.Separator, "'"),
+                new OToken(OTokenType.Word, "Sam"),
+                new OToken(OTokenType.Separator, "\\"),
+                new OToken(OTokenType.Separator, "'"),
+                new OToken(OTokenType.Word, "s"),
+                new OToken(OTokenType.Separator, " "),
+                new OToken(OTokenType.Separator, " "),
+                new OToken(OTokenType.Separator, " ")
             };
 
             // when
