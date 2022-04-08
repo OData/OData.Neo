@@ -5,7 +5,6 @@
 
 using FluentAssertions;
 using OData.Neo.Core.Models;
-using System.Linq;
 using Xunit;
 
 
@@ -13,45 +12,89 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 {
     public partial class TokenizationServiceTests
     {
-        [Theory]
-        [MemberData(nameof(OperandTokens))]
-        [MemberData(nameof(SpecialTokens))]
-        [MemberData(nameof(ComplexTokens))]
-        public void ShouldTokenizeQuery(OToken possibleToken)
+        [Fact]
+        public void ShouldTokenizeQuery()
         {
             // given
-            string rawQuery = possibleToken.Value;
+            string query = "$filter=Name eq 'Sam\'s   ";
 
             var expectedTokens = new OToken[]
             {
-                possibleToken
+                new OToken
+                {
+                    Value = "$filter",
+                    Type = OTokenType.Word
+                },
+                new OToken
+                {
+                    Value = "=",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = "Name",
+                    Type = OTokenType.Word
+                },
+                new OToken
+                {
+                    Value = " ",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = "eq",
+                    Type = OTokenType.Word
+                },
+                new OToken
+                {
+                    Value = " ",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = "'",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = "Sam",
+                    Type = OTokenType.Word
+                },
+                new OToken
+                {
+                    Value = "\\",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = "'",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = "s",
+                    Type = OTokenType.Word
+                },
+                new OToken
+                {
+                    Value = " ",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = " ",
+                    Type = OTokenType.Separator
+                },
+                new OToken
+                {
+                    Value = " ",
+                    Type = OTokenType.Separator
+                },
             };
 
             // when
             OToken[] actualTokens =
-                this.tokenizationService.Tokenize(rawQuery);
-
-            // then
-            actualTokens.Should().BeEquivalentTo(expectedTokens);
-        }
-
-        [Theory]
-        [MemberData(nameof(MultipleOTokens))]
-        public void ShouldTokenizeMultiTokenQuery(OToken[] possibleTokens)
-        {
-            // given
-            OToken[] randomOTokens = possibleTokens;
-            OToken[] expectedTokens = randomOTokens;
-
-            var allTokenValues =
-                randomOTokens.Select(token => token.Value);
-
-            string inputQuery =
-                string.Join(separator: null, values: allTokenValues);
-
-            // when
-            OToken[] actualTokens =
-                this.tokenizationService.Tokenize(inputQuery);
+                this.tokenizationService.Tokenize(query);
 
             // then
             actualTokens.Should().BeEquivalentTo(expectedTokens);
