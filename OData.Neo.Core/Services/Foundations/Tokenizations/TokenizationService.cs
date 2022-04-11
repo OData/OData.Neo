@@ -3,11 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using OData.Neo.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using OData.Neo.Core.Models;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
@@ -24,12 +24,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             {
                 if (GetTokenType(@char) == OTokenType.Separator)
                 {
-                    if (wordBuilder.Length > 0)
-                    {
-                        result.Add(new OToken(OTokenType.Word, wordBuilder.ToString()));
-                        wordBuilder.Clear();
-                    }
-
+                    AddWordTokenToResult(ref result, ref wordBuilder);
                     result.Add(new OToken(OTokenType.Separator, @char.ToString()));
                 }
                 else
@@ -38,7 +33,18 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                 }
             }
 
+            AddWordTokenToResult(ref result, ref wordBuilder);
+
             return result.ToArray();
+        }
+
+        private static void AddWordTokenToResult(ref List<OToken> tokens, ref StringBuilder wordBuilder)
+        {
+            if (wordBuilder.Length > 0)
+            {
+                tokens.Add(new OToken(OTokenType.Word, wordBuilder.ToString()));
+                wordBuilder.Clear();
+            }
         }
 
         private OTokenType GetTokenType(char tokenValue)

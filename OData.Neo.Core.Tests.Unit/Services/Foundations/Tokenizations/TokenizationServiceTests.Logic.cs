@@ -43,5 +43,19 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             // then
             actualTokens.Should().BeEquivalentTo(expectedTokens);
         }
+
+        [Fact]
+        public void ShouldTokenizeRandomQuery()
+        {
+            // given
+            (string queryToTest, OToken[] expectedTokens) = GetRandomQuery();
+
+            // when
+            OToken[] actualTokens =
+                this.tokenizationService.Tokenize(queryToTest);
+
+            // then
+            actualTokens.Should().BeEquivalentTo(expectedTokens);
+        }
     }
 }
