@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using OData.Neo.Core.Models;
+using OData.Neo.Core.Models.OTokens.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,11 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
 
         public OToken[] Tokenize(string rawQuery)
         {
+            if (string.IsNullOrEmpty(rawQuery))
+            {
+                throw new OTokenValidationException(null);
+            }
+
             var result = new List<OToken>();
             var wordBuilder = new StringBuilder();
 
