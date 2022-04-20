@@ -23,8 +23,10 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 this.tokenizationService.Tokenize(nullQuery);
 
             // then
-            OTokenValidationException exception = Assert.Throws<OTokenValidationException>(toknizeAction);
-            Assert.NotNull(exception.InnerException);
+            OTokenValidationException exception = 
+                Assert.Throws<OTokenValidationException>(toknizeAction);
+            
+            Assert.True(exception.InnerException is NullOTokenQueryException);
         }
     }
 }

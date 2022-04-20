@@ -20,7 +20,8 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
         {
             if (string.IsNullOrEmpty(rawQuery))
             {
-                throw new OTokenValidationException(null);
+                var nullOTokenQueryException = new NullOTokenQueryException();
+                throw new OTokenValidationException(nullOTokenQueryException);
             }
 
             var result = new List<OToken>();
