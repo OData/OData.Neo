@@ -12,18 +12,14 @@ using System.Text;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
-    public class TokenizationService : ITokenizationService
+    public partial class TokenizationService : ITokenizationService
     {
         readonly char[] SeparatorChars = new char[] { '\'', ' ', '=', '\\' };
 
-        public OToken[] Tokenize(string rawQuery)
+        public OToken[] Tokenize(string rawQuery) =>
+        TryCatch(() =>
         {
-            if (string.IsNullOrEmpty(rawQuery))
-            {
-                var nullOTokenQueryException = new NullOTokenQueryException();
-                throw new OTokenValidationException(nullOTokenQueryException);
-            }
-
+            ValidateOTokenQuery(rawQuery);
             var result = new List<OToken>();
             var wordBuilder = new StringBuilder();
 
@@ -43,7 +39,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             AddWordTokenToResult(ref result, ref wordBuilder);
 
             return result.ToArray();
-        }
+        });
 
         private static void AddWordTokenToResult(ref List<OToken> tokens, ref StringBuilder wordBuilder)
         {
