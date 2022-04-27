@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------
 
 using OData.Neo.Core.Models;
-using OData.Neo.Core.Models.OTokens.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,26 +19,50 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
         TryCatch(() =>
         {
             ValidateOTokenQuery(rawQuery);
-            var result = new List<OToken>();
-            var wordBuilder = new StringBuilder();
 
-            foreach (var @char in rawQuery)
+            return OTokenize(rawQuery, SeparatorChars).ToArray();
+        });
+
+        private static IEnumerable<OToken> OTokenize(string rawQuery, char[] separatorChars)
+        {
+            string remainingRawQuery = rawQuery;
+            Func<char, bool> NotSeparatorChar = c => !separatorChars.Contains(c);
+
+            while (remainingRawQuery.Length > 0)
             {
-                if (GetTokenType(@char) == OTokenType.Separator)
+                string returnValue = remainingRawQuery;
+                string nextRemainingValue = string.Empty;
+
+                var index = remainingRawQuery.IndexOfAny(separatorChars);
+                if (index is not -1)
                 {
-                    AddWordTokenToResult(ref result, ref wordBuilder);
-                    result.Add(new OToken(OTokenType.Separator, @char.ToString()));
+                    int rangeIndex = GetRangeIndex(index);
+                    Range currentRange = Range.EndAt(rangeIndex);
+                    Range remainingRange = Range.StartAt(rangeIndex);
+
+                    returnValue = remainingRawQuery[currentRange];
+                    nextRemainingValue = remainingRawQuery[remainingRange];
                 }
-                else
-                {
-                    wordBuilder.Append(@char);
-                }
+
+                remainingRawQuery = nextRemainingValue;
+
+                var oTokenType = returnValue.Any(NotSeparatorChar)
+                    ? OTokenType.Word
+                    : OTokenType.Separator;
+
+                yield return new OToken(oTokenType, returnValue);
+            }
+        }
+
+        private static int GetRangeIndex(in int index)
+        {
+            if (index > 0)
+            {
+                return index;
             }
 
-            AddWordTokenToResult(ref result, ref wordBuilder);
-
-            return result.ToArray();
-        });
+            return 1;
+        }
 
         private static void AddWordTokenToResult(ref List<OToken> tokens, ref StringBuilder wordBuilder)
         {
