@@ -24,6 +24,11 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             {
                 throw new OTokenValidationException(nullOTokenQueryException);
             }
+            catch (Exception ex)
+            {
+                var failedOTokenServiceException = new FailedOTokenServiceException(ex);
+                throw new OTokenServiceException(failedOTokenServiceException);
+            }
         }
     }
 }
