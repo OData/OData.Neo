@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using InternalMock.Extensions;
 using OData.Neo.Core.Models.OTokens.Exceptions;
 using Xunit;
 
@@ -13,20 +14,28 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
     public partial class TokenizationServiceTests
     {
         [Fact]
-        public void ShouldThrowValidationExceptionOnTokenizeIfQueryIsNull()
+        public void ShouldThrowServiceExceptionOnTokenizeIfExceptionOccurs()
         {
             // given
-            string nullQuery = null;
+            string someQuery = GetRandomWordValue();
+            var exception = new Exception();
+
+            this.tokenizationService.Mock(
+                methodName: "ValidateOTokenQuery")
+                    .Throws(exception);
 
             // when
-            Action toknizeAction = () =>
-                this.tokenizationService.Tokenize(nullQuery);
+            Action tokenizationAction = () =>
+                this.tokenizationService.Tokenize(someQuery);
 
             // then
-            OTokenValidationException exception = 
-                Assert.Throws<OTokenValidationException>(toknizeAction);
-            
-            Assert.True(exception.InnerException is NullOTokenQueryException);
+            OTokenServiceException otokenServiceException =
+                Assert.Throws<OTokenServiceException>(tokenizationAction);
+
+            Assert.True(otokenServiceException.InnerException
+                is FailedOTokenServiceException);
+
+            this.tokenizationService.ClearAllOtherCalls();
         }
     }
 }

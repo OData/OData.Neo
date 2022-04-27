@@ -13,24 +13,20 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
     public partial class TokenizationServiceTests
     {
         [Fact]
-        public void ShouldThrowServiceExceptionOnTokenizeIfExceptionOccurs()
+        public void ShouldThrowValidationExceptionOnTokenizeIfQueryIsNull()
         {
             // given
-            string someQuery = GetRandomWordValue();
-            var exception = new Exception();
-
-            var failedOTokenServiceException =
-                new FailedOTokenServiceException(exception);
-
-            var OTokenServiceException =
-                new OTokenServiceException(failedOTokenServiceException);
+            string nullQuery = null;
 
             // when
-            Action tokenizationAction = () =>
-                this.tokenizationService.Tokenize(someQuery);
+            Action toknizeAction = () =>
+                this.tokenizationService.Tokenize(nullQuery);
 
             // then
-            Assert.Throws<OTokenServiceException>(tokenizationAction);
+            OTokenValidationException exception = 
+                Assert.Throws<OTokenValidationException>(toknizeAction);
+            
+            Assert.True(exception.InnerException is NullOTokenQueryException);
         }
     }
 }
