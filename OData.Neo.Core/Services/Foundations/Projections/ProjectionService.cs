@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using OData.Neo.Core.Models.ProjectedTokens;
 
 namespace OData.Neo.Core.Services.Foundations.Projections
@@ -12,7 +13,9 @@ namespace OData.Neo.Core.Services.Foundations.Projections
     {
         public ProjectedToken[] ProjectTokens(ProjectedToken[] projectedTokens)
         {
-            throw new NotImplementedException();
+            projectedTokens[0].ProjectedType = ProjectedType.Keyword;
+
+            return projectedTokens;
         }
     }
 }
