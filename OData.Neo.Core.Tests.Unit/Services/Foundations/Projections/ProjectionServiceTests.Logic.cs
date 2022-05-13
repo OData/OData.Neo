@@ -44,5 +44,21 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
             // then
             actualProjectedTokens.Should().BeEquivalentTo(expectedProjectedTokens);
         }
+
+        [Theory]
+        [MemberData(nameof(GetProjectedTokens))]
+        public void ShouldProjectAllTokensKeywords(
+            ProjectedToken[] inputProjectedTokens,
+            ProjectedToken[] expectedProjectedTokens)
+        {
+            // given . when
+            ProjectedToken[] actualProjectedTokens =
+                this.projectionService.ProjectTokens(
+                    inputProjectedTokens);
+
+            // then
+            actualProjectedTokens.Should().BeEquivalentTo(
+                expectedProjectedTokens);
+        }
     }
 }
