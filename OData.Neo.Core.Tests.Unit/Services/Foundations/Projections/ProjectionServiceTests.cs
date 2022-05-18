@@ -3,11 +3,10 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using System.Linq;
 using OData.Neo.Core.Models;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Services.Foundations.Projections;
+using System.Collections.Generic;
 using Tynamix.ObjectFiller;
 using Xunit;
 
@@ -23,30 +22,34 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
         public static TheoryData<ProjectedToken[], ProjectedToken[]> GetProjectedTokens()
         {
             int randomNumber = GetRandomNumber();
-            string randomKeyword = GetRandomKeyword();
+            var inputProjectedTokens = new List<ProjectedToken>();
+            var expectedProjectedTokens = new List<ProjectedToken>();
 
-            ProjectedToken[] inputProjectedTokens =
-                Enumerable.Range(start: 0, count: randomNumber)
-                    .Select(item => new ProjectedToken
-                    {
-                        ProjectedType = ProjectedType.Unidentitied,
-                        RawValue = randomKeyword,
-                        TokenType = OTokenType.Word
-                    }).ToArray();
+            for (int i = 0; i < randomNumber; i++)
+            {
+                string randomKeyword = GetRandomKeyword();
 
-            ProjectedToken[] expectedProjectedTokens =
-                Enumerable.Range(start: 0, count: randomNumber)
-                    .Select(item => new ProjectedToken
-                    {
-                        ProjectedType = ProjectedType.Keyword,
-                        RawValue = randomKeyword,
-                        TokenType = OTokenType.Word
-                    }).ToArray();
+                inputProjectedTokens.Add(item: new ProjectedToken
+                {
+                    ProjectedType = ProjectedType.Unidentitied,
+                    RawValue = randomKeyword,
+                    TokenType = OTokenType.Word
+                });
 
+                expectedProjectedTokens.Add(item: new ProjectedToken
+                {
+                    ProjectedType = ProjectedType.Keyword,
+                    RawValue = randomKeyword,
+                    TokenType = OTokenType.Word
+                });
+            }
 
             return new TheoryData<ProjectedToken[], ProjectedToken[]>
             {
-                { inputProjectedTokens, expectedProjectedTokens }
+                {
+                    inputProjectedTokens.ToArray(),
+                    expectedProjectedTokens.ToArray()
+                }
             };
         }
 
