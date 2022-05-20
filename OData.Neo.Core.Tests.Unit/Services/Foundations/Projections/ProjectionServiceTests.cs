@@ -64,6 +64,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                 {
                     ($"${randomWord}", ProjectedType.Keyword, OTokenType.Word),
                     ("=", ProjectedType.Assignment, OTokenType.Separator),
+                    (randomWord, ProjectedType.Property, OTokenType.Word),
                 };
 
             int randomIndex =

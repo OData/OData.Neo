@@ -9,6 +9,7 @@ namespace OData.Neo.Core.Models.ProjectedTokens
     {
         Unidentified,
         Keyword,
-        Assignment
+        Assignment,
+        Property
     }
 }
