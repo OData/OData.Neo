@@ -27,7 +27,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
             for (int i = 0; i < randomNumber; i++)
             {
-                (string rawValue, ProjectedType projectedType, OTokenType tokenType) = 
+                (string rawValue, ProjectedType projectedType, OTokenType tokenType) =
                     GetRandomProjectedTokenProperties();
 
                 inputProjectedTokens.Add(item: new ProjectedToken
@@ -57,14 +57,12 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
         static (string rawValue, ProjectedType projectedType, OTokenType tokenType)
             GetRandomProjectedTokenProperties()
         {
-            string randomWord = GetRandomKeyword();
-
             var listOfProjectedTokenProperties =
                 new List<(string rawValue, ProjectedType projectedType, OTokenType tokenType)>()
                 {
-                    ($"${randomWord}", ProjectedType.Keyword, OTokenType.Word),
+                    (GetRandomKeyword(), ProjectedType.Keyword, OTokenType.Word),
                     ("=", ProjectedType.Assignment, OTokenType.Separator),
-                    (randomWord, ProjectedType.Property, OTokenType.Word),
+                    (GetRandomWord(), ProjectedType.Property, OTokenType.Word),
                 };
 
             int randomIndex =
@@ -73,8 +71,11 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
             return listOfProjectedTokenProperties[randomIndex];
         }
 
+        private static string GetRandomWord() =>
+            new MnemonicString().GetValue();
+
         private static string GetRandomKeyword() =>
-            $"${new MnemonicString().GetValue()}";
+            $"${GetRandomWord()}";
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
