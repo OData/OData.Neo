@@ -27,20 +27,21 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
             for (int i = 0; i < randomNumber; i++)
             {
-                string randomKeyword = GetRandomKeyword();
+                (string rawValue, ProjectedType projectedType, OTokenType tokenType) = 
+                    GetRandomProjectedTokenProperties();
 
                 inputProjectedTokens.Add(item: new ProjectedToken
                 {
                     ProjectedType = ProjectedType.Unidentified,
-                    RawValue = randomKeyword,
-                    TokenType = OTokenType.Word
+                    RawValue = rawValue,
+                    TokenType = tokenType
                 });
 
                 expectedProjectedTokens.Add(item: new ProjectedToken
                 {
-                    ProjectedType = ProjectedType.Keyword,
-                    RawValue = randomKeyword,
-                    TokenType = OTokenType.Word
+                    ProjectedType = projectedType,
+                    RawValue = rawValue,
+                    TokenType = tokenType
                 });
             }
 
@@ -51,6 +52,24 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                     expectedProjectedTokens.ToArray()
                 }
             };
+        }
+
+        static (string rawValue, ProjectedType projectedType, OTokenType tokenType)
+            GetRandomProjectedTokenProperties()
+        {
+            string randomWord = GetRandomKeyword();
+
+            var listOfProjectedTokenProperties =
+                new List<(string rawValue, ProjectedType projectedType, OTokenType tokenType)>()
+                {
+                    ($"${randomWord}", ProjectedType.Keyword, OTokenType.Word),
+                    ("=", ProjectedType.Assignment, OTokenType.Separator),
+                };
+
+            int randomIndex =
+                new IntRange(min: 0, max: listOfProjectedTokenProperties.Count).GetValue();
+
+            return listOfProjectedTokenProperties[randomIndex];
         }
 
         private static string GetRandomKeyword() =>

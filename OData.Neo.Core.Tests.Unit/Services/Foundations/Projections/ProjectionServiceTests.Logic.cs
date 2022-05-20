@@ -22,7 +22,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                 {
                     RawValue = "$filter",
                     TokenType = OTokenType.Word,
-                    ProjectedType = ProjectedType.Unidentitied
+                    ProjectedType = ProjectedType.Unidentified
                 }
             };
 
