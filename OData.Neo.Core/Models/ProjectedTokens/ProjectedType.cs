@@ -7,7 +7,7 @@ namespace OData.Neo.Core.Models.ProjectedTokens
 {
     public enum ProjectedType
     {
-        Unidentitied,
+        Unidentified,
         Keyword
     }
 }

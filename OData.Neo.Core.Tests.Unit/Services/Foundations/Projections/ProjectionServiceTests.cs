@@ -31,7 +31,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
                 inputProjectedTokens.Add(item: new ProjectedToken
                 {
-                    ProjectedType = ProjectedType.Unidentitied,
+                    ProjectedType = ProjectedType.Unidentified,
                     RawValue = randomKeyword,
                     TokenType = OTokenType.Word
                 });
