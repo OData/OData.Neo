@@ -10,6 +10,7 @@ namespace OData.Neo.Core.Models.ProjectedTokens
         Unidentified,
         Keyword,
         Assignment,
-        Property
+        Property,
+        Space
     }
 }
