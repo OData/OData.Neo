@@ -13,18 +13,13 @@ namespace OData.Neo.Core.Services.Foundations.Projections
         {
             foreach (var projectedToken in projectedTokens)
             {
-                if (projectedToken.RawValue == "=")
+                projectedToken.ProjectedType = projectedToken.RawValue switch
                 {
-                    projectedToken.ProjectedType = ProjectedType.Assignment;
-                }
-                else if (projectedToken.RawValue.StartsWith("$"))
-                {
-                    projectedToken.ProjectedType = ProjectedType.Keyword;
-                }
-                else
-                {
-                    projectedToken.ProjectedType = ProjectedType.Property;
-                }
+                    "=" => ProjectedType.Assignment,
+                    " " => ProjectedType.Space,
+                    _ when projectedToken.RawValue.StartsWith("$") => ProjectedType.Keyword,
+                    _ => ProjectedType.Property
+                };
             }
 
             return projectedTokens;
