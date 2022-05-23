@@ -11,6 +11,7 @@ namespace OData.Neo.Core.Models.ProjectedTokens
         Keyword,
         Assignment,
         Property,
-        Space
+        Space,
+        Equals
     }
 }
