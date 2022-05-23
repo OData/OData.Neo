@@ -74,7 +74,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
         }
 
         private static string GetRandomKeyword() =>
-            $"${new MnemonicString().GetValue()}";
+            $"{new MnemonicString().GetValue()}";
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();

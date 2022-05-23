@@ -13,9 +13,18 @@ namespace OData.Neo.Core.Services.Foundations.Projections
         {
             foreach (var projectedToken in projectedTokens)
             {
-                projectedToken.ProjectedType = (projectedToken.RawValue == "=")
-                    ? ProjectedType.Assignment
-                    : ProjectedType.Keyword;
+                if (projectedToken.RawValue == "=")
+                {
+                    projectedToken.ProjectedType = ProjectedType.Assignment;
+                }
+                else if (projectedToken.RawValue.StartsWith("$"))
+                {
+                    projectedToken.ProjectedType = ProjectedType.Keyword;
+                }
+                else
+                {
+                    projectedToken.ProjectedType = ProjectedType.Property;
+                }
             }
 
             return projectedTokens;
