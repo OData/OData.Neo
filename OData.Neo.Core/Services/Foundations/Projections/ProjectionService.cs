@@ -17,6 +17,7 @@ namespace OData.Neo.Core.Services.Foundations.Projections
                 {
                     "=" => ProjectedType.Assignment,
                     " " => ProjectedType.Space,
+                    "eq" => ProjectedType.Equals,
                     _ when projectedToken.RawValue.StartsWith("$") => ProjectedType.Keyword,
                     _ => ProjectedType.Property
                 };
