@@ -12,6 +12,7 @@ namespace OData.Neo.Core.Models.ProjectedTokens
         Assignment,
         Property,
         Space,
-        Equals
+        Equals,
+        Comma
     }
 }

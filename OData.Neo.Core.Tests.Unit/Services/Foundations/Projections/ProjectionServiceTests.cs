@@ -19,7 +19,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
         public ProjectionServiceTests() =>
             projectionService = new ProjectionService();
 
-        public static TheoryData<ProjectedToken[], ProjectedToken[]> GetProjectedTokens()
+        public static TheoryData<ProjectedToken[], ProjectedToken[]> ProjectedTokens()
         {
             int randomNumber = GetRandomNumber();
             var inputProjectedTokens = new List<ProjectedToken>();
@@ -64,7 +64,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                     ("=", ProjectedType.Assignment, OTokenType.Separator),
                     (GetRandomWord(), ProjectedType.Property, OTokenType.Word),
                     (" ", ProjectedType.Space, OTokenType.Separator),
-                    ("eq", ProjectedType.Equals, OTokenType.Word)
+                    ("eq", ProjectedType.Equals, OTokenType.Word),
+                    (",", ProjectedType.Comma, OTokenType.Separator)
                 };
 
             int randomIndex =

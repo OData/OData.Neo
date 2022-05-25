@@ -46,7 +46,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
         }
 
         [Theory]
-        [MemberData(nameof(GetProjectedTokens))]
+        [MemberData(nameof(ProjectedTokens))]
         public void ShouldProjectAllTokensKeywords(
             ProjectedToken[] inputProjectedTokens,
             ProjectedToken[] expectedProjectedTokens)
