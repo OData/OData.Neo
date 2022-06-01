@@ -4,26 +4,15 @@
 //-----------------------------------------------------------------------
 
 using OData.Neo.Core.Models.ProjectedTokens;
-using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.Projections
 {
-    public class ProjectionService : IProjectionService
+    public partial class ProjectionService : IProjectionService
     {
-        public ProjectedToken[] ProjectTokens(ProjectedToken[] projectedTokens)
+        public ProjectedToken[] ProjectTokens(ProjectedToken[] projectedTokens) =>
+        TryCatch(() =>
         {
-            if (projectedTokens is null)
-            {
-
-                var nullProjectedTokenException =
-                    new NullProjectedTokenException();
-
-                var projectedTokenValidationException =
-                    new ProjectedTokenValidationException(
-                        nullProjectedTokenException);
-
-                throw projectedTokenValidationException;
-            }
+            ValidateProjectedTokens(projectedTokens);
 
             foreach (var projectedToken in projectedTokens)
             {
@@ -39,6 +28,6 @@ namespace OData.Neo.Core.Services.Foundations.Projections
             }
 
             return projectedTokens;
-        }
+        });
     }
 }
