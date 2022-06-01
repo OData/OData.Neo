@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using OData.Neo.Core.Models.ProjectedTokens;
+using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.Projections
 {
@@ -11,6 +12,19 @@ namespace OData.Neo.Core.Services.Foundations.Projections
     {
         public ProjectedToken[] ProjectTokens(ProjectedToken[] projectedTokens)
         {
+            if (projectedTokens is null)
+            {
+
+                var nullProjectedTokenException =
+                    new NullProjectedTokenException();
+
+                var projectedTokenValidationException =
+                    new ProjectedTokenValidationException(
+                        nullProjectedTokenException);
+
+                throw projectedTokenValidationException;
+            }
+
             foreach (var projectedToken in projectedTokens)
             {
                 projectedToken.ProjectedType = projectedToken.RawValue switch
