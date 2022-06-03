@@ -73,5 +73,41 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
             actualProjectedTokenValidationException.InnerException.Should()
                 .BeOfType<NullProjectedTokenException>();
         }
+
+        [Fact]
+        public void ShouldThrowValidationExceptionIfAnyProjectedTokenRawValuesIsNull()
+        {
+            // given
+            ProjectedToken invalidProjectedToken = new ProjectedToken
+            {
+                RawValue = null
+            };
+
+            ProjectedToken[] randomProjectedTokens =
+                CreateRandomProjectedTokens(invalidProjectedToken);
+
+            ProjectedToken[] invalidProjectedTokens =
+                randomProjectedTokens;
+
+            var invalidProjectedTokenRawValueException =
+                new InvalidProjectedTokenRawValueException();
+
+            var expectedProjectedTokenValidationException =
+                new ProjectedTokenValidationException(
+                    invalidProjectedTokenRawValueException);
+
+            // when
+            Action projectTokensAction = () =>
+                this.projectionService.ProjectTokens(
+                    invalidProjectedTokens);
+
+            // then
+            ProjectedTokenValidationException actualProjectedTokenValidationException =
+                Assert.Throws<ProjectedTokenValidationException>(
+                    projectTokensAction);
+
+            actualProjectedTokenValidationException.InnerException.Should()
+                .BeOfType<NullProjectedTokenException>();
+        }
     }
 }
