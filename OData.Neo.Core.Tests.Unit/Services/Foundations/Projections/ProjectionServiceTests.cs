@@ -68,6 +68,9 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
             return ShuffleProjectedTokens(randomProjectedTokens).ToArray();
         }
 
+        private static ProjectedToken[] CreateRandomProjectedTokens() =>
+            CreateProjectedTokenFiller().Create(count: GetRandomNumber()).ToArray();
+
         private static List<ProjectedToken> ShuffleProjectedTokens(List<ProjectedToken> projectedTokens)
         {
             var randomizer = new Randomizer();

@@ -12,7 +12,7 @@ namespace OData.Neo.Core.Services.Foundations.Projections
 {
     public partial class ProjectionService : IProjectionService
     {
-        private void ValidateProjectedTokens(ProjectedToken[] projectedTokens)
+        private static void ValidateProjectedTokens(ProjectedToken[] projectedTokens)
         {
             ValidateProjectedTokensIsNotNull(projectedTokens);
             ValidateProjectedTokensContainsNotNullTokens(projectedTokens);
