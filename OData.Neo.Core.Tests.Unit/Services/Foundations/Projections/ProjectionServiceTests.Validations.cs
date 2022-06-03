@@ -107,7 +107,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                     projectTokensAction);
 
             actualProjectedTokenValidationException.InnerException.Should()
-                .BeOfType<NullProjectedTokenException>();
+                .BeOfType<InvalidProjectedTokenRawValueException>();
         }
     }
 }

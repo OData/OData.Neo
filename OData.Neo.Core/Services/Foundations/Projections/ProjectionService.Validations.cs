@@ -15,6 +15,7 @@ namespace OData.Neo.Core.Services.Foundations.Projections
         {
             ValidateProjectedTokensIsNotNull(projectedTokens);
             ValidateProjectedTokensContainsNotNullTokens(projectedTokens);
+            ValidateProjectedTokenRawValuesIsNullNull(projectedTokens);
         }
 
         private static void ValidateProjectedTokensIsNotNull(
@@ -32,6 +33,15 @@ namespace OData.Neo.Core.Services.Foundations.Projections
             if (projectedTokens.Contains(null))
             {
                 throw new NullProjectedTokenException();
+            }
+        }
+
+        private static void ValidateProjectedTokenRawValuesIsNullNull(
+            ProjectedToken[] projectedTokens)
+        {
+            if (projectedTokens.Any(token => token.RawValue is null))
+            {
+                throw new InvalidProjectedTokenRawValueException();
             }
         }
     }

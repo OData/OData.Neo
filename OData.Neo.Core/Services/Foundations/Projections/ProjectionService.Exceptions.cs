@@ -22,6 +22,10 @@ namespace OData.Neo.Core.Services.Foundations.Projections
             {
                 throw new ProjectedTokenValidationException(nullProjectedTokenException);
             }
+            catch (InvalidProjectedTokenRawValueException invalidProjectedTokenRawValueException)
+            {
+                throw new ProjectedTokenValidationException(invalidProjectedTokenRawValueException);
+            }
         }
     }
 }
