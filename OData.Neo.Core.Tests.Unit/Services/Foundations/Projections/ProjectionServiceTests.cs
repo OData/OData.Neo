@@ -7,8 +7,10 @@ using OData.Neo.Core.Models;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Services.Foundations.Projections;
 using System.Collections.Generic;
+using System.Linq;
 using Tynamix.ObjectFiller;
 using Xunit;
+using Randomizer = System.Random;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 {
@@ -54,7 +56,28 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
             };
         }
 
-        static (string rawValue, ProjectedType projectedType, OTokenType tokenType)
+        private static ProjectedToken[] CreateRandomProjectedTokens(ProjectedToken addedProjectedToken)
+        {
+            List<ProjectedToken> randomProjectedTokens = 
+                CreateProjectedTokenFiller()
+                    .Create(count: GetRandomNumber())
+                        .ToList();
+            
+            randomProjectedTokens.Add(addedProjectedToken);
+
+            return ShuffleProjectedTokens(randomProjectedTokens).ToArray();
+        }
+
+        private static List<ProjectedToken> ShuffleProjectedTokens(List<ProjectedToken> projectedTokens)
+        {
+            var randomizer = new Randomizer();
+
+            return projectedTokens
+                .OrderBy(token => randomizer.Next())
+                    .ToList(); ;
+        }
+
+        private static (string rawValue, ProjectedType projectedType, OTokenType tokenType)
             GetRandomProjectedTokenProperties()
         {
             var listOfProjectedTokenProperties =
@@ -82,5 +105,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
+
+        private static Filler<ProjectedToken> CreateProjectedTokenFiller() =>
+            new Filler<ProjectedToken>();
     }
 }

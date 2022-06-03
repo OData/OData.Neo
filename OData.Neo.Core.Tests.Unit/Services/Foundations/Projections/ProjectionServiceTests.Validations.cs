@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using FluentAssertions;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
@@ -30,6 +31,39 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
             Action projectTokensAction = () =>
                 this.projectionService.ProjectTokens(
                     nullProjectedTokens);
+
+            // then
+            ProjectedTokenValidationException actualProjectedTokenValidationException =
+                Assert.Throws<ProjectedTokenValidationException>(
+                    projectTokensAction);
+
+            actualProjectedTokenValidationException.InnerException.Should()
+                .BeOfType<NullProjectedTokenException>();
+        }
+
+        [Fact]
+        public void ShouldThrowValidationExceptionIfAnyProjectedTokenIsNull()
+        {
+            // given
+            ProjectedToken nullProjectedToken = null;
+            
+            ProjectedToken[] randomProjectedTokens = 
+                CreateRandomProjectedTokens(nullProjectedToken);
+
+            ProjectedToken[] invalidProjectedTokens =
+                randomProjectedTokens;
+
+            var nullProjectedTokenException =
+                new NullProjectedTokenException();
+
+            var expectedProjectedTokenValidationException =
+                new ProjectedTokenValidationException(
+                    nullProjectedTokenException);
+
+            // when
+            Action projectTokensAction = () =>
+                this.projectionService.ProjectTokens(
+                    invalidProjectedTokens);
 
             // then
             ProjectedTokenValidationException actualProjectedTokenValidationException =
