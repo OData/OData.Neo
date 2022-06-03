@@ -41,8 +41,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                     someProjectedTokens);
 
             // then
-            FailedProjectedTokenServiceException actualProjectedTokenValidationException =
-                Assert.Throws<FailedProjectedTokenServiceException>(
+            ProjectedTokenServiceException actualProjectedTokenValidationException =
+                Assert.Throws<ProjectedTokenServiceException>(
                     projectTokensAction);
 
             actualProjectedTokenValidationException.InnerException.Should()
