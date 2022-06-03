@@ -74,13 +74,16 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                 .BeOfType<NullProjectedTokenException>();
         }
 
-        [Fact]
-        public void ShouldThrowValidationExceptionIfAnyProjectedTokenRawValuesIsNull()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ShouldThrowValidationExceptionIfAnyProjectedTokenRawValuesIsNull(
+            string invalidRawData)
         {
             // given
             ProjectedToken invalidProjectedToken = new ProjectedToken
             {
-                RawValue = null
+                RawValue = invalidRawData
             };
 
             ProjectedToken[] randomProjectedTokens =
