@@ -5,6 +5,7 @@
 
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
+using System;
 using System.Linq;
 
 namespace OData.Neo.Core.Services.Foundations.Projections
@@ -39,7 +40,10 @@ namespace OData.Neo.Core.Services.Foundations.Projections
         private static void ValidateProjectedTokenRawValuesIsNullNull(
             ProjectedToken[] projectedTokens)
         {
-            if (projectedTokens.Any(token => token.RawValue is null))
+            Func<ProjectedToken, bool> hasRawValueNullOrEmpty = 
+                token => token.RawValue is null or "";
+
+            if (projectedTokens.Any(hasRawValueNullOrEmpty))
             {
                 throw new InvalidProjectedTokenRawValueException();
             }
