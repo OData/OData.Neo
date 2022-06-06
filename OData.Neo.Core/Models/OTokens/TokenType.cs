@@ -5,7 +5,7 @@
 
 namespace OData.Neo.Core.Models
 {
-    public enum OTokenType
+    public enum TokenType
     {
         Word,
         Separator

@@ -21,7 +21,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                 new ProjectedToken
                 {
                     RawValue = "$filter",
-                    TokenType = OTokenType.Word,
+                    TokenType = TokenType.Word,
                     ProjectedType = ProjectedType.Unidentified
                 }
             };
@@ -31,7 +31,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                 new ProjectedToken
                 {
                     RawValue = "$filter",
-                    TokenType = OTokenType.Word,
+                    TokenType = TokenType.Word,
                     ProjectedType = ProjectedType.Keyword
                 }
             };

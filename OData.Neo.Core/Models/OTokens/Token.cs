@@ -9,10 +9,10 @@ namespace OData.Neo.Core.Models
 {
     public class Token
     {
-        public OTokenType Type { get; set; }
+        public TokenType Type { get; set; }
         public string Value { get; set; }
 
-        public Token(OTokenType type, string value)
+        public Token(TokenType type, string value)
         {
             Type = type;
             Value = value;

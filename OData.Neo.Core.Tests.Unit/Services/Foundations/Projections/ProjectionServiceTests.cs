@@ -29,7 +29,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
             for (int i = 0; i < randomNumber; i++)
             {
-                (string rawValue, ProjectedType projectedType, OTokenType tokenType) =
+                (string rawValue, ProjectedType projectedType, TokenType tokenType) =
                     GetRandomProjectedTokenProperties();
 
                 inputProjectedTokens.Add(item: new ProjectedToken
@@ -80,18 +80,18 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                     .ToList(); ;
         }
 
-        private static (string rawValue, ProjectedType projectedType, OTokenType tokenType)
+        private static (string rawValue, ProjectedType projectedType, TokenType tokenType)
             GetRandomProjectedTokenProperties()
         {
             var listOfProjectedTokenProperties =
-                new List<(string rawValue, ProjectedType projectedType, OTokenType tokenType)>()
+                new List<(string rawValue, ProjectedType projectedType, TokenType tokenType)>()
                 {
-                    (GetRandomKeyword(), ProjectedType.Keyword, OTokenType.Word),
-                    ("=", ProjectedType.Assignment, OTokenType.Separator),
-                    (GetRandomWord(), ProjectedType.Property, OTokenType.Word),
-                    (" ", ProjectedType.Space, OTokenType.Separator),
-                    ("eq", ProjectedType.Equals, OTokenType.Word),
-                    (",", ProjectedType.Comma, OTokenType.Separator)
+                    (GetRandomKeyword(), ProjectedType.Keyword, TokenType.Word),
+                    ("=", ProjectedType.Assignment, TokenType.Separator),
+                    (GetRandomWord(), ProjectedType.Property, TokenType.Word),
+                    (" ", ProjectedType.Space, TokenType.Separator),
+                    ("eq", ProjectedType.Equals, TokenType.Word),
+                    (",", ProjectedType.Comma, TokenType.Separator)
                 };
 
             int randomIndex =

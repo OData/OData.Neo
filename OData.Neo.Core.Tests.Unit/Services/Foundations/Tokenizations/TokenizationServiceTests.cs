@@ -35,7 +35,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             List<Token> results = new List<Token>();
             while (results.Count < numberOfTokensToReturn)
             {
-                OTokenType nextTokenType = GetRandomTokenType();
+                TokenType nextTokenType = GetRandomTokenType();
                 if (IsNotWordType(nextTokenType) || LastIsNotWordType(results))
                 {
                     Token nextToken = GetNextRandomToken(nextTokenType);
@@ -60,12 +60,12 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 
         private static bool IsNotWordType(in Token token)
         {
-            return token.Type != OTokenType.Word;
+            return token.Type != TokenType.Word;
         }
 
-        private static bool IsNotWordType(in OTokenType tokenType)
+        private static bool IsNotWordType(in TokenType tokenType)
         {
-            return tokenType != OTokenType.Word;
+            return tokenType != TokenType.Word;
         }
 
         private static string GetQueryFromTokens(IEnumerable<Token> tokens)
@@ -75,19 +75,19 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             return result;
         }
 
-        private static OTokenType GetRandomTokenType()
+        private static TokenType GetRandomTokenType()
         {
-            OTokenType[] knownTokenTypes = Enum.GetValues<OTokenType>();
+            TokenType[] knownTokenTypes = Enum.GetValues<TokenType>();
             IntRange intRange = new IntRange(0, knownTokenTypes.Length);
             int resultIndex = intRange.GetValue();
             return knownTokenTypes[resultIndex];
         }
 
-        private static Token GetNextRandomToken(OTokenType tokenType)
+        private static Token GetNextRandomToken(TokenType tokenType)
         {
             string value = tokenType switch
             {
-                OTokenType.Word => GetRandomWordValue(),
+                TokenType.Word => GetRandomWordValue(),
                 _ => GetRandomSeperatorValue(),
             };
             return new Token(tokenType, value);

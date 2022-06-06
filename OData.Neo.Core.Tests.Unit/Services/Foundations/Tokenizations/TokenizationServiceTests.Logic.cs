@@ -20,20 +20,20 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 
             var expectedTokens = new Token[]
             {
-                new Token(OTokenType.Word, "$filter"),
-                new Token(OTokenType.Separator, "="),
-                new Token(OTokenType.Word, "Name"),
-                new Token(OTokenType.Separator, " "),
-                new Token(OTokenType.Word,"eq"),
-                new Token(OTokenType.Separator," "),
-                new Token(OTokenType.Separator, "'"),
-                new Token(OTokenType.Word, "Sam"),
-                new Token(OTokenType.Separator, "\\"),
-                new Token(OTokenType.Separator, "'"),
-                new Token(OTokenType.Word, "s"),
-                new Token(OTokenType.Separator, " "),
-                new Token(OTokenType.Separator, " "),
-                new Token(OTokenType.Separator, " ")
+                new Token(TokenType.Word, "$filter"),
+                new Token(TokenType.Separator, "="),
+                new Token(TokenType.Word, "Name"),
+                new Token(TokenType.Separator, " "),
+                new Token(TokenType.Word,"eq"),
+                new Token(TokenType.Separator," "),
+                new Token(TokenType.Separator, "'"),
+                new Token(TokenType.Word, "Sam"),
+                new Token(TokenType.Separator, "\\"),
+                new Token(TokenType.Separator, "'"),
+                new Token(TokenType.Word, "s"),
+                new Token(TokenType.Separator, " "),
+                new Token(TokenType.Separator, " "),
+                new Token(TokenType.Separator, " ")
             };
 
             // when
