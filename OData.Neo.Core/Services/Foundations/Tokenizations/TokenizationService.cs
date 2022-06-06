@@ -15,7 +15,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
     {
         readonly char[] SeparatorChars = new char[] { '\'', ' ', '=', '\\' };
 
-        public OToken[] Tokenize(string rawQuery) =>
+        public Token[] Tokenize(string rawQuery) =>
         TryCatch(() =>
         {
             ValidateOTokenQuery(rawQuery);
@@ -23,7 +23,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             return OTokenize(rawQuery, SeparatorChars).ToArray();
         });
 
-        private static IEnumerable<OToken> OTokenize(string rawQuery, char[] separatorChars)
+        private static IEnumerable<Token> OTokenize(string rawQuery, char[] separatorChars)
         {
             string remainingRawQuery = rawQuery;
             Func<char, bool> NotSeparatorChar = c => !separatorChars.Contains(c);
@@ -50,7 +50,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
                     ? OTokenType.Word
                     : OTokenType.Separator;
 
-                yield return new OToken(oTokenType, returnValue);
+                yield return new Token(oTokenType, returnValue);
             }
         }
 
@@ -64,11 +64,11 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             return 1;
         }
 
-        private static void AddWordTokenToResult(ref List<OToken> tokens, ref StringBuilder wordBuilder)
+        private static void AddWordTokenToResult(ref List<Token> tokens, ref StringBuilder wordBuilder)
         {
             if (wordBuilder.Length > 0)
             {
-                tokens.Add(new OToken(OTokenType.Word, wordBuilder.ToString()));
+                tokens.Add(new Token(OTokenType.Word, wordBuilder.ToString()));
                 wordBuilder.Clear();
             }
         }

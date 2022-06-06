@@ -18,26 +18,26 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             // given
             string query = "$filter=Name eq 'Sam\\'s   ";
 
-            var expectedTokens = new OToken[]
+            var expectedTokens = new Token[]
             {
-                new OToken(OTokenType.Word, "$filter"),
-                new OToken(OTokenType.Separator, "="),
-                new OToken(OTokenType.Word, "Name"),
-                new OToken(OTokenType.Separator, " "),
-                new OToken(OTokenType.Word,"eq"),
-                new OToken(OTokenType.Separator," "),
-                new OToken(OTokenType.Separator, "'"),
-                new OToken(OTokenType.Word, "Sam"),
-                new OToken(OTokenType.Separator, "\\"),
-                new OToken(OTokenType.Separator, "'"),
-                new OToken(OTokenType.Word, "s"),
-                new OToken(OTokenType.Separator, " "),
-                new OToken(OTokenType.Separator, " "),
-                new OToken(OTokenType.Separator, " ")
+                new Token(OTokenType.Word, "$filter"),
+                new Token(OTokenType.Separator, "="),
+                new Token(OTokenType.Word, "Name"),
+                new Token(OTokenType.Separator, " "),
+                new Token(OTokenType.Word,"eq"),
+                new Token(OTokenType.Separator," "),
+                new Token(OTokenType.Separator, "'"),
+                new Token(OTokenType.Word, "Sam"),
+                new Token(OTokenType.Separator, "\\"),
+                new Token(OTokenType.Separator, "'"),
+                new Token(OTokenType.Word, "s"),
+                new Token(OTokenType.Separator, " "),
+                new Token(OTokenType.Separator, " "),
+                new Token(OTokenType.Separator, " ")
             };
 
             // when
-            OToken[] actualTokens =
+            Token[] actualTokens =
                 this.tokenizationService.Tokenize(query);
 
             // then
@@ -48,10 +48,10 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         public void ShouldTokenizeRandomQuery()
         {
             // given
-            (string queryToTest, OToken[] expectedTokens) = GetRandomQuery();
+            (string queryToTest, Token[] expectedTokens) = GetRandomQuery();
 
             // when
-            OToken[] actualTokens =
+            Token[] actualTokens =
                 this.tokenizationService.Tokenize(queryToTest);
 
             // then
