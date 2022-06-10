@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace OData.Neo.Core.Models
+namespace OData.Neo.Core.Models.Tokens
 {
     public class Token
     {

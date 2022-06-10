@@ -5,20 +5,21 @@
 
 using System;
 using OData.Neo.Core.Models;
-using OData.Neo.Core.Models.OTokens.Exceptions;
+using OData.Neo.Core.Models.Tokens;
+using OData.Neo.Core.Models.Tokens.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
     public partial class TokenizationService
     {
-        private delegate Token[] ReturningOTokensFunction();
+        private delegate Token[] ReturningTokensFunction();
         private delegate void ReturningNothingFunction();
 
-        private Token[] TryCatch(ReturningOTokensFunction returningOTokensFunction)
+        private Token[] TryCatch(ReturningTokensFunction returningTokensFunction)
         {
             try
             {
-                return returningOTokensFunction();
+                return returningTokensFunction();
             }
             catch (NullOTokenQueryException nullOTokenQueryException)
             {

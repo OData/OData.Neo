@@ -3,11 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models;
-using OData.Neo.Core.Models.ProjectedTokens;
-using OData.Neo.Core.Services.Foundations.Projections;
 using System.Collections.Generic;
 using System.Linq;
+using OData.Neo.Core.Models.ProjectedTokens;
+using OData.Neo.Core.Models.Tokens;
+using OData.Neo.Core.Services.Foundations.Projections;
 using Tynamix.ObjectFiller;
 using Xunit;
 using Randomizer = System.Random;
@@ -58,11 +58,11 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
         private static ProjectedToken[] CreateRandomProjectedTokens(ProjectedToken addedProjectedToken)
         {
-            List<ProjectedToken> randomProjectedTokens = 
+            List<ProjectedToken> randomProjectedTokens =
                 CreateProjectedTokenFiller()
                     .Create(count: GetRandomNumber())
                         .ToList();
-            
+
             randomProjectedTokens.Add(addedProjectedToken);
 
             return ShuffleProjectedTokens(randomProjectedTokens).ToArray();

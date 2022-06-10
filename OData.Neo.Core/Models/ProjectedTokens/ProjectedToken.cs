@@ -3,11 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OData.Neo.Core.Models.Tokens;
 
 namespace OData.Neo.Core.Models.ProjectedTokens
 {

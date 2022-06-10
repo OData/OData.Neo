@@ -5,7 +5,8 @@
 
 using System;
 using InternalMock.Extensions;
-using OData.Neo.Core.Models.OTokens.Exceptions;
+using OData.Neo.Core.Models.Tokens.Exceptions;
+using OData.Neo.Core.Models.Tokens;
 using Xunit;
 
 
