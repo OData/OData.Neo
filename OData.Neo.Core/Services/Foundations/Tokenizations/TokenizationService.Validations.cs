@@ -3,7 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models.OTokens.Exceptions;
+using OData.Neo.Core.Models.Tokens.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {

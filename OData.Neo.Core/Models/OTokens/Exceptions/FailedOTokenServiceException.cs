@@ -6,7 +6,7 @@
 using System;
 using Xeptions;
 
-namespace OData.Neo.Core.Models.OTokens.Exceptions
+namespace OData.Neo.Core.Models.Tokens.Exceptions
 {
     public class FailedOTokenServiceException : Xeption
     {
