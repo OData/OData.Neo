@@ -3,14 +3,13 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models.Tokens;
-
-namespace OData.Neo.Core.Models.ProjectedTokens
+namespace OData.Neo.Core.Models.OTokens
 {
-    public class ProjectedToken
+    public enum OTokenType
     {
-        public string RawValue { get; set; }
-        public TokenType TokenType { get; set; }
-        public ProjectedTokenType ProjectedType { get; set; }
+        Unidentified,
+        Root,
+        Select,
+        Property
     }
 }
