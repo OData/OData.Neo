@@ -3,11 +3,10 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using OData.Neo.Core.Models.Tokens;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
@@ -63,17 +62,5 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
 
             return 1;
         }
-
-        private static void AddWordTokenToResult(ref List<Token> tokens, ref StringBuilder wordBuilder)
-        {
-            if (wordBuilder.Length > 0)
-            {
-                tokens.Add(new Token(TokenType.Word, wordBuilder.ToString()));
-                wordBuilder.Clear();
-            }
-        }
-
-        private TokenType GetTokenType(char tokenValue)
-            => SeparatorChars.Contains(tokenValue) ? TokenType.Separator : TokenType.Word;
     }
 }

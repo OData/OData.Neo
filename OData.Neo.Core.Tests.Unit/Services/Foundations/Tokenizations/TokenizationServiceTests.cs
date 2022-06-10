@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using OData.Neo.Core.Models;
+using OData.Neo.Core.Models.Tokens;
 using OData.Neo.Core.Services.Foundations.Tokenizations;
 using System;
 using System.Collections.Generic;

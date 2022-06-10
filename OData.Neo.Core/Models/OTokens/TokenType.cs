@@ -3,7 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-namespace OData.Neo.Core.Models
+namespace OData.Neo.Core.Models.Tokens
 {
     public enum TokenType
     {

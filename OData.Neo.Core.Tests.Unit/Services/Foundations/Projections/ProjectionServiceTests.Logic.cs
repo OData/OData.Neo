@@ -6,6 +6,7 @@
 using FluentAssertions;
 using OData.Neo.Core.Models;
 using OData.Neo.Core.Models.ProjectedTokens;
+using OData.Neo.Core.Models.Tokens;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections

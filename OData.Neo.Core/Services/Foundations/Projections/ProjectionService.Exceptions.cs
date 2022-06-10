@@ -13,7 +13,7 @@ namespace OData.Neo.Core.Services.Foundations.Projections
     {
         private delegate ProjectedToken[] ReturningProjectedTokensFunction();
 
-        private ProjectedToken[] TryCatch(ReturningProjectedTokensFunction returningProjectedTokensFunction)
+        private static ProjectedToken[] TryCatch(ReturningProjectedTokensFunction returningProjectedTokensFunction)
         {
             try
             {

@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using OData.Neo.Core.Models;
+using OData.Neo.Core.Models.Tokens;
 
 namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
