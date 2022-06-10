@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace OData.Neo.Core.Models
 {
-    public class OToken
+    public class Token
     {
-        public OTokenType Type { get; set; }
+        public TokenType Type { get; set; }
         public string Value { get; set; }
 
-        public OToken(OTokenType type, string value)
+        public Token(TokenType type, string value)
         {
             Type = type;
             Value = value;

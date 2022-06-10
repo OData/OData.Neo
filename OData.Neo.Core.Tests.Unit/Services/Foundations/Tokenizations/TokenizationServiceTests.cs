@@ -23,7 +23,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
         public TokenizationServiceTests() =>
             tokenizationService = new TokenizationService();
 
-        public static (string Query, OToken[] Tokens) GetRandomQuery(int numberOfTokens = 25)
+        public static (string Query, Token[] Tokens) GetRandomQuery(int numberOfTokens = 25)
         {
             int numberOfTokensToReturn = 1;
             if (numberOfTokens > 1)
@@ -32,23 +32,23 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 numberOfTokensToReturn = intRange.GetValue();
             }
 
-            List<OToken> results = new List<OToken>();
+            List<Token> results = new List<Token>();
             while (results.Count < numberOfTokensToReturn)
             {
-                OTokenType nextTokenType = GetRandomTokenType();
+                TokenType nextTokenType = GetRandomTokenType();
                 if (IsNotWordType(nextTokenType) || LastIsNotWordType(results))
                 {
-                    OToken nextToken = GetNextRandomToken(nextTokenType);
+                    Token nextToken = GetNextRandomToken(nextTokenType);
                     results.Add(nextToken);
                 }
             }
 
             string query = GetQueryFromTokens(results);
-            OToken[] tokens = results.ToArray();
+            Token[] tokens = results.ToArray();
             return new(query, tokens);
         }
 
-        private static bool LastIsNotWordType(in List<OToken> tokens)
+        private static bool LastIsNotWordType(in List<Token> tokens)
         {
             if (tokens.Count == 0)
             {
@@ -58,39 +58,39 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             return IsNotWordType(tokens.Last());
         }
 
-        private static bool IsNotWordType(in OToken token)
+        private static bool IsNotWordType(in Token token)
         {
-            return token.Type != OTokenType.Word;
+            return token.Type != TokenType.Word;
         }
 
-        private static bool IsNotWordType(in OTokenType tokenType)
+        private static bool IsNotWordType(in TokenType tokenType)
         {
-            return tokenType != OTokenType.Word;
+            return tokenType != TokenType.Word;
         }
 
-        private static string GetQueryFromTokens(IEnumerable<OToken> tokens)
+        private static string GetQueryFromTokens(IEnumerable<Token> tokens)
         {
             IEnumerable<string> tokenValues = tokens.Select(token => token.Value);
             string result = string.Join(separator: null, values: tokenValues);
             return result;
         }
 
-        private static OTokenType GetRandomTokenType()
+        private static TokenType GetRandomTokenType()
         {
-            OTokenType[] knownTokenTypes = Enum.GetValues<OTokenType>();
+            TokenType[] knownTokenTypes = Enum.GetValues<TokenType>();
             IntRange intRange = new IntRange(0, knownTokenTypes.Length);
             int resultIndex = intRange.GetValue();
             return knownTokenTypes[resultIndex];
         }
 
-        private static OToken GetNextRandomToken(OTokenType tokenType)
+        private static Token GetNextRandomToken(TokenType tokenType)
         {
             string value = tokenType switch
             {
-                OTokenType.Word => GetRandomWordValue(),
+                TokenType.Word => GetRandomWordValue(),
                 _ => GetRandomSeperatorValue(),
             };
-            return new OToken(tokenType, value);
+            return new Token(tokenType, value);
         }
 
         private static string GetRandomWordValue()

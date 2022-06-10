@@ -9,6 +9,6 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
     public interface ITokenizationService
     {
-        OToken[] Tokenize(string rawQuery);
+        Token[] Tokenize(string rawQuery);
     }
 }

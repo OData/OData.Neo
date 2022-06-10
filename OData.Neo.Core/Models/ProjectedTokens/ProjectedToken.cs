@@ -14,7 +14,7 @@ namespace OData.Neo.Core.Models.ProjectedTokens
     public class ProjectedToken
     {
         public string RawValue { get; set; }
-        public OTokenType TokenType { get; set; }
+        public TokenType TokenType { get; set; }
         public ProjectedType ProjectedType { get; set; }
     }
 }

@@ -11,10 +11,10 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
     public partial class TokenizationService
     {
-        private delegate OToken[] ReturningOTokensFunction();
+        private delegate Token[] ReturningOTokensFunction();
         private delegate void ReturningNothingFunction();
 
-        private OToken[] TryCatch(ReturningOTokensFunction returningOTokensFunction)
+        private Token[] TryCatch(ReturningOTokensFunction returningOTokensFunction)
         {
             try
             {
