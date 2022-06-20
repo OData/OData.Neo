@@ -10,33 +10,36 @@ using System.Linq;
 
 namespace OData.Neo.Core.Services.Foundations.OTokenizations
 {
-    public class OTokenizationService : IOTokenizationService
+    public partial class OTokenizationService : IOTokenizationService
     {
-        public OToken OTokenize(OToken[] oTokens)
-        {
-            OToken root = new OToken
+        public OToken OTokenize(OToken[] oTokens) =>
+            TryCatch(() =>
             {
-                Type = OTokenType.Root,
-                Children = new List<OToken>()
-            };
+                ValidateOTokensIsNotNull(oTokens);
 
-            var selectToken = oTokens[0];
-            selectToken.Type = OTokenType.Select;
-
-            root.Children.Add(selectToken);
-            selectToken.Children ??= new();
-            var tokens = oTokens
-                .Skip(1)
-                .Where(token => token.ProjectedType != ProjectedTokenType.Equals)
-                .Select(token =>
+                OToken root = new OToken
                 {
-                    token.Type = OTokenType.Property;
-                    return token;
-                });
+                    Type = OTokenType.Root,
+                    Children = new List<OToken>()
+                };
 
-            selectToken.Children.AddRange(tokens);
+                var selectToken = oTokens[0];
+                selectToken.Type = OTokenType.Select;
 
-            return root;
-        }
+                root.Children.Add(selectToken);
+                selectToken.Children ??= new();
+                var tokens = oTokens
+                    .Skip(1)
+                    .Where(token => token.ProjectedType != ProjectedTokenType.Equals)
+                    .Select(token =>
+                    {
+                        token.Type = OTokenType.Property;
+                        return token;
+                    });
+
+                selectToken.Children.AddRange(tokens);
+
+                return root;
+            });
     }
 }
