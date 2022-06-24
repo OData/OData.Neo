@@ -8,7 +8,7 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
     {
         private delegate OToken ReturningOTokenFunction();
 
-        private OToken TryCatch(ReturningOTokenFunction returningOTokenFunction)
+        private static OToken TryCatch(ReturningOTokenFunction returningOTokenFunction)
         {
             try
             {
@@ -28,8 +28,11 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
             }
             catch (Exception exception)
             {
+                var failedOTokenServiceException =
+                    new FailedOTokenServiceException(exception);
+
                 throw new OTokenServiceException(
-                    new FailedOTokenServiceException(exception));
+                    failedOTokenServiceException);
             }
         }
     }
