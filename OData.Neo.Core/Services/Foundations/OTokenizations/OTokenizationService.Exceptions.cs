@@ -21,6 +21,10 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
             {
                 throw new OTokenValidationException(nullOTokenException);
             }
+            catch (InvalidOTokenRawValueException invalidOTokenRawValueException)
+            {
+                throw new OTokenValidationException(invalidOTokenRawValueException);
+            }
         }
     }
 }

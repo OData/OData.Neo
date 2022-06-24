@@ -1,5 +1,6 @@
 ﻿using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
+using System;
 using System.Linq;
 
 namespace OData.Neo.Core.Services.Foundations.OTokenizations
@@ -10,6 +11,7 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
         {
             ValidateOTokensIsNotNull(oTokens);
             ValidateAllOTokensAreNotNull(oTokens);
+            ValidateOTokensRawValues(oTokens);
         }
 
         private static void ValidateOTokensIsNotNull(
@@ -28,6 +30,17 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
             {
                 throw new NullOTokenException();
             }
+        }
+
+        private static void ValidateOTokensRawValues(OToken[] otokens)
+        {
+            if (otokens.Any(IsNullOrEmpty))
+            {
+                throw new InvalidOTokenRawValueException();
+            }
+
+            static bool IsNullOrEmpty(OToken oToken) =>
+                oToken.RawValue is null or "";
         }
     }
 }
