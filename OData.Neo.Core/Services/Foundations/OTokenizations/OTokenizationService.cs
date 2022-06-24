@@ -15,7 +15,7 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
         public OToken OTokenize(OToken[] oTokens) =>
             TryCatch(() =>
             {
-                ValidateOTokensIsNotNull(oTokens);
+                ValidateOTokens(oTokens);
 
                 OToken root = new OToken
                 {

@@ -1,10 +1,6 @@
 ﻿using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OData.Neo.Core.Services.Foundations.OTokenizations
 {
@@ -13,6 +9,7 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
         private static void ValidateOTokens(OToken[] oTokens)
         {
             ValidateOTokensIsNotNull(oTokens);
+            ValidateAllOTokensAreNotNull(oTokens);
         }
 
         private static void ValidateOTokensIsNotNull(
@@ -21,6 +18,15 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
             if (oTokens is null)
             {
                 throw new NullOTokensException();
+            }
+        }
+
+        private static void ValidateAllOTokensAreNotNull(
+            OToken[] oTokens)
+        {
+            if (oTokens.Any(oToken => oToken is null))
+            {
+                throw new NullOTokenException();
             }
         }
     }

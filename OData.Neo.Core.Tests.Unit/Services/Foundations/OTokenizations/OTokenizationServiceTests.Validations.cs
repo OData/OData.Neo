@@ -40,7 +40,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
         }
 
         [Fact]
-        public void ShouldThrowValidationExceptionIfAnyProjectedTokenIsNull()
+        public void ShouldThrowValidationExceptionIfAnyOTokenIsNull()
         {
             // given
             OToken nullOToken = null;
