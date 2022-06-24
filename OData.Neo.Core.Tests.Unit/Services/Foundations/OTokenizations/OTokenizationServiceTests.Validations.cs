@@ -7,6 +7,7 @@ using System;
 using FluentAssertions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
+using OData.Neo.Core.Models.ProjectedTokens;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
@@ -36,6 +37,33 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
             // then
             actualOTokenValidationException.Should().BeEquivalentTo(
                 expectedOTokenValidationException);
+        }
+
+        [Fact]
+        public void ShouldThrowValidationExceptionIfAnyProjectedTokenIsNull()
+        {
+            // given
+            OToken nullOToken = null;
+            OToken[] randomOTokens = CreateRandomOTokens(nullOToken);
+            OToken[] invalidProjectedTokens = randomOTokens;
+            var nullProjectedTokenException = new NullOTokenException();
+
+            var expectedProjectedTokenValidationException =
+                new OTokenValidationException(
+                    nullProjectedTokenException);
+
+            // when
+            Action tokenizeAction = () =>
+                this.tokenizationService.OTokenize(
+                    invalidProjectedTokens);
+
+            OTokenValidationException actualProjectedTokenValidationException =
+                Assert.Throws<OTokenValidationException>(
+                    tokenizeAction);
+
+            // then
+            actualProjectedTokenValidationException.Should()
+                .BeEquivalentTo(expectedProjectedTokenValidationException);
         }
     }
 }
