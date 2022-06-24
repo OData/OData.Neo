@@ -3,14 +3,16 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using Xeptions;
 
-namespace OData.Neo.Core.Models.ProjectedTokens.Exceptions
+namespace OData.Neo.Core.Models.OTokens.Exceptions
 {
-    public class InvalidProjectedTokenRawValueException : Xeption
+    public class FailedOTokenServiceException : Xeption
     {
-        public InvalidProjectedTokenRawValueException()
-            : base(message: "Invalid projected token raw value error occurred, please fix the error and try again.")
+        public FailedOTokenServiceException(Exception innerException)
+            : base(message: "Failed otoken service error occurred, contact support.",
+                  innerException)
         { }
     }
 }

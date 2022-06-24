@@ -18,12 +18,12 @@ namespace OData.Neo.Core.Services.Foundations.Projections
             {
                 projectedToken.ProjectedType = projectedToken.RawValue switch
                 {
-                    "=" => ProjectedType.Assignment,
-                    " " => ProjectedType.Space,
-                    "eq" => ProjectedType.Equals,
-                    "," => ProjectedType.Comma,
-                    _ when projectedToken.RawValue.StartsWith("$") => ProjectedType.Keyword,
-                    _ => ProjectedType.Property
+                    "=" => ProjectedTokenType.Assignment,
+                    " " => ProjectedTokenType.Space,
+                    "eq" => ProjectedTokenType.Equals,
+                    "," => ProjectedTokenType.Comma,
+                    _ when projectedToken.RawValue.StartsWith("$") => ProjectedTokenType.Keyword,
+                    _ => ProjectedTokenType.Property
                 };
             }
 

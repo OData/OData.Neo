@@ -29,12 +29,12 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
             for (int i = 0; i < randomNumber; i++)
             {
-                (string rawValue, ProjectedType projectedType, TokenType tokenType) =
+                (string rawValue, ProjectedTokenType projectedType, TokenType tokenType) =
                     GetRandomProjectedTokenProperties();
 
                 inputProjectedTokens.Add(item: new ProjectedToken
                 {
-                    ProjectedType = ProjectedType.Unidentified,
+                    ProjectedType = ProjectedTokenType.Unidentified,
                     RawValue = rawValue,
                     TokenType = tokenType
                 });
@@ -80,18 +80,18 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                     .ToList(); ;
         }
 
-        private static (string rawValue, ProjectedType projectedType, TokenType tokenType)
+        private static (string rawValue, ProjectedTokenType projectedType, TokenType tokenType)
             GetRandomProjectedTokenProperties()
         {
             var listOfProjectedTokenProperties =
-                new List<(string rawValue, ProjectedType projectedType, TokenType tokenType)>()
+                new List<(string rawValue, ProjectedTokenType projectedType, TokenType tokenType)>()
                 {
-                    (GetRandomKeyword(), ProjectedType.Keyword, TokenType.Word),
-                    ("=", ProjectedType.Assignment, TokenType.Separator),
-                    (GetRandomWord(), ProjectedType.Property, TokenType.Word),
-                    (" ", ProjectedType.Space, TokenType.Separator),
-                    ("eq", ProjectedType.Equals, TokenType.Word),
-                    (",", ProjectedType.Comma, TokenType.Separator)
+                    (GetRandomKeyword(), ProjectedTokenType.Keyword, TokenType.Word),
+                    ("=", ProjectedTokenType.Assignment, TokenType.Separator),
+                    (GetRandomWord(), ProjectedTokenType.Property, TokenType.Word),
+                    (" ", ProjectedTokenType.Space, TokenType.Separator),
+                    ("eq", ProjectedTokenType.Equals, TokenType.Word),
+                    (",", ProjectedTokenType.Comma, TokenType.Separator)
                 };
 
             int randomIndex =

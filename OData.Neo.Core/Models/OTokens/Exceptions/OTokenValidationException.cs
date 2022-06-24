@@ -5,12 +5,13 @@
 
 using Xeptions;
 
-namespace OData.Neo.Core.Models.ProjectedTokens.Exceptions
+namespace OData.Neo.Core.Models.OTokens.Exceptions
 {
-    public class InvalidProjectedTokenRawValueException : Xeption
+    public class OTokenValidationException : Xeption
     {
-        public InvalidProjectedTokenRawValueException()
-            : base(message: "Invalid projected token raw value error occurred, please fix the error and try again.")
+        public OTokenValidationException(Xeption innerException)
+            : base(message: "OToken validation error occurred, fix the errors and try agian.",
+                  innerException)
         { }
     }
 }

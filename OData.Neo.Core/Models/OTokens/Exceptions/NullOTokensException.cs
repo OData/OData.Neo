@@ -3,14 +3,14 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models.Tokens;
+using Xeptions;
 
-namespace OData.Neo.Core.Models.ProjectedTokens
+namespace OData.Neo.Core.Models.OTokens.Exceptions
 {
-    public class ProjectedToken
+    public class NullOTokensException : Xeption
     {
-        public string RawValue { get; set; }
-        public TokenType TokenType { get; set; }
-        public ProjectedTokenType ProjectedType { get; set; }
+        public NullOTokensException()
+            : base(message: "OTokens are null.")
+        { }
     }
 }

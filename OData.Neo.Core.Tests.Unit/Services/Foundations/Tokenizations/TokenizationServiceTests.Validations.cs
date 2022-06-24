@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using FluentAssertions;
 using OData.Neo.Core.Models.Tokens.Exceptions;
 using Xunit;
 
@@ -18,15 +19,22 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             // given
             string nullQuery = null;
 
+            var nullOTokenException =
+                new NullOTokenQueryException();
+
+            var expectedOtokenValidationException =
+                new OTokenValidationException(nullOTokenException);
+
             // when
             Action toknizeAction = () =>
                 this.tokenizationService.Tokenize(nullQuery);
 
-            // then
-            OTokenValidationException exception = 
+            OTokenValidationException actualOTokenValidationException = 
                 Assert.Throws<OTokenValidationException>(toknizeAction);
-            
-            Assert.True(exception.InnerException is NullOTokenQueryException);
+
+            // then
+            actualOTokenValidationException.Should().BeEquivalentTo(
+                expectedOtokenValidationException);
         }
     }
 }
