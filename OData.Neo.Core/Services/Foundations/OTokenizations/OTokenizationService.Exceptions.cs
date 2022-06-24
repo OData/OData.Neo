@@ -1,5 +1,6 @@
 ﻿using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
+using System;
 
 namespace OData.Neo.Core.Services.Foundations.OTokenizations
 {
@@ -24,6 +25,11 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
             catch (InvalidOTokenRawValueException invalidOTokenRawValueException)
             {
                 throw new OTokenValidationException(invalidOTokenRawValueException);
+            }
+            catch (Exception exception)
+            {
+                throw new OTokenServiceException(
+                    new FailedOTokenServiceException(exception));
             }
         }
     }
