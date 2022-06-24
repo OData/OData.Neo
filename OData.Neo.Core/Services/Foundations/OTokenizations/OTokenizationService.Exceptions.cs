@@ -1,4 +1,9 @@
-﻿using OData.Neo.Core.Models.OTokens;
+﻿//-----------------------------------------------------------------------
+// Copyright (c) .NET Foundation and Contributors. All rights reserved.
+// See License.txt in the project root for license information.
+//-----------------------------------------------------------------------
+
+using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
 using System;
 
