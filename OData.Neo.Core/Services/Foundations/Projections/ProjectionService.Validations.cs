@@ -3,10 +3,10 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models.ProjectedTokens;
-using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
 using System;
 using System.Linq;
+using OData.Neo.Core.Models.ProjectedTokens;
+using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.Projections
 {
@@ -40,7 +40,7 @@ namespace OData.Neo.Core.Services.Foundations.Projections
         private static void ValidateProjectedTokenRawValuesIsNullNull(
             ProjectedToken[] projectedTokens)
         {
-            Func<ProjectedToken, bool> hasRawValueNullOrEmpty = 
+            Func<ProjectedToken, bool> hasRawValueNullOrEmpty =
                 token => token.RawValue is null or "";
 
             if (projectedTokens.Any(hasRawValueNullOrEmpty))

@@ -3,12 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models;
-using OData.Neo.Core.Models.Tokens;
-using OData.Neo.Core.Services.Foundations.Tokenizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OData.Neo.Core.Models.Tokens;
+using OData.Neo.Core.Services.Foundations.Tokenizations;
 using Tynamix.ObjectFiller;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations

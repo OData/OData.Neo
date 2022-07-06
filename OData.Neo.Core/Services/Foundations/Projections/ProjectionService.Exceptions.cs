@@ -3,9 +3,9 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
-using System;
 
 namespace OData.Neo.Core.Services.Foundations.Projections
 {

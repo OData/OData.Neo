@@ -3,11 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using FluentAssertions;
 using InternalMock.Extensions;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
-using System;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections

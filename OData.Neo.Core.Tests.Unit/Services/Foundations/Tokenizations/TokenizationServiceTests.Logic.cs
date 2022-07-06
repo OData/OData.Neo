@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------
 
 using FluentAssertions;
-using OData.Neo.Core.Models;
 using OData.Neo.Core.Models.Tokens;
 using Xunit;
 
