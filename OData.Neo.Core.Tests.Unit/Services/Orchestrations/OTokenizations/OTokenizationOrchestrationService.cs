@@ -4,12 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
 using OData.Neo.Core.Models.OTokens;
@@ -46,7 +41,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
         private Expression<Func<ProjectedToken[], bool>> SameProjectedTokensAs(
             ProjectedToken[] expectedProjectedTokens)
         {
-            return actualProjectedTokens => 
+            return actualProjectedTokens =>
                 this.compareLogic.Compare(
                     expectedProjectedTokens,
                     actualProjectedTokens)

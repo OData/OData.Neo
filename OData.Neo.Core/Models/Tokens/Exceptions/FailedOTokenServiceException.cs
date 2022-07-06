@@ -13,6 +13,6 @@ namespace OData.Neo.Core.Models.Tokens.Exceptions
         public FailedOTokenServiceException(Exception innerException)
             : base(message: "Failed otoken service error occurred, contact support.",
                   innerException)
-        {}
+        { }
     }
 }

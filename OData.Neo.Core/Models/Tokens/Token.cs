@@ -3,8 +3,6 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace OData.Neo.Core.Models.Tokens
 {
     public class Token

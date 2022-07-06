@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Linq;
 using FluentAssertions;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
@@ -46,8 +45,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
         {
             // given
             ProjectedToken nullProjectedToken = null;
-            
-            ProjectedToken[] randomProjectedTokens = 
+
+            ProjectedToken[] randomProjectedTokens =
                 CreateRandomProjectedTokens(nullProjectedToken);
 
             ProjectedToken[] invalidProjectedTokens =

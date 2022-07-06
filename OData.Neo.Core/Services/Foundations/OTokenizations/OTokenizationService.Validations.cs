@@ -1,7 +1,6 @@
-﻿using OData.Neo.Core.Models.OTokens;
+﻿using System.Linq;
+using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
-using System;
-using System.Linq;
 
 namespace OData.Neo.Core.Services.Foundations.OTokenizations
 {

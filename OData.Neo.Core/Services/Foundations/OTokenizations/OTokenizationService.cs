@@ -3,10 +3,10 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models.OTokens;
-using OData.Neo.Core.Models.ProjectedTokens;
 using System.Collections.Generic;
 using System.Linq;
+using OData.Neo.Core.Models.OTokens;
+using OData.Neo.Core.Models.ProjectedTokens;
 
 namespace OData.Neo.Core.Services.Foundations.OTokenizations
 {

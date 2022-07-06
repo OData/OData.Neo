@@ -29,7 +29,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             Action toknizeAction = () =>
                 this.tokenizationService.Tokenize(nullQuery);
 
-            OTokenValidationException actualOTokenValidationException = 
+            OTokenValidationException actualOTokenValidationException =
                 Assert.Throws<OTokenValidationException>(toknizeAction);
 
             // then
