@@ -109,5 +109,54 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
             this.projectionServiceMock.VerifyNoOtherCalls();
             this.otokenizationServiceMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowServiceExceptionOnOTokenizeIfServiceErrorOccurs()
+        {
+            // given
+            string someQuery = GetRandomString();
+            var serviceException = new Exception();
+
+            var failedTokenizationOrchestrationServiceException =
+                new FailedTokenizationOrchestrationServiceException(serviceException);
+
+            var expectedOTokenizationOrchestrationServiceException =
+                new OTokenizationOrchestrationServiceException(
+                    failedTokenizationOrchestrationServiceException);
+
+            this.tokenizationServiceMock.Setup(service =>
+                service.Tokenize(It.IsAny<string>()))
+                    .Throws(serviceException);
+
+            // when
+            Action oTokenizeAction = () =>
+                this.otokenizationOrchestrationService.OTokenizeQuery(
+                    someQuery);
+
+            OTokenizationOrchestrationServiceException
+                actualOTokenizationOrchestrationServiceException =
+                    Assert.Throws<OTokenizationOrchestrationServiceException>(
+                        oTokenizeAction);
+
+            // then
+            actualOTokenizationOrchestrationServiceException.Should()
+                .BeEquivalentTo(expectedOTokenizationOrchestrationServiceException);
+
+            this.tokenizationServiceMock.Verify(service =>
+                service.Tokenize(It.IsAny<string>()),
+                    Times.Once);
+
+            this.projectionServiceMock.Verify(service =>
+                service.ProjectTokens(It.IsAny<ProjectedToken[]>()),
+                    Times.Never);
+
+            this.otokenizationServiceMock.Verify(service =>
+                service.OTokenize(It.IsAny<OToken[]>()),
+                    Times.Never);
+
+            this.tokenizationServiceMock.VerifyNoOtherCalls();
+            this.projectionServiceMock.VerifyNoOtherCalls();
+            this.otokenizationServiceMock.VerifyNoOtherCalls();
+        }
     }
 }
