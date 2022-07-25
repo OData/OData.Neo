@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
@@ -56,6 +57,15 @@ namespace OData.Neo.Core.Services.Orchestrations.OTokenizations
             {
                 throw new OTokenizationOrchestrationDependencyException(
                     oTokenServiceException.InnerException as Xeption);
+            }
+            catch (Exception exception)
+            {
+                var failedTokenizationOrchestrationServiceException =
+                    new FailedTokenizationOrchestrationServiceException(
+                        exception);
+
+                throw new OTokenizationOrchestrationServiceException(
+                    failedTokenizationOrchestrationServiceException);
             }
         }
     }
