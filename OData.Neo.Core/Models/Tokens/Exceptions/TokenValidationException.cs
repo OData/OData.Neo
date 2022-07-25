@@ -7,9 +7,9 @@ using Xeptions;
 
 namespace OData.Neo.Core.Models.Tokens.Exceptions
 {
-    public class OTokenValidationException : Xeption
+    public class TokenValidationException : Xeption
     {
-        public OTokenValidationException(Xeption innerException)
+        public TokenValidationException(Xeption innerException)
             : base(message: "OToken validation error occurred, fix the errors and try again.",
                   innerException)
         { }

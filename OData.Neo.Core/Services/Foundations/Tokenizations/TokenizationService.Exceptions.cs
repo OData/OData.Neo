@@ -22,7 +22,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             }
             catch (NullOTokenQueryException nullOTokenQueryException)
             {
-                throw new OTokenValidationException(nullOTokenQueryException);
+                throw new TokenValidationException(nullOTokenQueryException);
             }
             catch (Exception ex)
             {
