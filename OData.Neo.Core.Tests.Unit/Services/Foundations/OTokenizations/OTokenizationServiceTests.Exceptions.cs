@@ -3,11 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using FluentAssertions;
 using InternalMock.Extensions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
-using System;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
@@ -43,11 +43,11 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
             OTokenServiceException actualOTokenValidationException =
                 Assert.Throws<OTokenServiceException>(
                     toknizationAction);
-            
+
             // then
             actualOTokenValidationException.Should()
                 .BeEquivalentTo(expectedOTokenServiceException);
-            
+
             this.tokenizationService.ClearAllOtherCalls();
         }
     }

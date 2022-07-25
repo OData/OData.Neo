@@ -5,13 +5,12 @@
 
 using Xeptions;
 
-namespace OData.Neo.Core.Models.Tokens.Exceptions
+namespace OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions
 {
-    public class OTokenServiceException : Xeption
+    public class NullQueryOTokenizationOrchestrationException : Xeption
     {
-        public OTokenServiceException(Xeption innerException)
-            : base(message: "OToken service error occurred, contact support",
-                  innerException)
+        public NullQueryOTokenizationOrchestrationException()
+            : base("Query is null.")
         { }
     }
 }

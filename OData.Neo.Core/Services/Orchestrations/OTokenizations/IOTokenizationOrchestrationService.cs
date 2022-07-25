@@ -3,17 +3,12 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-namespace OData.Neo.Core.Models.Tokens
-{
-    public class Token
-    {
-        public TokenType Type { get; set; }
-        public string Value { get; set; }
+using OData.Neo.Core.Models.OTokens;
 
-        public Token(TokenType type, string value)
-        {
-            Type = type;
-            Value = value;
-        }
+namespace OData.Neo.Core.Services.Orchestrations.OTokenizations
+{
+    public interface IOTokenizationOrchestrationService
+    {
+        OToken OTokenizeQuery(string query);
     }
 }

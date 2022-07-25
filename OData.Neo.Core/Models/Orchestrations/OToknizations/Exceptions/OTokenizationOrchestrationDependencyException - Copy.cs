@@ -3,15 +3,14 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using Xeptions;
 
-namespace OData.Neo.Core.Models.Tokens.Exceptions
+namespace OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions
 {
-    public class FailedOTokenServiceException : Xeption
+    public class OTokenizationOrchestrationDependencyException : Xeption
     {
-        public FailedOTokenServiceException(Exception innerException)
-            : base(message: "Failed otoken service error occurred, contact support.",
+        public OTokenizationOrchestrationDependencyException(Xeption innerException)
+            : base(message: "OTokenization dependency error occured, please fix the errors and try again.",
                   innerException)
         { }
     }

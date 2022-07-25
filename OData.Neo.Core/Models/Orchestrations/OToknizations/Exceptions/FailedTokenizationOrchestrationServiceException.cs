@@ -6,13 +6,13 @@
 using System;
 using Xeptions;
 
-namespace OData.Neo.Core.Models.Tokens.Exceptions
+namespace OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions
 {
-    public class FailedOTokenServiceException : Xeption
+    public class FailedTokenizationOrchestrationServiceException : Xeption
     {
-        public FailedOTokenServiceException(Exception innerException)
-            : base(message: "Failed otoken service error occurred, contact support.",
+        public FailedTokenizationOrchestrationServiceException(Exception innerException)
+            : base (message: "Failed tokenization service error occurred, contact support.",
                   innerException)
-        { }
+        {}
     }
 }

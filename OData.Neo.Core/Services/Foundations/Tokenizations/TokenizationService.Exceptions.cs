@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using OData.Neo.Core.Models;
 using OData.Neo.Core.Models.Tokens;
 using OData.Neo.Core.Models.Tokens.Exceptions;
 
@@ -23,12 +22,12 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             }
             catch (NullOTokenQueryException nullOTokenQueryException)
             {
-                throw new OTokenValidationException(nullOTokenQueryException);
+                throw new TokenValidationException(nullOTokenQueryException);
             }
             catch (Exception ex)
             {
                 var failedOTokenServiceException = new FailedOTokenServiceException(ex);
-                throw new OTokenServiceException(failedOTokenServiceException);
+                throw new TokenServiceException(failedOTokenServiceException);
             }
         }
     }
