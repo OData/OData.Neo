@@ -42,6 +42,21 @@ namespace OData.Neo.Core.Services.Orchestrations.OTokenizations
                 throw new OTokenizationOrchestrationDependencyValidationException(
                     oTokenValidationException.InnerException as Xeption);
             }
+            catch (TokenServiceException tokenServiceException)
+            {
+                throw new OTokenizationOrchestrationDependencyException(
+                    tokenServiceException.InnerException as Xeption);
+            }
+            catch (ProjectedTokenServiceException projectedTokenServiceException)
+            {
+                throw new OTokenizationOrchestrationDependencyException(
+                    projectedTokenServiceException.InnerException as Xeption);
+            }
+            catch (OTokenServiceException oTokenServiceException)
+            {
+                throw new OTokenizationOrchestrationDependencyException(
+                    oTokenServiceException.InnerException as Xeption);
+            }
         }
     }
 }
