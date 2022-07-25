@@ -5,12 +5,12 @@
 
 using Xeptions;
 
-namespace OData.Neo.Core.Models.Tokens.Exceptions
+namespace OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions
 {
-    public class OTokenServiceException : Xeption
+    public class OTokenizationOrchestrationDependencyException : Xeption
     {
-        public OTokenServiceException(Xeption innerException)
-            : base(message: "OToken service error occurred, contact support",
+        public OTokenizationOrchestrationDependencyException(Xeption innerException)
+            : base(message: "OTokenization dependency error occured, please fix the errors and try again.",
                   innerException)
         { }
     }

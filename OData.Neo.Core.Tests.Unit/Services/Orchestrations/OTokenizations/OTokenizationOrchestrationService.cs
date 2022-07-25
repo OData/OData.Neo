@@ -56,6 +56,19 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
             };
         }
 
+        public static TheoryData DependencyExceptions()
+        {
+            string randomMessage = GetRandomString();
+            var someException = new Xeption(randomMessage);
+
+            return new TheoryData<Xeption>
+            {
+                new TokenServiceException(someException),
+                new ProjectedTokenServiceException(someException),
+                new OTokenServiceException(someException),
+            };
+        }
+
         private Expression<Func<ProjectedToken[], bool>> SameProjectedTokensAs(
             ProjectedToken[] expectedProjectedTokens)
         {

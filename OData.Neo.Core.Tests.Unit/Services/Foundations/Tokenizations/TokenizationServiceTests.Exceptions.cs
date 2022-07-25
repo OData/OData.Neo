@@ -29,8 +29,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
                 this.tokenizationService.Tokenize(someQuery);
 
             // then
-            OTokenServiceException otokenServiceException =
-                Assert.Throws<OTokenServiceException>(tokenizationAction);
+            TokenServiceException otokenServiceException =
+                Assert.Throws<TokenServiceException>(tokenizationAction);
 
             Assert.True(otokenServiceException.InnerException
                 is FailedOTokenServiceException);
