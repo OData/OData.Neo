@@ -29,13 +29,15 @@ namespace OData.Neo.Core.Services.Orchestrations.OTokenizations
             this.otokenizationService = oTokenizationService;
         }
 
-        public OToken OTokenizeQuery(string query)
+        public OToken OTokenizeQuery(string query) =>
+        TryCatch(() =>
         {
+            ValidateQuery(query);
             Token[] tokens = this.tokenizationService.Tokenize(query);
             ProjectedToken[] projectedTokens = ProjectTokens(tokens);
 
             return OTokenize(projectedTokens);
-        }
+        });
 
         private ProjectedToken[] ProjectTokens(Token[] tokens)
         {
