@@ -5,6 +5,10 @@
 
 using OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions;
 using OData.Neo.Core.Models.OTokens;
+using OData.Neo.Core.Models.OTokens.Exceptions;
+using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
+using OData.Neo.Core.Models.Tokens.Exceptions;
+using Xeptions;
 
 namespace OData.Neo.Core.Services.Orchestrations.OTokenizations
 {
@@ -22,6 +26,21 @@ namespace OData.Neo.Core.Services.Orchestrations.OTokenizations
             {
                 throw new OTokenizationOrchestrationValidationException(
                     nullQueryException);
+            }
+            catch (TokenValidationException tokenValidationException)
+            {
+                throw new OTokenizationOrchestrationDependencyValidationException(
+                    tokenValidationException.InnerException as Xeption);
+            }
+            catch (ProjectedTokenValidationException projectedTokenValidationException)
+            {
+                throw new OTokenizationOrchestrationDependencyValidationException(
+                    projectedTokenValidationException.InnerException as Xeption);
+            }
+            catch (OTokenValidationException oTokenValidationException)
+            {
+                throw new OTokenizationOrchestrationDependencyValidationException(
+                    oTokenValidationException.InnerException as Xeption);
             }
         }
     }
