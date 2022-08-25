@@ -17,11 +17,16 @@ namespace OData.Neo.Core.Tests.Unit
             var expressionBroker = new ExpressionBroker();
 
             Expression actualExpression =
-                await expressionBroker.GenerateExpressionAsync<object>(
+                await expressionBroker.GenerateExpressionAsync<Student>(
                     linqExpression: "Select(s => new {s.Name})");
 
 
             Assert.True(actualExpression is not null);
         }
+    }
+
+    public class Student
+    {
+        public string Name { get; set; }
     }
 }

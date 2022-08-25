@@ -17,12 +17,13 @@ namespace OData.Neo.Core.Brokers.Expressions
     {
         public async ValueTask<Expression> GenerateExpressionAsync<T>(string linqExpression)
         {
-            var globals = new Globals<Student>
+            var globals = new Globals<T>
             {
-                DataSource = new List<Student>().AsQueryable()
+                DataSource = new List<T>().AsQueryable()
             };
 
             ScriptOptions scriptOptions = ScriptOptions.Default;
+            scriptOptions = scriptOptions.AddReferences(typeof(T).Assembly);
             scriptOptions = scriptOptions.AddReferences("System");
             scriptOptions = scriptOptions.AddReferences("System.Linq");
             scriptOptions = scriptOptions.AddReferences("System.Collections.Generic");
