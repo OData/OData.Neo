@@ -11,8 +11,4 @@
     <PackageReference Include="Xeption" Version="2.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Expressions\" />
-  </ItemGroup>
-
 </Project>
