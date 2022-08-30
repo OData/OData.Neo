@@ -30,7 +30,7 @@ namespace OData.Neo.Core.Brokers.Expressions
             return state.ReturnValue;
         }
 
-        protected virtual Globals<T> GetGlobalVariables<T>()
+        private Globals<T> GetGlobalVariables<T>()
         {
             return new Globals<T>
             {
@@ -38,7 +38,7 @@ namespace OData.Neo.Core.Brokers.Expressions
             };
         }
 
-        protected virtual ScriptOptions GetScriptOptions<T>()
+        private ScriptOptions GetScriptOptions<T>()
         {
             ScriptOptions scriptOptions = ScriptOptions.Default;
             scriptOptions = scriptOptions.AddReferences("System");
@@ -49,7 +49,7 @@ namespace OData.Neo.Core.Brokers.Expressions
             return scriptOptions;
         }
 
-        protected virtual string GetScript(string linqExpression)
+        private string GetScript(string linqExpression)
         {
             return $@"
                 using System;
