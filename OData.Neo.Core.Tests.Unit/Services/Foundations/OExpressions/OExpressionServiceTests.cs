@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Moq;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OTokens;
@@ -27,15 +28,29 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                 expressionBroker: this.expressionBrokerMock.Object);
         }
 
-        private static List<OToken> CreateRandomPropertyOTokens()
+        private static (List<OToken>, string) CreateRandomPropertyOTokens()
         {
-            return Enumerable.Range(start: 0, count: GetRandomNumber())
-                .Select(item => new OToken
+            var randomOTokens = new List<OToken>();
+            var rawValues = new List<string>();
+
+            Enumerable.Range(start: 0, count: GetRandomNumber()).ToList()
+                .ForEach(item =>
                 {
-                    Type = OTokenType.Property,
-                    ProjectedType = ProjectedTokenType.Property,
-                    RawValue = GetRandomString()
-                }).ToList();
+                    string rawStringValue = GetRandomString();
+
+                    randomOTokens.Add(new OToken
+                    {
+                        Type = OTokenType.Property,
+                        ProjectedType = ProjectedTokenType.Property,
+                        RawValue = rawStringValue
+                    });
+
+                    rawValues.Add($"obj.{rawStringValue}");
+                });
+
+            string allRawValues = string.Join(",", rawValues);
+
+            return (randomOTokens, allRawValues);
         }
 
         private static int GetRandomNumber() =>

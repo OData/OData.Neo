@@ -22,7 +22,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         public async Task ShouldGenerateOExpressionAsync()
         {
             // given
-            List<OToken> randomPropertyOTokens = CreateRandomPropertyOTokens();
+            (List<OToken> randomPropertyOTokens, string allRawValues) = 
+                CreateRandomPropertyOTokens();
 
             var inputOExpression = new OExpression
             {
@@ -37,18 +38,13 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                             RawValue = "$select",
                             Type = OTokenType.Select,
                             ProjectedType = ProjectedTokenType.Keyword,
-
                             Children = randomPropertyOTokens
                         }
                     }
                 }
             };
 
-            string[] propertiesArray =
-                randomPropertyOTokens.Select(otoken => $"obj.{otoken.RawValue}").ToArray();
-
-            string properties = string.Join(",", propertiesArray);
-            string expectedLinqQuery = $"Select(obj => new {{{properties}}})";
+            string expectedLinqQuery = $"Select(obj => new {{{allRawValues}}})";
             Expression generatedExpression = Expression.Constant(value: default);
 
             var expectedOExpression = new OExpression
