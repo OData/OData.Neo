@@ -28,9 +28,10 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             // oExp.OTken => linqExp
             string linqExp = CovertToLinqExp(oExpression.OToken);
 
-            Expression exp = await expressionBroker.GenerateExpressionAsync<T>(linqExp);
+            Expression expression = 
+                await expressionBroker.GenerateExpressionAsync<T>(linqExp);
 
-            oExpression.Expression = exp;
+            oExpression.Expression = expression;
 
             return oExpression;
         }
@@ -45,15 +46,14 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             {
                 if (child.Type == OTokenType.Select)
                 {
-                    sb.Append("Select(x => new { ");
+                    sb.Append("Select(obj => new {");
 
-                    // x.Name,x.Age
                     foreach (OToken selectChild in child.Children)
                     {
-                        sb.Append($"x.{selectChild.RawValue}");
+                        sb.Append($"obj.{selectChild.RawValue}");
                     }
 
-                    sb.Append(" })");
+                    sb.Append("})");
                 }
             }
 
