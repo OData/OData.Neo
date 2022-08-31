@@ -4,15 +4,14 @@
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.ProjectedTokens;
-using OData.Neo.Core.Services.Foundations.OExpressions;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
@@ -23,6 +22,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         public async Task ShouldGenerateOExpressionAsync()
         {
             // given
+            List<OToken> randomPropertyOTokens = CreateRandomPropertyOTokens();
+
             var inputOExpression = new OExpression
             {
                 OToken = new OToken
@@ -37,21 +38,17 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                             Type = OTokenType.Select,
                             ProjectedType = ProjectedTokenType.Keyword,
 
-                            Children = new List<OToken>
-                            {
-                                new OToken
-                                {
-                                    ProjectedType = ProjectedTokenType.Property,
-                                    RawValue = "Name",
-                                    Type = OTokenType.Property
-                                }
-                            }
+                            Children = randomPropertyOTokens
                         }
                     }
                 }
             };
 
-            string expectedLinqQuery = "Select(obj => new {obj.Name})";
+            string[] propertiesArray =
+                randomPropertyOTokens.Select(otoken => $"obj.{otoken.RawValue}").ToArray();
+
+            string properties = string.Join(",", propertiesArray);
+            string expectedLinqQuery = $"Select(obj => new {{{properties}}})";
             Expression generatedExpression = Expression.Constant(value: default);
 
             var expectedOExpression = new OExpression
