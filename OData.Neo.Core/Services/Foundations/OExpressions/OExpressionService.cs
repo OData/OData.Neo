@@ -46,14 +46,8 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             {
                 if (child.Type == OTokenType.Select)
                 {
-                    sb.Append("Select(obj => new {");
-
-                    foreach (OToken selectChild in child.Children)
-                    {
-                        sb.Append($"obj.{selectChild.RawValue}");
-                    }
-
-                    sb.Append("})");
+                    string properties = string.Join(",", child.Children.Select(x => $"obj.{x.RawValue}"));
+                    sb.Append($"Select(obj => new {{{properties}}})");
                 }
             }
 
