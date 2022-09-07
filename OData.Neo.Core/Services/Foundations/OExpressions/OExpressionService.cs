@@ -3,13 +3,10 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
@@ -25,10 +22,9 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 
         public async ValueTask<OExpression> GenerateOExpressionAsync<T>(OExpression oExpression)
         {
-            // oExp.OTken => linqExp
             string linqExp = CovertToLinqExp(oExpression.OToken);
 
-            Expression expression = 
+            Expression expression =
                 await expressionBroker.GenerateExpressionAsync<T>(linqExp);
 
             oExpression.Expression = expression;
@@ -38,8 +34,6 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 
         private string CovertToLinqExp(OToken token)
         {
-            // Root:
-            // Debug.Assert(token.Type == OTokenType.Root);
             StringBuilder sb = new StringBuilder();
 
             foreach (OToken child in token.Children)
