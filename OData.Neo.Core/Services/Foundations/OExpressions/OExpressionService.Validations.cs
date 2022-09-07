@@ -22,6 +22,16 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             {
                 throw new NullOExpressionException();
             }
+
+            var invalidOExpressionException = new InvalidOExpressionException();
+
+            if (oExpression.OToken is null)
+            {
+                invalidOExpressionException.UpsertDataList(key: nameof(OExpression.OToken),
+                    value: "Value is required");
+
+                throw invalidOExpressionException;
+            }
         }
     }
 }
