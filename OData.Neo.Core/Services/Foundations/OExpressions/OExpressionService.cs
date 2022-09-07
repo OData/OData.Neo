@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
+using OData.Neo.Core.Models.OExpressions.Exceptions;
 using OData.Neo.Core.Models.OTokens;
 
 namespace OData.Neo.Core.Services.Foundations.OExpressions
@@ -22,14 +23,26 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 
         public async ValueTask<OExpression> GenerateOExpressionAsync<T>(OExpression oExpression)
         {
-            string linqExp = CovertToLinqExp(oExpression.OToken);
+            try
+            {
+                if (oExpression is null)
+                {
+                    throw new NullOExpressionException();
+                }
 
-            Expression expression =
-                await expressionBroker.GenerateExpressionAsync<T>(linqExp);
+                string linqExp = CovertToLinqExp(oExpression.OToken);
 
-            oExpression.Expression = expression;
+                Expression expression =
+                    await expressionBroker.GenerateExpressionAsync<T>(linqExp);
 
-            return oExpression;
+                oExpression.Expression = expression;
+
+                return oExpression;
+            }
+            catch (NullOExpressionException nullException)
+            {
+                throw new OExpressionValidationException(nullException);
+            }
         }
 
         private string CovertToLinqExp(OToken token)
