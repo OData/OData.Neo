@@ -5,9 +5,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Moq;
 using OData.Neo.Core.Brokers.Expressions;
+using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Services.Foundations.OExpressions;
@@ -53,10 +55,23 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             return (randomOTokens, allRawValues);
         }
 
+        private static OExpression CreateRandomOExpression() =>
+            CreateOExpressionFiller().Create();
+
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
+
+        private static Filler<OExpression> CreateOExpressionFiller()
+        {
+            var filler = new Filler<OExpression>();
+
+            filler.Setup()
+                .OnType<Expression>().IgnoreIt();
+
+            return filler;
+        }
     }
 }
