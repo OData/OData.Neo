@@ -3,10 +3,15 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Scripting;
 using Moq;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
@@ -14,6 +19,7 @@ using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Services.Foundations.OExpressions;
 using Tynamix.ObjectFiller;
+using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 {
@@ -28,6 +34,21 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             this.oExpressionService = new OExpressionService(
                 expressionBroker: this.expressionBrokerMock.Object);
+        }
+
+        public static TheoryData<Exception> DependencyExceptions()
+        {
+            string randomMessage = GetRandomString();
+
+            return new TheoryData<Exception>
+            {
+                new ArgumentNullException(),
+                new ArgumentException(),
+
+                new CompilationErrorException(
+                    message: randomMessage,
+                    diagnostics: ImmutableArray.Create<Diagnostic>())
+            };
         }
 
         private static (List<OToken>, string) CreateRandomPropertyOTokens()

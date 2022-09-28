@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
-using OData.Neo.Core.Models.OExpressions.Exceptions;
 using OData.Neo.Core.Models.OTokens;
 
 namespace OData.Neo.Core.Services.Foundations.OExpressions
@@ -37,18 +36,21 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 
         private string CovertToLinqExp(OToken token)
         {
-            StringBuilder sb = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
             foreach (OToken child in token.Children)
             {
                 if (child.Type == OTokenType.Select)
                 {
-                    string properties = string.Join(",", child.Children.Select(x => $"obj.{x.RawValue}"));
-                    sb.Append($"Select(obj => new {{{properties}}})");
+                    string properties = string.Join(
+                        separator: ",",
+                        values: child.Children.Select(child => $"obj.{child.RawValue}"));
+
+                    stringBuilder.Append($"Select(obj => new {{{properties}}})");
                 }
             }
 
-            return sb.ToString();
+            return stringBuilder.ToString();
         }
     }
 }
