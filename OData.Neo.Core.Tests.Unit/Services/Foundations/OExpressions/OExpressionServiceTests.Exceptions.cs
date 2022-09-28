@@ -57,5 +57,46 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             this.expressionBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnGenerateIfServiceErrorOcurrsAndLogitAsync()
+        {
+            // given
+            OExpression someOExpression = CreateRandomOExpression();
+            someOExpression.OToken.Children = new List<OToken>();
+
+            var serviceException = new Exception();
+
+            var failedOExpressionServiceException =
+                new FailedOExpressionServiceException(
+                    serviceException);
+
+            var expectedOExpressionServiceException =
+                new OExpressionServiceException(
+                    failedOExpressionServiceException);
+
+            this.expressionBrokerMock.Setup(broker =>
+                broker.GenerateExpressionAsync<object>(It.IsAny<string>()))
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<OExpression> generateOExpressionTask =
+                this.oExpressionService.GenerateOExpressionAsync<object>(
+                    someOExpression);
+
+            OExpressionServiceException actualOExpressionServiceException =
+                await Assert.ThrowsAsync<OExpressionServiceException>(
+                    generateOExpressionTask.AsTask);
+
+            // then
+            actualOExpressionServiceException.Should().BeEquivalentTo(
+                expectedOExpressionServiceException);
+
+            this.expressionBrokerMock.Verify(broker =>
+                broker.GenerateExpressionAsync<object>(It.IsAny<string>()),
+                    Times.Once);
+
+            this.expressionBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
