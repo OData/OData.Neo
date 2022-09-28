@@ -51,6 +51,13 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 
                 throw new OExpressionDependencyException(failedOExpressionDependencyException);
             }
+            catch (Exception exception)
+            {
+                var failedOExpressionServiceException =
+                    new FailedOExpressionServiceException(exception);
+
+                throw new OExpressionServiceException(failedOExpressionServiceException);
+            }
         }
     }
 }
