@@ -3,13 +3,13 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
+using OData.Neo.Core.Models.OTokens;
 
 namespace OData.Neo.Core.Services.Foundations.OExpressions
 {
@@ -21,6 +21,36 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             this.expressionBroker = expressionBroker;
 
         public ValueTask<OExpression> GenerateOExpressionAsync<T>(OExpression oExpression) =>
-            throw new NotImplementedException();
+        TryCatch(async () =>
+        {
+            ValidateOExpression(oExpression);
+            string linqExp = CovertToLinqExp(oExpression.OToken);
+
+            Expression expression =
+                await expressionBroker.GenerateExpressionAsync<T>(linqExp);
+
+            oExpression.Expression = expression;
+
+            return oExpression;
+        });
+
+        private string CovertToLinqExp(OToken token)
+        {
+            var stringBuilder = new StringBuilder();
+
+            foreach (OToken child in token.Children)
+            {
+                if (child.Type == OTokenType.Select)
+                {
+                    string properties = string.Join(
+                        separator: ",",
+                        values: child.Children.Select(child => $"obj.{child.RawValue}"));
+
+                    stringBuilder.Append($"Select(obj => new {{{properties}}})");
+                }
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }
