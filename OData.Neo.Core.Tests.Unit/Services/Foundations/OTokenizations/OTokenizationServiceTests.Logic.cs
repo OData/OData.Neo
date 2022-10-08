@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using OData.Neo.Core.Models.OTokens;
@@ -63,6 +64,28 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
                         }
                     }
                 }
+            };
+
+            // when
+            OToken actualToken =
+                this.tokenizationService.OTokenize(inputTokens);
+
+            // then
+            actualToken.Should().BeEquivalentTo(expectedToken);
+        }
+
+        [Fact]
+        public void ShouldOTokenizeEmptyArrays()
+        {
+            // given
+            var unidentifiedOTokens = Array.Empty<OToken>();
+
+            OToken[] inputTokens = unidentifiedOTokens;
+
+            OToken expectedToken = new OToken
+            {
+                Type = OTokenType.Root,
+                Children = new List<OToken>()
             };
 
             // when
