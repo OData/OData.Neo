@@ -17,29 +17,36 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
             {
                 ValidateOTokens(oTokens);
 
-                OToken root = new OToken
+                OToken root = new()
                 {
                     Type = OTokenType.Root,
                     Children = new List<OToken>()
                 };
 
-                var selectToken = oTokens[0];
-                selectToken.Type = OTokenType.Select;
-
-                root.Children.Add(selectToken);
-                selectToken.Children ??= new();
-                var tokens = oTokens
-                    .Skip(1)
-                    .Where(token => token.ProjectedType != ProjectedTokenType.Equals)
-                    .Select(token =>
-                    {
-                        token.Type = OTokenType.Property;
-                        return token;
-                    });
-
-                selectToken.Children.AddRange(tokens);
-
-                return root;
+                return oTokens.Any()
+                    ? ProcessTokens(root, oTokens)
+                    : root;
             });
+
+        OToken ProcessTokens(OToken root, OToken[] oTokens)
+        {
+            var selectToken = oTokens[0];
+            selectToken.Type = OTokenType.Select;
+
+            root.Children.Add(selectToken);
+            selectToken.Children ??= new();
+            var tokens = oTokens
+                .Skip(1)
+                .Where(token => token.ProjectedType != ProjectedTokenType.Equals)
+                .Select(token =>
+                {
+                    token.Type = OTokenType.Property;
+                    return token;
+                });
+
+            selectToken.Children.AddRange(tokens);
+
+            return root;
+        }
     }
 }
