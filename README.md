@@ -1,6 +1,8 @@
 # OData.NxT
 
-[![Discord Shield](https://discordapp.com/api/guilds/934133164790644777/widget.png?style=shield)](https://discord.gg/Nr8w6wxv)
+[![OData Neo Build](https://github.com/OData/OData.Neo/actions/workflows/dotnet.yml/badge.svg)](https://github.com/OData/OData.Neo/actions/workflows/dotnet.yml)
+[![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f)](https://github.com/hassanhabib/The-Standard)
+[![The Standard Community](https://img.shields.io/discord/934130100008538142?color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
 
 This is OData NxT. The next generation of OData Protocol implementation for the .NET ecosystem. This implementation will incorporate three new fundamental design capabilities to OData.NET. These capabilities are:
 
