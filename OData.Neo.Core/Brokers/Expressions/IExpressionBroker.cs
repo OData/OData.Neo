@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 

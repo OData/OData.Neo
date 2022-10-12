@@ -19,11 +19,11 @@ namespace OData.Neo.Core.Brokers.Expressions
         {
             Globals<T> globals = GetGlobalVariables<T>();
             ScriptOptions scriptOptions = GetScriptOptions<T>();
-            string script = GetScript(linqExpression);
+            string script = GetScript<T>(linqExpression);
 
             ScriptState<Expression> state =
                 await CSharpScript.RunAsync<Expression>(
-                    code: linqExpression,
+                    code: script,
                     scriptOptions,
                     globals);
 
@@ -49,12 +49,13 @@ namespace OData.Neo.Core.Brokers.Expressions
             return scriptOptions;
         }
 
-        private string GetScript(string linqExpression)
+        private string GetScript<T>(string linqExpression)
         {
             return $@"
                 using System;
                 using System.Linq;
                 using System.Collections.Generic;
+                using {typeof(T).Namespace};
 
                 return DataSource.{linqExpression}.Expression;";
         }

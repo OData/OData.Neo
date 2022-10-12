@@ -21,18 +21,18 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             this.expressionBroker = expressionBroker;
 
         public ValueTask<OExpression> GenerateOExpressionAsync<T>(OExpression oExpression) =>
-        TryCatch(async () =>
-        {
-            ValidateOExpression(oExpression);
-            string linqExp = CovertToLinqExp(oExpression.OToken);
+            TryCatch(async () =>
+            {
+                ValidateOExpression(oExpression);
+                string linqExp = CovertToLinqExp(oExpression.OToken);
 
-            Expression expression =
-                await expressionBroker.GenerateExpressionAsync<T>(linqExp);
+                Expression expression =
+                    await expressionBroker.GenerateExpressionAsync<T>(linqExp);
 
-            oExpression.Expression = expression;
+                oExpression.Expression = expression;
 
-            return oExpression;
-        });
+                return oExpression;
+            });
 
         private string CovertToLinqExp(OToken token)
         {
