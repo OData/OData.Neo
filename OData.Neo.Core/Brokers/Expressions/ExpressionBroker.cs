@@ -23,7 +23,7 @@ namespace OData.Neo.Core.Brokers.Expressions
 
             ScriptState<Expression> state =
                 await CSharpScript.RunAsync<Expression>(
-                    code: linqExpression,
+                    code: script,
                     scriptOptions,
                     globals);
 
