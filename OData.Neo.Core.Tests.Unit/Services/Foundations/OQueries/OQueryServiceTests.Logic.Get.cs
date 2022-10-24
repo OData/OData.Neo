@@ -29,7 +29,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
                 GetRandomString();
 
             string returnedSqlQuery =
-                $"SELECT [{randomSqlVariable}].[{randomPropertyName}]" +
+                $"SELECT [{randomSqlVariable}].[{randomPropertyName}] " +
                 $"FROM [{randomTableName}]";
 
             string expectedOQuery =
