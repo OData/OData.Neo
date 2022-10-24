@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using FluentAssertions;
 using Moq;
@@ -16,24 +17,18 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
         public void ShouldGetOQueryFromExpression()
         {
             // given
-            Expression randomExpression =
-                CreateMockedExpression();
+            Expression randomExpression = CreateMockedExpression();
+            string randomTableName = GetRandomString();
 
-            string randomSqlVariable =
-                GetRandomString();
-
-            string randomPropertyName =
-                GetRandomString();
-            
-            string randomTableName =
-                GetRandomString();
+            (List<string> properites, string sqlProperties) =
+                 GenerateRandomSqlQueryProperties();
 
             string returnedSqlQuery =
-                $"SELECT [{randomSqlVariable}].[{randomPropertyName}] " +
+                $"SELECT {sqlProperties} " +
                 $"FROM [{randomTableName}]";
 
             string expectedOQuery =
-                $"$select={randomPropertyName}";
+                $"$select={string.Join(",", properites)}";
 
             this.sqlQueryBrokerMock.Setup(broker =>
                 broker.GetSqlQuery(randomExpression))

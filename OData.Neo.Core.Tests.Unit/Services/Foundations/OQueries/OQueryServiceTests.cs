@@ -3,6 +3,9 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Moq;
 using OData.Neo.Core.Brokers.Queries;
@@ -27,6 +30,32 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
 
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
+
+        private static (List<string>, string) GenerateRandomSqlQueryProperties()
+        {
+            int randomNumber = GetRandomNumber();
+            string randomSqlVariable = GetRandomString();
+            List<string> properties = new List<string>();
+            
+            string[] sqlProperties = Enumerable.Range(start: 0, count: randomNumber)
+                .Select(item =>
+                {
+                    string randomPropertyName =
+                        GetRandomString();
+
+                    properties.Add(randomPropertyName);
+
+                    return $"[{randomSqlVariable}].[{randomPropertyName}]";
+                }).ToArray();
+
+            string query =
+                String.Join(separator: ", ", sqlProperties);
+
+            return (properties, query);
+        }
+
+        private static int GetRandomNumber() =>
+            new IntRange(min: 2, max: 10).GetValue();
 
         private static Expression CreateMockedExpression() =>
             Mock.Of<Expression>();
