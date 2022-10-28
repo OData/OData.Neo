@@ -52,7 +52,8 @@ namespace OData.Neo.Core.Services.Foundations.OQueries
             return propertyReference
                 .Split('.')
                 .Last()
-                .Trim("[]".ToCharArray());
+                .Trim("[]".ToCharArray())
+                .Replace("]", "");
         }
     }
 }
