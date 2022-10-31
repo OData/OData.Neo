@@ -21,6 +21,11 @@ namespace OData.Neo.Core.Services.Foundations.OQueries
 
         public string GetOQuery(Expression expression)
         {
+            return GenerateOQuery(expression);
+        }
+
+        private string GenerateOQuery(Expression expression)
+        {
             var sql = sqlQueryBroker.GetSqlQuery(expression);
             var parts = sql
                 .Split("FROM")[0]
