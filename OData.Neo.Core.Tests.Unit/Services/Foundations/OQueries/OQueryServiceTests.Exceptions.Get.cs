@@ -53,5 +53,44 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
 
             this.sqlQueryBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowServiceExceptionOnGetIfServiceErrorOccurs()
+        {
+            // given
+            Expression someExpression = CreateMockedExpression();
+            var serviceException = new Exception();
+
+            var failedOQueryServiceException =
+                new FailedOQueryServiceException(
+                    serviceException);
+
+            var expectedOQueryServiceException =
+                new OQueryServiceException(
+                    failedOQueryServiceException);
+
+            this.sqlQueryBrokerMock.Setup(broker =>
+                broker.GetSqlQuery(It.IsAny<Expression>()))
+                    .Throws(serviceException);
+
+            // when
+            Action getOQueryAction = () =>
+                this.oqueryService.GetOQuery(
+                    someExpression);
+
+            OQueryServiceException actualOQueryServiceException =
+                Assert.Throws<OQueryServiceException>(
+                    getOQueryAction);
+
+            // then
+            actualOQueryServiceException.Should().BeEquivalentTo(
+                expectedOQueryServiceException);
+
+            this.sqlQueryBrokerMock.Verify(broker =>
+                broker.GetSqlQuery(It.IsAny<Expression>()),
+                    Times.Once);
+
+            this.sqlQueryBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
