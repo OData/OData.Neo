@@ -3,26 +3,27 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using OData.Neo.Core.Brokers.Queries;
 
 namespace OData.Neo.Core.Services.Foundations.OQueries
 {
-    public class OQueryService : IOQueryService
+    public partial class OQueryService : IOQueryService
     {
         private readonly ISqlQueryBroker sqlQueryBroker;
 
         public OQueryService(ISqlQueryBroker sqlQueryBroker) =>
             this.sqlQueryBroker = sqlQueryBroker;
 
-        public string GetOQuery(Expression expression)
+        public string GetOQuery(Expression expression) =>
+        TryCatch(() =>
         {
+            ValidateExpression(expression);
+
             return GenerateOQuery(expression);
-        }
+        });
 
         private string GenerateOQuery(Expression expression)
         {
