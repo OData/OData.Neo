@@ -1,0 +1,17 @@
+﻿//-----------------------------------------------------------------------
+// Copyright (c) .NET Foundation and Contributors. All rights reserved.
+// See License.txt in the project root for license information.
+//-----------------------------------------------------------------------
+
+using Xeptions;
+
+namespace OData.Neo.Core.Models.OQueries.Exceptions
+{
+    public class OQueryDependencyException : Xeption
+    {
+        public OQueryDependencyException(Xeption innerException)
+            : base(message: "OQuery dependency error occurred, contact support.",
+                  innerException)
+        { }
+    }
+}

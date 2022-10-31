@@ -11,6 +11,7 @@ using Moq;
 using OData.Neo.Core.Brokers.Queries;
 using OData.Neo.Core.Services.Foundations.OQueries;
 using Tynamix.ObjectFiller;
+using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
 {
@@ -26,6 +27,15 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
 
             this.oqueryService =
                 new OQueryService(sqlQueryBrokerMock.Object);
+        }
+
+        public static TheoryData DependencyExceptions()
+        {
+            return new TheoryData<Exception>
+            {
+                new InvalidOperationException(),
+                new InvalidCastException()
+            };
         }
 
         private static string GetRandomString() =>
