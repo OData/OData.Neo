@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading.Tasks;
+using OData.Neo.Core.Models.OExpressions.Exceptions;
 using OData.Neo.Core.Models.OQueries.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OQueries
@@ -37,6 +38,13 @@ namespace OData.Neo.Core.Services.Foundations.OQueries
                     new FailedOQueryDependencyException(invalidCastException);
 
                 throw new OQueryDependencyException(failedOQueryDependencyException);
+            }
+            catch (Exception exception)
+            {
+                var failedOQuryServiceException =
+                    new FailedOQueryServiceException(exception);
+
+                throw new OQueryServiceException(failedOQuryServiceException);
             }
         }
     }
