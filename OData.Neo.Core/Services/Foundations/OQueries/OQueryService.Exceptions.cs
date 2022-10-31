@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using OData.Neo.Core.Models.OQueries.Exceptions;
 
@@ -22,6 +23,20 @@ namespace OData.Neo.Core.Services.Foundations.OQueries
             catch (NullOQueryExpressionException nullOQueryException)
             {
                 throw new OQueryValidationException(nullOQueryException);
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                var failedOQueryDependencyException = 
+                    new FailedOQueryDependencyException(invalidOperationException);
+
+                throw new OQueryDependencyException(failedOQueryDependencyException);
+            }
+            catch (InvalidCastException invalidCastException)
+            {
+                var failedOQueryDependencyException =
+                    new FailedOQueryDependencyException(invalidCastException);
+
+                throw new OQueryDependencyException(failedOQueryDependencyException);
             }
         }
     }
