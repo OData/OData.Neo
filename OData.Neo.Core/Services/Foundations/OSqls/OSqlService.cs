@@ -16,9 +16,7 @@ namespace OData.Neo.Core.Services.Foundations.OSqls
         public OSqlService(ISqlQueryBroker sqlQueryBroker) =>
             this.sqlQueryBroker = sqlQueryBroker;
 
-        public string RetrieveOSqlQuery(Expression expression)
-        {
-            throw new NotImplementedException();
-        }
+        public string RetrieveOSqlQuery(Expression expression) =>
+            this.sqlQueryBroker.GetSqlQuery(expression);
     }
 }
