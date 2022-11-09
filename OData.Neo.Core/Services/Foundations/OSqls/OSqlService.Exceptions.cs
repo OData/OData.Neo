@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using OData.Neo.Core.Models.OExpressions.Exceptions;
 using OData.Neo.Core.Models.OSqls.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OSqls
@@ -21,6 +22,20 @@ namespace OData.Neo.Core.Services.Foundations.OSqls
             catch (NullExpressionOSqlException nullExpressionOSqlException)
             {
                 throw new OSqlValidationException(nullExpressionOSqlException);
+            }
+            catch (InvalidOperationException invalidOExpressionException)
+            {
+                var failedOSqlDependencyException =
+                    new FailedOSqlDependencyException(invalidOExpressionException);
+
+                throw new OSqlDependencyException(failedOSqlDependencyException);
+            }
+            catch (InvalidCastException invalidCastException)
+            {
+                var failedOSqlDependencyException =
+                    new FailedOSqlDependencyException(invalidCastException);
+
+                throw new OSqlDependencyException(failedOSqlDependencyException);
             }
         }
     }
