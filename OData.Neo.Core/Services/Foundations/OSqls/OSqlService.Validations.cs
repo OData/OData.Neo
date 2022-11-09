@@ -10,19 +10,14 @@ using OData.Neo.Core.Models.OSqls.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OSqls
 {
-    public partial class OSqlService : IOSqlService
+    public partial class OSqlService
     {
-        private readonly ISqlQueryBroker sqlQueryBroker;
-
-        public OSqlService(ISqlQueryBroker sqlQueryBroker) =>
-            this.sqlQueryBroker = sqlQueryBroker;
-
-        public string RetrieveOSqlQuery(Expression expression) =>
-        TryCatch(() =>
+        private void ValidateExpression(Expression expression)
         {
-            ValidateExpression(expression);
-
-            return this.sqlQueryBroker.GetSqlQuery(expression);
-        });
+            if (expression is null)
+            {
+                throw new NullExpressionOSqlException();
+            }
+        }
     }
 }
