@@ -37,6 +37,13 @@ namespace OData.Neo.Core.Services.Foundations.OSqls
 
                 throw new OSqlDependencyException(failedOSqlDependencyException);
             }
+            catch (Exception exception)
+            {
+                var failedOSqlServiceException =
+                    new FailedOSqlServiceException(exception);
+
+                throw new OSqlServiceException(failedOSqlServiceException);
+            }
         }
     }
 }
