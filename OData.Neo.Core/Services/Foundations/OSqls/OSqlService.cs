@@ -6,6 +6,7 @@
 using System;
 using System.Linq.Expressions;
 using OData.Neo.Core.Brokers.Queries;
+using OData.Neo.Core.Models.OSqls.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OSqls
 {
@@ -16,7 +17,12 @@ namespace OData.Neo.Core.Services.Foundations.OSqls
         public OSqlService(ISqlQueryBroker sqlQueryBroker) =>
             this.sqlQueryBroker = sqlQueryBroker;
 
-        public string RetrieveOSqlQuery(Expression expression) =>
-            this.sqlQueryBroker.GetSqlQuery(expression);
+        public string RetrieveOSqlQuery(Expression expression)
+        {
+            if (expression == null)
+                throw new OSqlValidationException(new NullExpressionOSqlException());
+
+            return this.sqlQueryBroker.GetSqlQuery(expression);
+        }
     }
 }
