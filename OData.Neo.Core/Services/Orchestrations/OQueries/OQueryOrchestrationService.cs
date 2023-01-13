@@ -28,9 +28,9 @@ namespace OData.Neo.Core.Services.Orchestrations.OQueries
             this.oSqlService = oSqlService;
         }
 
-        public ValueTask<OExpression> ProcessOTokenAsync<T>(OExpression oExpression)
+        public async ValueTask<OExpression> ProcessOTokenAsync<T>(OExpression oExpression)
         {
-            throw new NotImplementedException();
+            return await oExpressionService.GenerateOExpressionAsync<T>(oExpression);
         }
     }
 }
