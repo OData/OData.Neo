@@ -3,7 +3,6 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -16,7 +15,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OQueries
     public partial class OQueryOrchestrationServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnOQueryIfExpressionIsNull()
+        public async Task ShouldThrowValidationExceptionOnOQueryIfExpressionIsNullAsync()
         {
             // given
             OExpression nullExpression = null;
@@ -29,7 +28,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OQueries
                     nullQueryOQueryOrchestrationException);
 
             // when
-            ValueTask<OExpression> processOQueryTask = this.oQueryOrchestrationService.ProcessOQueryAsync<object>(
+            ValueTask<OExpression> processOQueryTask =
+                this.oQueryOrchestrationService.ProcessOQueryAsync<object>(
                     nullExpression);
 
             OQueryOrchestrationValidationException
