@@ -59,7 +59,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OQueries
             this.oSqlServiceMock.VerifyNoOtherCalls();
         }
 
-
         [Fact]
         public async Task ShouldThrowDependencyExceptionOnProcessIfDependencyErrorOccursAsync()
         {

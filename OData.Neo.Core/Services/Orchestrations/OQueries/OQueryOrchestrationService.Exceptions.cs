@@ -33,6 +33,11 @@ namespace OData.Neo.Core.Services.Orchestrations.OQueries
                 throw new OQueryOrchestrationDependencyValidationException(
                     oExpressionValidationException.InnerException as Xeption);
             }
+            catch (OExpressionDependencyException oExpressionDependencyException)
+            {
+                throw new OQueryOrchestrationDependencyException(
+                    oExpressionDependencyException.InnerException as Xeption);
+            }
         }
     }
 }
