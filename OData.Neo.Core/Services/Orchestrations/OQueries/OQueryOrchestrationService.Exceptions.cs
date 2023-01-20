@@ -3,9 +3,12 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using OData.Neo.Core.Models.OExpressions;
+using OData.Neo.Core.Models.OExpressions.Exceptions;
 using OData.Neo.Core.Models.Orchestrations.OQueries.Exceptions;
+using Xeptions;
 
 namespace OData.Neo.Core.Services.Orchestrations.OQueries
 {
@@ -23,7 +26,12 @@ namespace OData.Neo.Core.Services.Orchestrations.OQueries
             catch (NullOExpressionOQueryOrchestrationException nullQueryOQueryOrchestrationException)
             {
                 throw new OQueryOrchestrationValidationException(
-                    nullQueryOQueryOrchestrationException); ;
+                    nullQueryOQueryOrchestrationException);
+            }
+            catch (OExpressionValidationException oExpressionValidationException)
+            {
+                throw new OQueryOrchestrationDependencyValidationException(
+                    oExpressionValidationException.InnerException as Xeption);
             }
         }
     }
