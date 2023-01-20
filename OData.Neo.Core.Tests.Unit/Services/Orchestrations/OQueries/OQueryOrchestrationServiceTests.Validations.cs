@@ -21,7 +21,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OQueries
             OExpression nullExpression = null;
 
             var nullQueryOQueryOrchestrationException =
-                new NullQueryOQueryOrchestrationException();
+                new NullOExpressionOQueryOrchestrationException();
 
             var expectedOQueryOrchestrationValidationException =
                 new OQueryOrchestrationValidationException(

@@ -14,7 +14,7 @@ namespace OData.Neo.Core.Services.Orchestrations.OQueries
         {
             if (oExpression is null)
             {
-                throw new NullQueryOQueryOrchestrationException();
+                throw new NullOExpressionOQueryOrchestrationException();
             }
         }
     }

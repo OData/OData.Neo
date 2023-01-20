@@ -20,7 +20,7 @@ namespace OData.Neo.Core.Services.Orchestrations.OQueries
             {
                 return await returningOExpressionFunction();
             }
-            catch (NullQueryOQueryOrchestrationException nullQueryOQueryOrchestrationException)
+            catch (NullOExpressionOQueryOrchestrationException nullQueryOQueryOrchestrationException)
             {
                 throw new OQueryOrchestrationValidationException(
                     nullQueryOQueryOrchestrationException); ;

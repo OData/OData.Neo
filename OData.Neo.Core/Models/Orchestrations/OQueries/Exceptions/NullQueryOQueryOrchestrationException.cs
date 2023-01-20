@@ -7,9 +7,9 @@ using Xeptions;
 
 namespace OData.Neo.Core.Models.Orchestrations.OQueries.Exceptions
 {
-    public class NullQueryOQueryOrchestrationException : Xeption
+    public class NullOExpressionOQueryOrchestrationException : Xeption
     {
-        public NullQueryOQueryOrchestrationException()
+        public NullOExpressionOQueryOrchestrationException()
             : base("Query Expression is null.")
         { }
     }
