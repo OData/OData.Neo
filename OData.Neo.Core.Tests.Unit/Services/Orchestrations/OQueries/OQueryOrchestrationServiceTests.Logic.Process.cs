@@ -28,8 +28,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OQueries
                     .ReturnsAsync(generatedOExpression);
 
             // when
-            OExpression actualOExpression =
-                await this.oQueryOrchestrationService.ProcessOTokenAsync<object>(
+            ValueTask<OExpression> actualOExpression =
+                await this.oQueryOrchestrationService.ProcessOQueryAsync<object>(
                     inputOExpression);
 
             // then

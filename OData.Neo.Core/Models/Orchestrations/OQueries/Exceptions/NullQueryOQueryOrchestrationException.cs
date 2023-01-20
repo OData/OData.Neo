@@ -3,13 +3,14 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System.Threading.Tasks;
-using OData.Neo.Core.Models.OExpressions;
+using Xeptions;
 
-namespace OData.Neo.Core.Services.Orchestrations.OQueries
+namespace OData.Neo.Core.Models.Orchestrations.OQueries.Exceptions
 {
-    public interface IOQueryOrchestrationService
+    public class NullQueryOQueryOrchestrationException : Xeption
     {
-        ValueTask<OExpression> ProcessOQueryAsync<T>(OExpression oExpression);
+        public NullQueryOQueryOrchestrationException()
+            : base("Query Expression is null.")
+        { }
     }
 }
