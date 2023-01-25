@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -92,6 +93,49 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OQueries
             // then
             actualOQueryOrchestrationDependencyException.Should()
                 .BeEquivalentTo(expectedOQueryOrchestrationDependencyException);
+
+            this.oExpressionServiceMock.Verify(service =>
+                service.GenerateOExpressionAsync<object>(someOExpression),
+                    Times.Once);
+
+            this.oExpressionServiceMock.VerifyNoOtherCalls();
+            this.oQueryServiceMock.VerifyNoOtherCalls();
+            this.oSqlServiceMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnProcessIfServiceErrorOccursAsync()
+        {
+            // given
+            OExpression someOExpression = CreateRandomOExpression();
+            var serviceException = new Exception();
+
+            var failedOQueryOrchestrationServiceException =
+                new FailedOQueryOrchestrationServiceException(
+                    serviceException);
+
+            var expectedOQueryOrchestrationServiceException =
+                new OQueryOrchestrationServiceException(
+                    failedOQueryOrchestrationServiceException);
+
+            this.oExpressionServiceMock.Setup(service =>
+                service.GenerateOExpressionAsync<object>(It.IsAny<OExpression>()))
+                    .ThrowsAsync(failedOQueryOrchestrationServiceException);
+
+            // when
+            ValueTask<OExpression> processOQueryTask =
+                this.oQueryOrchestrationService.ProcessOQueryAsync<object>(
+                    someOExpression);
+
+            OQueryOrchestrationServiceException
+                actualOQueryOrchestrationServiceException =
+                    await Assert.ThrowsAsync<
+                        OQueryOrchestrationServiceException>(
+                            processOQueryTask.AsTask);
+
+            // then
+            actualOQueryOrchestrationServiceException.Should()
+                .BeEquivalentTo(expectedOQueryOrchestrationServiceException);
 
             this.oExpressionServiceMock.Verify(service =>
                 service.GenerateOExpressionAsync<object>(someOExpression),
