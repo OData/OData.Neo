@@ -38,6 +38,14 @@ namespace OData.Neo.Core.Services.Orchestrations.OQueries
                 throw new OQueryOrchestrationDependencyException(
                     oExpressionDependencyException.InnerException as Xeption);
             }
+            catch (Exception exception)
+            {
+                var failedOQueryOrchestrationServiceException =
+                    new FailedOQueryOrchestrationServiceException(exception);
+
+                throw new OQueryOrchestrationServiceException(
+                    failedOQueryOrchestrationServiceException);
+            }
         }
     }
 }
