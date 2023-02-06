@@ -3,12 +3,14 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
 using OData.Neo.Core.Models.OExpressions;
+using OData.Neo.Core.Models.OQueries.Exceptions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Services.Coordinations.OQueries;
 using OData.Neo.Core.Services.Orchestrations.OQueries;
@@ -68,6 +70,39 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
 
             this.oQueryOrchestrationServiceMock.VerifyNoOtherCalls();
             this.oTokenizationOrchestrationServiceMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void ShouldThrowValidationExceptionIfExpressionIsNull()
+        {
+            // given
+            string nullExpression = null;
+
+            var nullOQueryExpressionException =
+                new NullOQueryExpressionException();
+
+            var expectedOQueryValidationException =
+                new OQueryValidationException(
+                    nullOQueryExpressionException);
+
+            // when
+            Action getOQueryAction = () =>
+                this.oQueryCoordinationService.ProcessOQueryAsync<object>(
+                    nullExpression);
+
+            OQueryValidationException actualOQueryValidationException =
+                Assert.Throws<OQueryValidationException>(
+                    getOQueryAction);
+
+            // then
+            actualOQueryValidationException.Should().BeEquivalentTo(
+                expectedOQueryValidationException);
+
+            this.oQueryOrchestrationServiceMock.Verify(broker =>
+                broker.ProcessOQueryAsync<object>(It.IsAny<OExpression>()),
+                    Times.Never);
+
+            this.oQueryOrchestrationServiceMock.VerifyNoOtherCalls();
         }
     }
 }
