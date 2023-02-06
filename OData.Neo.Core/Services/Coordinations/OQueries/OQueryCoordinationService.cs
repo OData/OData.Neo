@@ -6,6 +6,8 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using OData.Neo.Core.Models.OExpressions;
+using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Services.Orchestrations.OQueries;
 using OData.Neo.Core.Services.Orchestrations.OTokenizations;
 
@@ -24,9 +26,19 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
             this.oQueryOrchestrationService = oQueryOrchestrationService;
         }
 
-        public ValueTask<Expression> ProcessOQueryAsync<T>(string oQuery)
+        public async ValueTask<Expression> ProcessOQueryAsync<T>(string odataQuery)
         {
-            throw new NotImplementedException();
+            OToken oToken = this.oTokenizationOrchestrationService.OTokenizeQuery(odataQuery);
+
+            OExpression oExpression = new OExpression
+            {
+                OToken = oToken,
+                RawQuery = odataQuery
+            };
+
+            OExpression processedOExpression = await this.oQueryOrchestrationService.ProcessOQueryAsync<T>(oExpression);
+
+            return processedOExpression.Expression;
         }
     }
 }
