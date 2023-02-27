@@ -52,5 +52,43 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
             this.oTokenizationOrchestrationServiceMock.VerifyNoOtherCalls();
             this.oQueryOrchestrationServiceMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(DependencyExceptions))]
+        public async Task ShouldThrowDependencyExceptionOnProcessIfDependencyOccursAsync(
+            Xeption dependencyException)
+        {
+            // given
+            string someOQueryExpression = GetRandomODataQuery();
+
+            var expectedOQueryCoordinationDependencyException =
+                new OQueryCoordinationDependencyException(
+                    dependencyException.InnerException as Xeption);
+
+            this.oTokenizationOrchestrationServiceMock.Setup(service =>
+                service.OTokenizeQuery(It.IsAny<string>()))
+                    .Throws(dependencyException);
+
+            // when
+            ValueTask<Expression> processOQueryTask =
+                this.oQueryCoordinationService.ProcessOQueryAsync<object>(
+                    someOQueryExpression);
+
+            OQueryCoordinationDependencyException
+                actualOQueryCoordinationDependencyException =
+                    await Assert.ThrowsAsync<OQueryCoordinationDependencyException>(
+                        processOQueryTask.AsTask);
+
+            // then
+            actualOQueryCoordinationDependencyException.Should().BeEquivalentTo(
+                expectedOQueryCoordinationDependencyException);
+
+            this.oTokenizationOrchestrationServiceMock.Verify(service =>
+                service.OTokenizeQuery(It.IsAny<string>()),
+                    Times.Once);
+
+            this.oTokenizationOrchestrationServiceMock.VerifyNoOtherCalls();
+            this.oQueryOrchestrationServiceMock.VerifyNoOtherCalls();
+        }
     }
 }

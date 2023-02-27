@@ -55,6 +55,19 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
             };
         }
 
+        public static TheoryData DependencyExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Xeption>
+            {
+                new OTokenizationOrchestrationServiceException(innerException),
+                new OQueryOrchestrationServiceException(innerException),
+                new OQueryOrchestrationDependencyException(innerException),
+                new OTokenizationOrchestrationDependencyException(innerException)
+            };
+        }
+
         private string GetRandomODataQuery() =>
             new MnemonicString().GetValue();
 
