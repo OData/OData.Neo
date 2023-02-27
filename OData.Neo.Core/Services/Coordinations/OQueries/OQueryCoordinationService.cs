@@ -29,7 +29,9 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
         public ValueTask<Expression> ProcessOQueryAsync<T>(string odataQuery) => TryCatch(async () =>
         {
             ValidateOQueryExpression(odataQuery);
-            OToken oToken = this.oTokenizationOrchestrationService.OTokenizeQuery(odataQuery);
+           
+            OToken oToken = this.oTokenizationOrchestrationService
+                .OTokenizeQuery(odataQuery);
 
             OExpression oExpression = new OExpression
             {

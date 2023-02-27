@@ -41,10 +41,15 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
             actualOQueryCoordinationValidationException.Should().BeEquivalentTo(
                 expectedOQueryCoordinationValidationException);
 
-            this.oQueryOrchestrationServiceMock.Verify(broker =>
-                broker.ProcessOQueryAsync<object>(It.IsAny<OExpression>()),
+            this.oTokenizationOrchestrationServiceMock.Verify(service =>
+                service.OTokenizeQuery(It.IsAny<string>()),
                     Times.Never);
 
+            this.oQueryOrchestrationServiceMock.Verify(service =>
+                service.ProcessOQueryAsync<object>(It.IsAny<OExpression>()),
+                    Times.Never);
+
+            this.oTokenizationOrchestrationServiceMock.VerifyNoOtherCalls();
             this.oQueryOrchestrationServiceMock.VerifyNoOtherCalls();
         }
     }

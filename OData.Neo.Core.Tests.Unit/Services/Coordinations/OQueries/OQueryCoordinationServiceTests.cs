@@ -8,11 +8,15 @@ using System.Linq.Expressions;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
 using OData.Neo.Core.Models.OExpressions;
+using OData.Neo.Core.Models.Orchestrations.OQueries.Exceptions;
+using OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Services.Coordinations.OQueries;
 using OData.Neo.Core.Services.Orchestrations.OQueries;
 using OData.Neo.Core.Services.Orchestrations.OTokenizations;
 using Tynamix.ObjectFiller;
+using Xeptions;
+using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
 {
@@ -36,6 +40,19 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
             this.oQueryCoordinationService = new OQueryCoordinationService(
                 oTokenizationOrchestrationService: this.oTokenizationOrchestrationServiceMock.Object,
                 oQueryOrchestrationService: this.oQueryOrchestrationServiceMock.Object);
+        }
+
+        public static TheoryData DependencyValidationExceptions()
+        {
+            var innerException = new Xeption();
+
+            return new TheoryData<Xeption>
+            {
+                new OTokenizationOrchestrationValidationException(innerException),
+                new OTokenizationOrchestrationDependencyValidationException(innerException),
+                new OQueryOrchestrationValidationException(innerException),
+                new OQueryOrchestrationDependencyValidationException(innerException)
+            };
         }
 
         private string GetRandomODataQuery() =>
