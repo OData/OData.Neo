@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
+using OData.Neo.Core.Models.Coordinations.OQueries.Exceptions;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OQueries.Exceptions;
 using OData.Neo.Core.Models.OTokens;
@@ -73,30 +74,30 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
         }
 
         [Fact]
-        public void ShouldThrowValidationExceptionIfExpressionIsNull()
+        public async Task ShouldThrowValidationExceptionOnProcessIfExpressionIsNullAsync()
         {
             // given
             string nullExpression = null;
 
-            var nullOQueryExpressionException =
-                new NullOQueryExpressionException();
+            var nullOQueryExpressionCoordinationException =
+                new NullOQueryExpressionCoordinationException();
 
-            var expectedOQueryValidationException =
-                new OQueryValidationException(
-                    nullOQueryExpressionException);
+            var expectedOQueryCoordinationValidationException =
+                new OQueryCoordinationValidationException(
+                    nullOQueryExpressionCoordinationException);
 
             // when
-            Action getOQueryAction = () =>
+            ValueTask<Expression> processOQueryTask = 
                 this.oQueryCoordinationService.ProcessOQueryAsync<object>(
                     nullExpression);
 
-            OQueryValidationException actualOQueryValidationException =
-                Assert.Throws<OQueryValidationException>(
-                    getOQueryAction);
+            OQueryCoordinationValidationException actualOQueryCoordinationValidationException =
+                await Assert.ThrowsAsync<OQueryCoordinationValidationException>(
+                    processOQueryTask.AsTask);
 
             // then
-            actualOQueryValidationException.Should().BeEquivalentTo(
-                expectedOQueryValidationException);
+            actualOQueryCoordinationValidationException.Should().BeEquivalentTo(
+                expectedOQueryCoordinationValidationException);
 
             this.oQueryOrchestrationServiceMock.Verify(broker =>
                 broker.ProcessOQueryAsync<object>(It.IsAny<OExpression>()),
