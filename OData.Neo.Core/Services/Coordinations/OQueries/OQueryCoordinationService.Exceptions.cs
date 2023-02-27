@@ -6,6 +6,9 @@
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using OData.Neo.Core.Models.Coordinations.OQueries.Exceptions;
+using OData.Neo.Core.Models.Orchestrations.OQueries.Exceptions;
+using OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions;
+using Xeptions;
 
 namespace OData.Neo.Core.Services.Coordinations.OQueries
 {
@@ -22,6 +25,26 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
             catch (NullOQueryExpressionCoordinationException nullOQueryExpressionCoordinationException)
             {
                 throw new OQueryCoordinationValidationException(nullOQueryExpressionCoordinationException);
+            }
+            catch (OTokenizationOrchestrationValidationException oTokenizationOrchestrationValidationException)
+            { 
+                throw new OQueryCoordinationDependencyValidationException(
+                    oTokenizationOrchestrationValidationException.InnerException as Xeption);
+            }
+            catch (OTokenizationOrchestrationDependencyValidationException oTokenizationOrchestrationDependencyValidationException)
+            { 
+                throw new OQueryCoordinationDependencyValidationException(
+                    oTokenizationOrchestrationDependencyValidationException.InnerException as Xeption);
+            }
+            catch (OQueryOrchestrationValidationException oQueryOrchestrationValidationException)
+            { 
+                throw new OQueryCoordinationDependencyValidationException(
+                    oQueryOrchestrationValidationException.InnerException as Xeption);
+            }
+            catch (OQueryOrchestrationDependencyValidationException oQueryOrchestrationDependencyValidationException)
+            {
+                throw new OQueryCoordinationDependencyValidationException(
+                    oQueryOrchestrationDependencyValidationException.InnerException as Xeption);
             }
         }
     }
