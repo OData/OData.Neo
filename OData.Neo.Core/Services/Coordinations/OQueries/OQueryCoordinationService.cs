@@ -26,20 +26,23 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
             this.oQueryOrchestrationService = oQueryOrchestrationService;
         }
 
-        public ValueTask<Expression> ProcessOQueryAsync<T>(string odataQuery) => TryCatch(async () =>
+        public ValueTask<Expression> ProcessOQueryAsync<T>(string odataQuery) =>
+        TryCatch(async () =>
         {
             ValidateOQueryExpression(odataQuery);
-           
+
             OToken oToken = this.oTokenizationOrchestrationService
                 .OTokenizeQuery(odataQuery);
 
-            OExpression oExpression = new OExpression
+            var oExpression = new OExpression
             {
                 OToken = oToken,
                 RawQuery = odataQuery
             };
 
-            OExpression processedOExpression = await this.oQueryOrchestrationService.ProcessOQueryAsync<T>(oExpression);
+            OExpression processedOExpression =
+                await this.oQueryOrchestrationService
+                    .ProcessOQueryAsync<T>(oExpression);
 
             return processedOExpression.Expression;
         });

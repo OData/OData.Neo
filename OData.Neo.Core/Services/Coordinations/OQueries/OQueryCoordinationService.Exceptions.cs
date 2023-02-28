@@ -27,17 +27,17 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
                 throw new OQueryCoordinationValidationException(nullOQueryExpressionCoordinationException);
             }
             catch (OTokenizationOrchestrationValidationException oTokenizationOrchestrationValidationException)
-            { 
+            {
                 throw new OQueryCoordinationDependencyValidationException(
                     oTokenizationOrchestrationValidationException.InnerException as Xeption);
             }
-            catch (OTokenizationOrchestrationDependencyValidationException oTokenizationOrchestrationDependencyValidationException)
-            { 
+            catch (OTokenizationOrchestrationDependencyValidationException tokenizationDependencyValidationException)
+            {
                 throw new OQueryCoordinationDependencyValidationException(
-                    oTokenizationOrchestrationDependencyValidationException.InnerException as Xeption);
+                    tokenizationDependencyValidationException.InnerException as Xeption);
             }
             catch (OQueryOrchestrationValidationException oQueryOrchestrationValidationException)
-            { 
+            {
                 throw new OQueryCoordinationDependencyValidationException(
                     oQueryOrchestrationValidationException.InnerException as Xeption);
             }
@@ -45,6 +45,26 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
             {
                 throw new OQueryCoordinationDependencyValidationException(
                     oQueryOrchestrationDependencyValidationException.InnerException as Xeption);
+            }
+            catch (OTokenizationOrchestrationDependencyException oTokenizationOrchestrationDependencyException)
+            {
+                throw new OQueryCoordinationDependencyException(
+                    oTokenizationOrchestrationDependencyException.InnerException as Xeption);
+            }
+            catch (OTokenizationOrchestrationServiceException oTokenizationOrchestrationServiceException)
+            {
+                throw new OQueryCoordinationDependencyException(
+                    oTokenizationOrchestrationServiceException.InnerException as Xeption);
+            }
+            catch (OQueryOrchestrationDependencyException oQueryOrchestrationDependencyException)
+            {
+                throw new OQueryCoordinationDependencyException(
+                    oQueryOrchestrationDependencyException.InnerException as Xeption);
+            }
+            catch (OQueryOrchestrationServiceException oQueryOrchestrationServiceException)
+            {
+                throw new OQueryCoordinationDependencyException(
+                    oQueryOrchestrationServiceException.InnerException as Xeption);
             }
         }
     }

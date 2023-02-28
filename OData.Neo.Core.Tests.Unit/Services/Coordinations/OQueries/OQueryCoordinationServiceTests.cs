@@ -61,10 +61,10 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
 
             return new TheoryData<Xeption>
             {
+                new OTokenizationOrchestrationDependencyException(innerException),
                 new OTokenizationOrchestrationServiceException(innerException),
-                new OQueryOrchestrationServiceException(innerException),
                 new OQueryOrchestrationDependencyException(innerException),
-                new OTokenizationOrchestrationDependencyException(innerException)
+                new OQueryOrchestrationServiceException(innerException)
             };
         }
 

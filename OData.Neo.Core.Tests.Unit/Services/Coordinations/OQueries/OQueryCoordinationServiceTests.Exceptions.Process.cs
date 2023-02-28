@@ -36,7 +36,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
                 this.oQueryCoordinationService.ProcessOQueryAsync<object>(
                     someOQueryExpression);
 
-            OQueryCoordinationDependencyValidationException 
+            OQueryCoordinationDependencyValidationException
                 actualOQueryCoordinationDependencyValidationException =
                     await Assert.ThrowsAsync<OQueryCoordinationDependencyValidationException>(
                         processOQueryTask.AsTask);
@@ -55,7 +55,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
 
         [Theory]
         [MemberData(nameof(DependencyExceptions))]
-        public async Task ShouldThrowDependencyExceptionOnProcessIfDependencyOccursAsync(
+        public async Task ShouldThrowDependencyExceptionOnProcessIfDependencyErrorOccursAsync(
             Xeption dependencyException)
         {
             // given
