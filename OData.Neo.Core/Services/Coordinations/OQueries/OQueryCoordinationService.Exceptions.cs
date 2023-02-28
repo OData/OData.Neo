@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using OData.Neo.Core.Models.Coordinations.OQueries.Exceptions;
@@ -65,6 +66,13 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
             {
                 throw new OQueryCoordinationDependencyException(
                     oQueryOrchestrationServiceException.InnerException as Xeption);
+            }
+            catch (Exception exception)
+            {
+                var failedOQueryCoordinationServiceException = 
+                    new FailedOQueryCoordinationServiceException(exception);
+
+                throw new OQueryCoordinationServiceException(failedOQueryCoordinationServiceException);
             }
         }
     }
