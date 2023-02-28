@@ -44,7 +44,8 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
                 {
                     string properties = string.Join(
                         separator: ",",
-                        values: child.Children.Select(child => $"obj.{child.RawValue}"));
+                        values: child.Children.Where(c => c.ProjectedType == Models.ProjectedTokens.ProjectedTokenType.Property)
+                            .Select(c => $"obj.{c.RawValue}"));
 
                     stringBuilder.Append($"Select(obj => new {{{properties}}})");
                 }
