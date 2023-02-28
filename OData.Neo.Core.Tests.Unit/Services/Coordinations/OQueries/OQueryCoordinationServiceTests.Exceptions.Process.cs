@@ -3,11 +3,13 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using OData.Neo.Core.Models.Coordinations.OQueries.Exceptions;
+using OData.Neo.Core.Models.Orchestrations.Coordinates.Exceptions;
 using Xeptions;
 using Xunit;
 
@@ -82,6 +84,47 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
             // then
             actualOQueryCoordinationDependencyException.Should().BeEquivalentTo(
                 expectedOQueryCoordinationDependencyException);
+
+            this.oTokenizationOrchestrationServiceMock.Verify(service =>
+                service.OTokenizeQuery(It.IsAny<string>()),
+                    Times.Once);
+
+            this.oTokenizationOrchestrationServiceMock.VerifyNoOtherCalls();
+            this.oQueryOrchestrationServiceMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnProcessIfServiceErrorOccursAsync()
+        {
+            // given
+            string someOQueryExpression = GetRandomODataQuery();
+            var exception = new Exception();
+            
+            var failedOQueryCoordinationServiceException =
+                new FailedOQueryCoordinationServiceException(
+                    exception);
+
+            var expectedOQueryCoordinationServiceException =
+                new OQueryCoordinationServiceException(
+                    failedOQueryCoordinationServiceException);
+
+            this.oTokenizationOrchestrationServiceMock.Setup(service =>
+                service.OTokenizeQuery(It.IsAny<string>()))
+                    .Throws(exception);
+
+            // when
+            ValueTask<Expression> processOQueryTask =
+                this.oQueryCoordinationService.ProcessOQueryAsync<object>(
+                    someOQueryExpression);
+
+            OQueryCoordinationServiceException
+                actualOQueryCoordinationServiceException =
+                    await Assert.ThrowsAsync<OQueryCoordinationServiceException>(
+                        processOQueryTask.AsTask);
+
+            // then
+            actualOQueryCoordinationServiceException.Should().BeEquivalentTo(
+                expectedOQueryCoordinationServiceException);
 
             this.oTokenizationOrchestrationServiceMock.Verify(service =>
                 service.OTokenizeQuery(It.IsAny<string>()),
