@@ -76,6 +76,54 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             return (randomOTokens, allRawValues);
         }
 
+        private static (List<OToken>, string) CreateRandomNonPropertyOTokens()
+        {
+            var randomOTokens = new List<OToken>();
+            var rawValues = new List<string>();
+
+            Enumerable.Range(start: 0, count: GetRandomNumber()).ToList()
+                .ForEach(item =>
+                {
+                    string rawStringValue = GetRandomString();
+
+                    randomOTokens.Add(new OToken
+                    {
+                        Type = GetEnumThatIsNot(OTokenType.Property),
+                        ProjectedType = GetEnumThatIsNot(ProjectedTokenType.Property),
+                        RawValue = rawStringValue
+                    });
+
+                    rawValues.Add($"obj.{rawStringValue}");
+                });
+
+            string allRawValues = string.Join(",", rawValues);
+
+            return (randomOTokens, allRawValues);
+        }
+
+        private static T GetEnumThatIsNot<T>(T exception)
+        {
+            T[] enumArray = Enum.GetValues(typeof(T)) as T[];
+            int enumLength = enumArray.Length;
+
+            int randomNumber =
+                new IntRange(
+                    min: 0,
+                    max: enumLength - 1)
+                        .GetValue();
+
+            while (enumArray[randomNumber].ToString() == exception.ToString())
+            {
+                randomNumber = 
+                    new IntRange(
+                        min: 0,
+                        max: enumLength - 1)
+                            .GetValue();
+            }
+
+            return (T)(object)randomNumber;
+        }
+
         private static OExpression CreateRandomOExpression() =>
             CreateOExpressionFiller().Create();
 
