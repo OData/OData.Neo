@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
+using OData.Neo.Core.Models.ProjectedTokens;
 
 namespace OData.Neo.Core.Services.Foundations.OExpressions
 {
@@ -44,7 +45,9 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
                 {
                     string properties = string.Join(
                         separator: ",",
-                        values: child.Children.Select(child => $"obj.{child.RawValue}"));
+                        values: child.Children
+                        .Where(c => c.ProjectedType == ProjectedTokenType.Property)
+                        .Select(child => $"obj.{child.RawValue}"));
 
                     stringBuilder.Append($"Select(obj => new {{{properties}}})");
                 }

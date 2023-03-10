@@ -25,6 +25,9 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             (List<OToken> randomPropertyOTokens, string allRawValues) = 
                 CreateRandomPropertyOTokens();
 
+            (List<OToken> randomNonPropertyOTokens, _) =
+                CreateRandomNonPropertyOTokens();
+
             var inputOExpression = new OExpression
             {
                 OToken = new OToken
@@ -38,7 +41,10 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                             RawValue = "$select",
                             Type = OTokenType.Select,
                             ProjectedType = ProjectedTokenType.Keyword,
-                            Children = randomPropertyOTokens
+                            
+                            Children = 
+                                randomPropertyOTokens.Concat(randomNonPropertyOTokens)
+                                    .ToList()
                         }
                     }
                 }
