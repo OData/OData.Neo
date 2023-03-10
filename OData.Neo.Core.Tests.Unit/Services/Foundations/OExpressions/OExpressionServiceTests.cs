@@ -101,27 +101,17 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             return (randomOTokens, allRawValues);
         }
 
-        private static T GetEnumThatIsNot<T>(T exception)
+        private static T GetEnumThatIsNot<T>(T notThisValue) where T : Enum
         {
-            T[] enumArray = Enum.GetValues(typeof(T)) as T[];
-            int enumLength = enumArray.Length;
+            T[] allValues = Enum.GetValues(typeof(T)) as T[];
+            allValues = allValues.Except(new[] { notThisValue }).ToArray();
 
-            int randomNumber =
-                new IntRange(
-                    min: 0,
-                    max: enumLength - 1)
-                        .GetValue();
+            int randomNumber = new Random()
+                .Next(
+                    minValue: 0, 
+                    maxValue: allValues.Length);
 
-            while (enumArray[randomNumber].ToString() == exception.ToString())
-            {
-                randomNumber = 
-                    new IntRange(
-                        min: 0,
-                        max: enumLength - 1)
-                            .GetValue();
-            }
-
-            return (T)(object)randomNumber;
+            return allValues[randomNumber];
         }
 
         private static OExpression CreateRandomOExpression() =>
