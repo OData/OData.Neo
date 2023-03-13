@@ -6,7 +6,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using OData.Neo.Core.Models.Expressions;
@@ -28,6 +30,19 @@ namespace OData.Neo.Core.Brokers.Expressions
                     globals);
 
             return state.ReturnValue;
+        }
+
+        public IQueryable Execute<T>(IQueryable<T> sources, Expression expression)
+        {
+            var methodCallExpression = expression as MethodCallExpression;
+            MethodInfo methodInfo = methodCallExpression.Method;
+            var unary = methodCallExpression.Arguments[1] as UnaryExpression;
+            var lambda = unary.Operand as LambdaExpression;
+            
+            return methodInfo.Invoke(
+                obj: null, 
+                parameters: 
+                new object[] { sources, lambda }) as IQueryable;
         }
 
         private Globals<T> GetGlobalVariables<T>()
