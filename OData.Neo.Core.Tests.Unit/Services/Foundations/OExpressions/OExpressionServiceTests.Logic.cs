@@ -77,5 +77,39 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             this.expressionBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldApplyExpressionToSource()
+        {
+            // given
+            var randomSource = new List<object>();
+            var randomExpression = Expression.Constant(value: default);
+            IQueryable<object> inputSource = randomSource.AsQueryable();
+            Expression inputExpression = randomExpression;
+            var randomSourceAfterExpression = new List<object>();
+            IQueryable expectedSource = randomSourceAfterExpression.AsQueryable();
+
+            var inputOexpression = new OExpression
+            {
+                Expression = inputExpression
+            };
+
+            this.expressionBrokerMock.Setup(broker =>
+                broker.ApplyExpression(inputSource, inputExpression))
+                    .Returns(expectedSource);
+
+            // when
+            IQueryable actualSource = this.oExpressionService
+                .ApplyExpression(inputSource, inputOexpression);
+
+            // then
+            actualSource.Should().BeEquivalentTo(expectedSource);
+
+            this.expressionBrokerMock.Verify(broker =>
+                broker.ApplyExpression(inputSource, inputExpression),
+                    Times.Once);
+
+            this.expressionBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }

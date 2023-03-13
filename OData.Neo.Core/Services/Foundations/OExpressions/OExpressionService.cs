@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -34,6 +35,11 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 
             return oExpression;
         });
+
+        public IQueryable ApplyExpression<T>(IQueryable<T> sources, OExpression expression)
+        {
+            throw new NotImplementedException();
+        }
 
         private string CovertToLinqExp(OToken token)
         {

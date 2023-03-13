@@ -3,13 +3,6 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 using Moq;
@@ -18,6 +11,11 @@ using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Services.Foundations.OExpressions;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 using Xunit;
 
