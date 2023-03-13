@@ -36,10 +36,8 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             return oExpression;
         });
 
-        public IQueryable ApplyExpression<T>(IQueryable<T> sources, OExpression expression)
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable ApplyExpression<T>(IQueryable<T> sources, OExpression expression) =>
+            this.expressionBroker.ApplyExpression(sources, expression.Expression);
 
         private string CovertToLinqExp(OToken token)
         {
