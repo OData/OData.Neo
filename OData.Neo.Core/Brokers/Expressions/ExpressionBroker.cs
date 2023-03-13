@@ -32,7 +32,7 @@ namespace OData.Neo.Core.Brokers.Expressions
             return state.ReturnValue;
         }
 
-        public IQueryable Execute<T>(IQueryable<T> sources, Expression expression)
+        public IQueryable ApplyExpression<T>(IQueryable<T> sources, Expression expression)
         {
             var methodCallExpression = expression as MethodCallExpression;
             MethodInfo methodInfo = methodCallExpression.Method;
