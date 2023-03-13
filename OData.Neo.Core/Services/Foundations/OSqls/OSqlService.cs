@@ -3,10 +3,8 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using System.Linq.Expressions;
 using OData.Neo.Core.Brokers.Queries;
-using OData.Neo.Core.Models.OSqls.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OSqls
 {

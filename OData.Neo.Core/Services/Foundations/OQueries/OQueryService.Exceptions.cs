@@ -4,9 +4,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Threading.Tasks;
-using OData.Neo.Core.Models.Coordinations.OQueries.Exceptions;
-using OData.Neo.Core.Models.OExpressions.Exceptions;
 using OData.Neo.Core.Models.OQueries.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OQueries
@@ -28,7 +25,7 @@ namespace OData.Neo.Core.Services.Foundations.OQueries
             }
             catch (InvalidOperationException invalidOperationException)
             {
-                var failedOQueryDependencyException = 
+                var failedOQueryDependencyException =
                     new FailedOQueryDependencyException(invalidOperationException);
 
                 throw new OQueryDependencyException(failedOQueryDependencyException);

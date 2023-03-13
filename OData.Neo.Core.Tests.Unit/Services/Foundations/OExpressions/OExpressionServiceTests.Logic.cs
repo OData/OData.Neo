@@ -22,7 +22,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         public async Task ShouldGenerateOExpressionAsync()
         {
             // given
-            (List<OToken> randomPropertyOTokens, string allRawValues) = 
+            (List<OToken> randomPropertyOTokens, string allRawValues) =
                 CreateRandomPropertyOTokens();
 
             (List<OToken> randomNonPropertyOTokens, _) =
@@ -41,8 +41,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                             RawValue = "$select",
                             Type = OTokenType.Select,
                             ProjectedType = ProjectedTokenType.Keyword,
-                            
-                            Children = 
+
+                            Children =
                                 randomPropertyOTokens.Concat(randomNonPropertyOTokens)
                                     .ToList()
                         }
@@ -82,25 +82,24 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         public void ShouldApplyExpressionToSource()
         {
             // given
-            var randomSource = new List<object>();
+            var randomSource = CreateRandomSource();
             var randomExpression = Expression.Constant(value: default);
-            IQueryable<object> inputSource = randomSource.AsQueryable();
+            IQueryable<object> inputSource = CreateRandomSource();
             Expression inputExpression = randomExpression;
-            var randomSourceAfterExpression = new List<object>();
-            IQueryable expectedSource = randomSourceAfterExpression.AsQueryable();
-
-            var inputOexpression = new OExpression
-            {
-                Expression = inputExpression
-            };
+            IQueryable randomSourceAfterExpression = CreateRandomSource();
+            IQueryable expectedSource = randomSourceAfterExpression;
+            var inputOExpression = new OExpression();
+            inputOExpression.Expression = inputExpression;
 
             this.expressionBrokerMock.Setup(broker =>
                 broker.ApplyExpression(inputSource, inputExpression))
                     .Returns(expectedSource);
 
             // when
-            IQueryable actualSource = this.oExpressionService
-                .ApplyExpression(inputSource, inputOexpression);
+            IQueryable actualSource =
+                this.oExpressionService.ApplyExpression(
+                    inputSource,
+                    inputOExpression);
 
             // then
             actualSource.Should().BeEquivalentTo(expectedSource);

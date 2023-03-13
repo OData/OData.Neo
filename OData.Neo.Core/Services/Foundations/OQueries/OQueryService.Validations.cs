@@ -3,8 +3,8 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using OData.Neo.Core.Models.OQueries.Exceptions;
 using System.Linq.Expressions;
+using OData.Neo.Core.Models.OQueries.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OQueries
 {

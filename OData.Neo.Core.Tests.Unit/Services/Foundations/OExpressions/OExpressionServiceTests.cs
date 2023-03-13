@@ -3,6 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 using Moq;
@@ -11,11 +16,6 @@ using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Services.Foundations.OExpressions;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 using Xunit;
 
@@ -106,7 +106,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             int randomNumber = new Random()
                 .Next(
-                    minValue: 0, 
+                    minValue: 0,
                     maxValue: allValues.Length);
 
             return allValues[randomNumber];
@@ -120,6 +120,13 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
+
+        private static IQueryable<object> CreateRandomSource()
+        {
+            return new Filler<object>()
+                .Create(count: GetRandomNumber())
+                .AsQueryable();
+        }
 
         private static Filler<OExpression> CreateOExpressionFiller()
         {

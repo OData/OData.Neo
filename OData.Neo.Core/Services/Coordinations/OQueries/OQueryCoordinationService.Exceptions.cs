@@ -69,7 +69,7 @@ namespace OData.Neo.Core.Services.Coordinations.OQueries
             }
             catch (Exception exception)
             {
-                var failedOQueryCoordinationServiceException = 
+                var failedOQueryCoordinationServiceException =
                     new FailedOQueryCoordinationServiceException(exception);
 
                 throw new OQueryCoordinationServiceException(failedOQueryCoordinationServiceException);

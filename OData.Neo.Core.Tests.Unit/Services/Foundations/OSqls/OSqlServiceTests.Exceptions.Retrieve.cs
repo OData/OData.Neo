@@ -7,7 +7,6 @@ using System;
 using System.Linq.Expressions;
 using FluentAssertions;
 using Moq;
-using OData.Neo.Core.Models.OQueries.Exceptions;
 using OData.Neo.Core.Models.OSqls.Exceptions;
 using Xunit;
 

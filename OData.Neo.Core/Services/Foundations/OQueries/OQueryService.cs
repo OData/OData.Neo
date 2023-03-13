@@ -40,7 +40,7 @@ namespace OData.Neo.Core.Services.Foundations.OQueries
             return string.Join("", result);
         }
 
-        static Dictionary<string, string> keywords = 
+        static Dictionary<string, string> keywords =
             new Dictionary<string, string>()
             {
                 { "SELECT", "$select=" }

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using OData.Neo.Core.Models.Coordinations.OQueries.Exceptions;
-using OData.Neo.Core.Models.Orchestrations.Coordinates.Exceptions;
 using Xeptions;
 using Xunit;
 
@@ -99,7 +98,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
             // given
             string someOQueryExpression = GetRandomODataQuery();
             var exception = new Exception();
-            
+
             var failedOQueryCoordinationServiceException =
                 new FailedOQueryCoordinationServiceException(
                     exception);

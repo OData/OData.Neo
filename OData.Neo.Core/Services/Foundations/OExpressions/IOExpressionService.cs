@@ -3,7 +3,6 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System.Linq.Expressions;
 using System.Linq;
 using System.Threading.Tasks;
 using OData.Neo.Core.Models.OExpressions;

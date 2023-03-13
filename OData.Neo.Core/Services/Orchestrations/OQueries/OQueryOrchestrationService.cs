@@ -3,11 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System.Threading.Tasks;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Services.Foundations.OExpressions;
 using OData.Neo.Core.Services.Foundations.OQueries;
 using OData.Neo.Core.Services.Foundations.OSqls;
-using System.Threading.Tasks;
 
 namespace OData.Neo.Core.Services.Orchestrations.OQueries
 {

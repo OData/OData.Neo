@@ -10,7 +10,7 @@ namespace OData.Neo.Core.Models.OExpressions.Exceptions
     public class NullOExpressionException : Xeption
     {
         public NullOExpressionException()
-            : base (message: "OExpression is null")
+            : base(message: "OExpression is null")
         {
         }
     }
