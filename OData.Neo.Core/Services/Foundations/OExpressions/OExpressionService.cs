@@ -40,6 +40,7 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
         TryCatch(() => 
         {
             ValidateSource(sources);
+            ValidateOExpression(expression);
 
             return this.expressionBroker.ApplyExpression(sources, expression.Expression);
         });

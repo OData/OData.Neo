@@ -61,7 +61,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             IQueryable<object> someSource = CreateRandomSource();
 
             var nullOExpressionException =
-                new NullSourceOExpressionException();
+                new NullOExpressionException();
 
             var expectedOExpressionValidationException =
                 new OExpressionValidationException(

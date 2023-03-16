@@ -72,6 +72,10 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             {
                 throw new OExpressionValidationException(nullSourceOExpressionException);
             }
+            catch (NullOExpressionException nullOExpressionException)
+            {
+                throw new OExpressionValidationException(nullOExpressionException);
+            }
         }
     }
 }
