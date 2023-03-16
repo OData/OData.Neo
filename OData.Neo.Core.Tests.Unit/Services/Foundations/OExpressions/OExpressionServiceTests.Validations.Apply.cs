@@ -6,6 +6,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using OData.Neo.Core.Models.OExpressions;
@@ -72,6 +73,49 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                 this.oExpressionService.ApplyExpression(
                     someSource,
                     nullOExpression);
+
+            OExpressionValidationException actualOExpressionValidationException =
+                Assert.Throws<OExpressionValidationException>(
+                    applyExpressionAction);
+
+            // then
+            actualOExpressionValidationException.Should().BeEquivalentTo(
+                expectedOExpressionValidationException);
+
+            this.expressionBrokerMock.Verify(broker =>
+                broker.ApplyExpression<object>(
+                    It.IsAny<IQueryable<object>>(),
+                    It.IsAny<Expression>()),
+                        Times.Never);
+
+            this.expressionBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void ShouldThrowValidationExceptionOnApplyIfExpressionIsNull()
+        {
+            // given
+            OExpression randomOExpression = CreateRandomOExpression();
+            IQueryable<object> someSource = CreateRandomSource();
+            OExpression invalidOExpression = randomOExpression;
+            invalidOExpression.Expression = null;
+
+            var invalidOExpressionException =
+                new InvalidOExpressionException();
+
+            invalidOExpressionException.AddData(
+                key: nameof(OExpression.Expression),
+                values: "Expression is required");
+
+            var expectedOExpressionValidationException =
+                new OExpressionValidationException(
+                    invalidOExpressionException);
+
+            // when
+            Action applyExpressionAction = () =>
+                this.oExpressionService.ApplyExpression(
+                    someSource,
+                    invalidOExpression);
 
             OExpressionValidationException actualOExpressionValidationException =
                 Assert.Throws<OExpressionValidationException>(
