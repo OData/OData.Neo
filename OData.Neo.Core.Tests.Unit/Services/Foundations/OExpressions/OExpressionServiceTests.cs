@@ -123,9 +123,14 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
         private static IQueryable<object> CreateRandomSource()
         {
-            return new Filler<object>()
+            var filler = new Filler<object>();
+            
+            filler.Setup()
+                .OnType<object>().Use(GetRandomString());
+
+            return filler
                 .Create(count: GetRandomNumber())
-                .AsQueryable();
+                .AsQueryable<object>();
         }
 
         private static Filler<OExpression> CreateOExpressionFiller()
