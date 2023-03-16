@@ -105,7 +105,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             invalidOExpressionException.AddData(
                 key: nameof(OExpression.Expression),
-                values: "Expression is required");
+                values: "Value is required");
 
             var expectedOExpressionValidationException =
                 new OExpressionValidationException(
