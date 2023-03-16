@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Scripting;
 using OData.Neo.Core.Models.OExpressions;
@@ -14,6 +15,7 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
     public partial class OExpressionService : IOExpressionService
     {
         private delegate ValueTask<OExpression> ReturningOExpressionFunction();
+        private delegate IQueryable ReturningQueryableFunction();
 
         private async ValueTask<OExpression> TryCatch(
             ReturningOExpressionFunction returningOExpressionFunction)
@@ -57,6 +59,18 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
                     new FailedOExpressionServiceException(exception);
 
                 throw new OExpressionServiceException(failedOExpressionServiceException);
+            }
+        }
+
+        private IQueryable TryCatch(ReturningQueryableFunction returningQueryableFunction)
+        {
+            try
+            {
+                return returningQueryableFunction();
+            }
+            catch (NullSourceOExpressionException nullSourceOExpressionException)
+            {
+                throw new OExpressionValidationException(nullSourceOExpressionException);
             }
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
@@ -36,7 +37,12 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
         });
 
         public IQueryable ApplyExpression<T>(IQueryable<T> sources, OExpression expression) =>
-            this.expressionBroker.ApplyExpression(sources, expression.Expression);
+        TryCatch(() => 
+        {
+            ValidateSource(sources);
+
+            return this.expressionBroker.ApplyExpression(sources, expression.Expression);
+        });
 
         private string CovertToLinqExp(OToken token)
         {

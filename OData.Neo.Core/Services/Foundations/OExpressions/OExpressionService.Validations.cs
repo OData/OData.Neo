@@ -3,8 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OExpressions.Exceptions;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace OData.Neo.Core.Services.Foundations.OExpressions
 {
@@ -26,6 +29,14 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 
                 throw invalidOExpressionException;
             }
+        }
+
+        private static void ValidateSource(IQueryable source)
+        {
+            if (source is null)
+            {
+                throw new NullSourceOExpressionException();
+            } 
         }
     }
 }
