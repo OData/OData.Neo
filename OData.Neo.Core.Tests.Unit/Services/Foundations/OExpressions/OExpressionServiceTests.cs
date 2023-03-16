@@ -38,7 +38,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
         public static TheoryData<Exception> DependencyExceptions()
         {
-            string randomMessage = GetRandomString();
+            string randomMessage = CreateRandomString();
 
             return new TheoryData<Exception>
             {
@@ -59,7 +59,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             Enumerable.Range(start: 0, count: GetRandomNumber()).ToList()
                 .ForEach(item =>
                 {
-                    string rawStringValue = GetRandomString();
+                    string rawStringValue = CreateRandomString();
 
                     randomOTokens.Add(new OToken
                     {
@@ -84,7 +84,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             Enumerable.Range(start: 0, count: GetRandomNumber()).ToList()
                 .ForEach(item =>
                 {
-                    string rawStringValue = GetRandomString();
+                    string rawStringValue = CreateRandomString();
 
                     randomOTokens.Add(new OToken
                     {
@@ -120,7 +120,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
-        private static string GetRandomString() =>
+        private static string CreateRandomString() =>
             new MnemonicString().GetValue();
 
         private static Filler<OExpression> CreateOExpressionFiller()
