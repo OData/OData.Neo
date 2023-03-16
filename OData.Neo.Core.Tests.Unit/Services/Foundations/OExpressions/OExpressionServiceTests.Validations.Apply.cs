@@ -52,5 +52,42 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             this.expressionBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public void ShouldThrowValidationExceptionOnApplyIfOexpressionIsNull()
+        {
+            // given
+            OExpression nullOExpression = null;
+            IQueryable<object> someSource = CreateRandomSource();
+
+            var nullOExpressionException =
+                new NullSourceOExpressionException();
+
+            var expectedOExpressionValidationException =
+                new OExpressionValidationException(
+                    nullOExpressionException);
+
+            // when
+            Action applyExpressionAction = () =>
+                this.oExpressionService.ApplyExpression(
+                    someSource,
+                    nullOExpression);
+
+            OExpressionValidationException actualOExpressionValidationException =
+                Assert.Throws<OExpressionValidationException>(
+                    applyExpressionAction);
+
+            // then
+            actualOExpressionValidationException.Should().BeEquivalentTo(
+                expectedOExpressionValidationException);
+
+            this.expressionBrokerMock.Verify(broker =>
+                broker.ApplyExpression<object>(
+                    It.IsAny<IQueryable<object>>(),
+                    It.IsAny<Expression>()),
+                        Times.Never);
+
+            this.expressionBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
