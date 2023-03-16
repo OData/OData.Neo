@@ -14,19 +14,13 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
 {
     public partial class OExpressionService : IOExpressionService
     {
-        private static void ValidateOExpression(OExpression oExpression)
+        private void ValidateOExpressionOnGenerate(OExpression oExpression)
         {
             ValidateOExpressionIsNotNull(oExpression);
 
-            var invalidOExpressionException = new InvalidOExpressionException();
-
-            if (oExpression.OToken is null)
-            {
-                invalidOExpressionException.UpsertDataList(key: nameof(OExpression.OToken),
-                    value: "Value is required");
-
-                throw invalidOExpressionException;
-            }
+            Validate(
+                (Rule: IsInvalid(oExpression.OToken),
+                Parameter: nameof(OExpression.OToken)));
         }
 
         private void ValidateOExpressionOnApply(OExpression oExpression)
@@ -34,7 +28,7 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             ValidateOExpressionIsNotNull(oExpression);
 
             Validate(
-                (Rule: IsInvalid(oExpression.Expression), 
+                (Rule: IsInvalid(oExpression.Expression),
                 Parameter: nameof(OExpression.Expression)));
         }
 

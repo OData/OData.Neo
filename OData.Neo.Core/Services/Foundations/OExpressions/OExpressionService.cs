@@ -25,7 +25,7 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
         public ValueTask<OExpression> GenerateOExpressionAsync<T>(OExpression oExpression) =>
         TryCatch(async () =>
         {
-            ValidateOExpression(oExpression);
+            ValidateOExpressionOnGenerate(oExpression);
             string linqExp = CovertToLinqExp(oExpression.OToken);
 
             Expression expression =
