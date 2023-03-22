@@ -92,10 +92,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
         private static OToken CreateRandomOToken() =>
             CreateOTokenFiller().Create();
 
-        private static string CreateRandomString()
-        {
-            return new MnemonicString(wordCount: GetRandomCount()).GetValue();
-        }
+        private static string CreateRandomString() => new MnemonicString(wordCount: GetRandomCount()).GetValue();
 
         private static int GetRandomCount() =>
             new IntRange(min: 2, max: 10).GetValue();
