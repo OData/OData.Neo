@@ -18,7 +18,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OSqls
             // given
             Expression randomExpression = CreateMockedExpression();
             Expression inputExpression = randomExpression;
-            string generatedSqlQuery = GetRandomSqlQuery();
+            string generatedSqlQuery = CreateRandomSqlQuery();
             string expectedSqlQuery = generatedSqlQuery;
 
             this.sqlQueryBrokerMock.Setup(broker =>
