@@ -45,7 +45,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
 
         public static TheoryData DependencyValidationExceptions()
         {
-            string randomMessage = GetRandomString();
+            string randomMessage = CreateRandomString();
             var someException = new Xeption(randomMessage);
 
             return new TheoryData<Xeption>
@@ -58,7 +58,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
 
         public static TheoryData DependencyExceptions()
         {
-            string randomMessage = GetRandomString();
+            string randomMessage = CreateRandomString();
             var someException = new Xeption(randomMessage);
 
             return new TheoryData<Xeption>
@@ -92,7 +92,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
         private static OToken CreateRandomOToken() =>
             CreateOTokenFiller().Create();
 
-        private static string GetRandomString() =>
+        private static string CreateRandomString() =>
             new MnemonicString(wordCount: GetRandomCount()).GetValue();
 
         private static int GetRandomCount() =>

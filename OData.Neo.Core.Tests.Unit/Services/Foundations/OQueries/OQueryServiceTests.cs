@@ -38,7 +38,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
             };
         }
 
-        private static string GetRandomString() =>
+        private static string CreateRandomString() =>
             new MnemonicString().GetValue();
 
         private static (List<string>, string) GenerateRandomSqlQueryProperties()
