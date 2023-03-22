@@ -18,7 +18,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
         {
             // given
             Expression randomExpression = CreateMockedExpression();
-            string randomTableName = GetRandomString();
+            string randomTableName = CreateRandomString();
 
             (List<string> properites, string sqlProperties) =
                  GenerateRandomSqlQueryProperties();
