@@ -5,6 +5,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Scripting;
 using OData.Neo.Core.Models.OExpressions;
@@ -79,6 +80,41 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             catch (InvalidOExpressionException invalidOExpressionException)
             {
                 throw new OExpressionValidationException(invalidOExpressionException);
+            }
+            catch (TargetException targetException)
+            {
+                var failedOExpressionDependencyException = 
+                    new FailedOExpressionDependencyException(targetException);
+
+                throw new OExpressionDependencyException(failedOExpressionDependencyException);
+            }
+            catch (TargetParameterCountException targetParameterCountException)
+            {
+                var failedOExpressionDependencyException = 
+                    new FailedOExpressionDependencyException(targetParameterCountException);
+
+                throw new OExpressionDependencyException(failedOExpressionDependencyException);
+            }
+            catch (MethodAccessException methodAccessException)
+            {
+                var failedOExpressionDependencyException = 
+                    new FailedOExpressionDependencyException(methodAccessException);
+
+                throw new OExpressionDependencyException(failedOExpressionDependencyException);
+            }
+            catch (TargetInvocationException targetInvocationException)
+            {
+                var failedOExpressionDependencyException = 
+                    new FailedOExpressionDependencyException(targetInvocationException);
+
+                throw new OExpressionDependencyException(failedOExpressionDependencyException);
+            }
+            catch (NotSupportedException notSupportedException)
+            {
+                var failedOExpressionDependencyException =
+                    new FailedOExpressionDependencyException(notSupportedException);
+
+                throw new OExpressionDependencyException(failedOExpressionDependencyException);
             }
         }
     }
