@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 using Moq;
@@ -46,6 +47,31 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                 new CompilationErrorException(
                     message: randomMessage,
                     diagnostics: ImmutableArray.Create<Diagnostic>())
+            };
+        }
+
+        public static TheoryData<Exception> ApplyDependencyExceptions()
+        {
+            var someInnerException = new Exception();
+
+            return new TheoryData<Exception>
+            {
+                new TargetException(),
+                new TargetParameterCountException(),
+                new MethodAccessException(),
+                new TargetInvocationException(someInnerException),
+                new NotSupportedException()
+            };
+        }
+
+        public static TheoryData<Exception> ApplyDependencyValidationExceptions()
+        {
+            return new TheoryData<Exception>
+            {
+                new InvalidCastException(),
+                new ArgumentNullException(),
+                new ArgumentOutOfRangeException(),
+                new InvalidOperationException()
             };
         }
 
@@ -124,7 +150,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         private static IQueryable<object> CreateRandomSource()
         {
             var filler = new Filler<object>();
-            
+
             filler.Setup()
                 .OnType<object>().Use(GetRandomString());
 

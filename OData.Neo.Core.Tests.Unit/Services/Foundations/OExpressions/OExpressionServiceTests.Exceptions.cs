@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -19,7 +21,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
     {
         [Theory]
         [MemberData(nameof(DependencyExceptions))]
-        public async Task ShouldThrowDependencyExceptionOnGenerateIfDependencyErrorOcurrsAndLogitAsync(
+        public async Task ShouldThrowDependencyExceptionOnGenerateIfDependencyErrorOccursAsync(
             Exception dependencyException)
         {
             // given
@@ -59,7 +61,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         }
 
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnGenerateIfServiceErrorOcurrsAndLogitAsync()
+        public async Task ShouldThrowServiceExceptionOnGenerateIfServiceErrorOccursAsync()
         {
             // given
             OExpression someOExpression = CreateRandomOExpression();
@@ -95,6 +97,55 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
             this.expressionBrokerMock.Verify(broker =>
                 broker.GenerateExpressionAsync<object>(It.IsAny<string>()),
                     Times.Once);
+
+            this.expressionBrokerMock.VerifyNoOtherCalls();
+        }
+
+
+        [Theory]
+        [MemberData(nameof(ApplyDependencyExceptions))]
+        public void ShouldThrowDependencyExceptionOnApplyIfDependencyErrorOccurs(
+            Exception dependencyException)
+        {
+            // given
+            IQueryable<object> someSource = CreateRandomSource();
+            ConstantExpression someExpression = Expression.Constant(value: default);
+            var someOExpression = new OExpression();
+            someOExpression.Expression = someExpression;
+
+            var failedOExpressionException =
+                new FailedOExpressionDependencyException(
+                    dependencyException);
+
+            var expectedOExpressionDependencyException =
+                new OExpressionDependencyException(
+                    failedOExpressionException);
+
+            this.expressionBrokerMock.Setup(broker =>
+                broker.ApplyExpression(
+                    It.IsAny<IQueryable<object>>(),
+                    It.IsAny<Expression>()))
+                        .Throws(dependencyException);
+
+            // when
+            Action applyExpressionAction = () =>
+                this.oExpressionService.ApplyExpression(
+                    someSource,
+                    someOExpression);
+
+            OExpressionDependencyException actualOExpressionDependencyException =
+                Assert.Throws<OExpressionDependencyException>(
+                    applyExpressionAction);
+
+            // then
+            actualOExpressionDependencyException.Should().BeEquivalentTo(
+                expectedOExpressionDependencyException);
+
+            this.expressionBrokerMock.Verify(broker =>
+                broker.ApplyExpression(
+                    It.IsAny<IQueryable<object>>(),
+                    It.IsAny<Expression>()),
+                        Times.Once);
 
             this.expressionBrokerMock.VerifyNoOtherCalls();
         }
