@@ -1,9 +1,11 @@
 # OData Neo
 
 [![OData Neo Build](https://github.com/OData/OData.Neo/actions/workflows/dotnet.yml/badge.svg)](https://github.com/OData/OData.Neo/actions/workflows/dotnet.yml)
-[![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f)](https://github.com/hassanhabib/The-Standard)
-[![The Standard Community](https://img.shields.io/discord/934130100008538142?color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
+[![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f?style=default)](https://github.com/hassanhabib/The-Standard)
+[![The Standard](https://img.shields.io/github/v/release/hassanhabib/The-Standard?filter=v2.9.0&style=default&label=Standard%20Version&color=2ea44f)](https://github.com/hassanhabib/The-Standard)
+[![The Standard Community](https://img.shields.io/discord/934130100008538142?style=default&color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
 
+## Introduction
 This is OData Neo. The next generation of OData Protocol implementation for the .NET ecosystem. This implementation will incorporate three new fundamental design capabilities to OData.NET. These capabilities are:
 
 ## 0. Protocol Agnosticism
