@@ -13,7 +13,7 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
     public partial class TokenizationService : ITokenizationService
     {
         readonly ITokenizationValidationService tokenizationValidationService;
-        readonly char[] SeparatorChars = new char[] { '\'', ' ', '=', '\\' };
+        readonly char[] seperatorChars = new char[] { '\'', ' ', '=', '\\' };
 
         public TokenizationService(ITokenizationValidationService tokenizationValidationService)
         {
@@ -25,20 +25,20 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
             {
                 tokenizationValidationService.ValidateOTokenQuery(rawQuery);
 
-                return OTokenize(rawQuery, SeparatorChars).ToArray();
+                return OTokenize(rawQuery).ToArray();
             });
 
-        private static IEnumerable<Token> OTokenize(string rawQuery, char[] separatorChars)
+        private IEnumerable<Token> OTokenize(string rawQuery)
         {
             string remainingRawQuery = rawQuery;
-            Func<char, bool> NotSeparatorChar = c => !separatorChars.Contains(c);
+            Func<char, bool> NotSeparatorChar = c => !seperatorChars.Contains(c);
 
             while (remainingRawQuery.Length > 0)
             {
                 string returnValue = remainingRawQuery;
                 string nextRemainingValue = string.Empty;
 
-                var index = remainingRawQuery.IndexOfAny(separatorChars);
+                var index = remainingRawQuery.IndexOfAny(seperatorChars);
                 if (index is not -1)
                 {
                     int rangeIndex = GetRangeIndex(index);
