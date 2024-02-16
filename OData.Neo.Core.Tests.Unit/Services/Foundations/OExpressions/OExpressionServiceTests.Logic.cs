@@ -22,7 +22,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
         public async Task ShouldGenerateOExpressionAsync()
         {
             // given
-            (List<OToken> randomPropertyOTokens, string allRawValues) = 
+            (List<OToken> randomPropertyOTokens, string allRawValues) =
                 CreateRandomPropertyOTokens();
 
             (List<OToken> randomNonPropertyOTokens, _) =
@@ -41,8 +41,8 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                             RawValue = "$select",
                             Type = OTokenType.Select,
                             ProjectedType = ProjectedTokenType.Keyword,
-                            
-                            Children = 
+
+                            Children =
                                 randomPropertyOTokens.Concat(randomNonPropertyOTokens)
                                     .ToList()
                         }
@@ -73,6 +73,39 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             this.expressionBrokerMock.Verify(broker =>
                 broker.GenerateExpressionAsync<object>(expectedLinqQuery),
+                    Times.Once);
+
+            this.expressionBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void ShouldApplyExpressionToSource()
+        {
+            // given
+            var randomSource = CreateRandomSource();
+            var randomExpression = Expression.Constant(value: default);
+            IQueryable<object> inputSource = CreateRandomSource();
+            Expression inputExpression = randomExpression;
+            IQueryable randomSourceAfterExpression = CreateRandomSource();
+            IQueryable expectedSource = randomSourceAfterExpression;
+            var inputOExpression = new OExpression();
+            inputOExpression.Expression = inputExpression;
+
+            this.expressionBrokerMock.Setup(broker =>
+                broker.ApplyExpression(inputSource, inputExpression))
+                    .Returns(expectedSource);
+
+            // when
+            IQueryable actualSource =
+                this.oExpressionService.ApplyExpression(
+                    inputSource,
+                    inputOExpression);
+
+            // then
+            actualSource.Should().BeEquivalentTo(expectedSource);
+
+            this.expressionBrokerMock.Verify(broker =>
+                broker.ApplyExpression(inputSource, inputExpression),
                     Times.Once);
 
             this.expressionBrokerMock.VerifyNoOtherCalls();

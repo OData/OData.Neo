@@ -8,8 +8,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
+using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 using Moq;
@@ -48,6 +47,31 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
                 new CompilationErrorException(
                     message: randomMessage,
                     diagnostics: ImmutableArray.Create<Diagnostic>())
+            };
+        }
+
+        public static TheoryData<Exception> ApplyDependencyExceptions()
+        {
+            var someInnerException = new Exception();
+
+            return new TheoryData<Exception>
+            {
+                new TargetException(),
+                new TargetParameterCountException(),
+                new MethodAccessException(),
+                new TargetInvocationException(someInnerException),
+                new NotSupportedException()
+            };
+        }
+
+        public static TheoryData<Exception> ApplyDependencyValidationExceptions()
+        {
+            return new TheoryData<Exception>
+            {
+                new InvalidCastException(),
+                new ArgumentNullException(),
+                new ArgumentOutOfRangeException(),
+                new InvalidOperationException()
             };
         }
 
@@ -108,7 +132,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
             int randomNumber = new Random()
                 .Next(
-                    minValue: 0, 
+                    minValue: 0,
                     maxValue: allValues.Length);
 
             return allValues[randomNumber];
@@ -122,6 +146,18 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OExpressions
 
         private static string CreateRandomString() =>
             new MnemonicString().GetValue();
+
+        private static IQueryable<object> CreateRandomSource()
+        {
+            var filler = new Filler<object>();
+
+            filler.Setup()
+                .OnType<object>().Use(CreateRandomString());
+
+            return filler
+                .Create(count: GetRandomNumber())
+                .AsQueryable<object>();
+        }
 
         private static Filler<OExpression> CreateOExpressionFiller()
         {

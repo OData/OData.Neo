@@ -3,6 +3,7 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,11 @@ namespace OData.Neo.Core.Brokers.SqlQueries
             return (IQueryable)methodCallExpression.Method.Invoke(
                 obj: null,
                 parameters: new object[] { source, unaryExpression.Operand });
+        }
+
+        public IQueryable ApplyExpression<T>(IQueryable<T> source, Expression expression)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using OData.Neo.Core.Brokers.Expressions;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
@@ -24,7 +25,7 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
         public ValueTask<OExpression> GenerateOExpressionAsync<T>(OExpression oExpression) =>
         TryCatch(async () =>
         {
-            ValidateOExpression(oExpression);
+            ValidateOExpressionOnGenerate(oExpression);
             string linqExp = CovertToLinqExp(oExpression.OToken);
 
             Expression expression =
@@ -33,6 +34,15 @@ namespace OData.Neo.Core.Services.Foundations.OExpressions
             oExpression.Expression = expression;
 
             return oExpression;
+        });
+
+        public IQueryable ApplyExpression<T>(IQueryable<T> sources, OExpression expression) =>
+        TryCatch(() => 
+        {
+            ValidateSource(sources);
+            ValidateOExpressionOnApply(expression);
+
+            return this.expressionBroker.ApplyExpression(sources, expression.Expression);
         });
 
         private string CovertToLinqExp(OToken token)

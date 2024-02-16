@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------
 
 using System;
-using OData.Neo.Core.Models.OExpressions.Exceptions;
 using OData.Neo.Core.Models.OSqls.Exceptions;
 
 namespace OData.Neo.Core.Services.Foundations.OSqls

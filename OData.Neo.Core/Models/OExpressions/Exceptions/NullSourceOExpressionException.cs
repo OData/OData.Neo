@@ -3,14 +3,14 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System.Linq;
-using System.Linq.Expressions;
+using Xeptions;
 
-namespace OData.Neo.Core.Brokers.Queries
+namespace OData.Neo.Core.Models.OExpressions.Exceptions
 {
-    public interface ISqlQueryBroker
+    public class NullSourceOExpressionException : Xeption
     {
-        string GetSqlQuery(Expression expression);
-        IQueryable ApplyExpression<T>(IQueryable<T> source, Expression expression);
+        public NullSourceOExpressionException()
+            : base(message: "Source is null")
+        { }
     }
 }

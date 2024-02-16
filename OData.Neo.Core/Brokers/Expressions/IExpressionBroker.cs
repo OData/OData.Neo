@@ -12,6 +12,6 @@ namespace OData.Neo.Core.Brokers.Expressions
     public interface IExpressionBroker
     {
         ValueTask<Expression> GenerateExpressionAsync<T>(string linqExpression);
-        IQueryable Execute<T>(IQueryable<T> sources, Expression expression);
+        IQueryable ApplyExpression<T>(IQueryable<T> sources, Expression expression);
     }
 }
