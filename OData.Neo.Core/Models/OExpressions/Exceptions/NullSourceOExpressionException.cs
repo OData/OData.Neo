@@ -3,14 +3,14 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using OData.Neo.Core.Models.OExpressions;
+using Xeptions;
 
-namespace OData.Neo.Core.Services.Orchestrations.Coordinates
+namespace OData.Neo.Core.Models.OExpressions.Exceptions
 {
-    public interface IOQueryCoordinateService
+    public class NullSourceOExpressionException : Xeption
     {
-        ValueTask<Expression> ProcessOQueryAsync<T>(string odataQuery);
+        public NullSourceOExpressionException()
+            : base(message: "Source is null")
+        { }
     }
 }

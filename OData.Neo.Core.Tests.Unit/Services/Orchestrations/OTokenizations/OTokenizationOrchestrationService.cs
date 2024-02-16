@@ -88,7 +88,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
                     actualOTokens)
                         .AreEqual;
         }
-        
+
         private static OToken CreateRandomOToken() =>
             CreateOTokenFiller().Create();
 

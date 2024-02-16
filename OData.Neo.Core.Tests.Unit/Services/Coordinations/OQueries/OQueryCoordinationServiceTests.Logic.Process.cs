@@ -3,12 +3,12 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using OData.Neo.Core.Models.OExpressions;
 using OData.Neo.Core.Models.OTokens;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries

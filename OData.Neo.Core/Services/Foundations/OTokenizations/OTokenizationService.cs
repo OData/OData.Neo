@@ -12,10 +12,17 @@ namespace OData.Neo.Core.Services.Foundations.OTokenizations
 {
     public partial class OTokenizationService : IOTokenizationService
     {
+        private readonly IOTokenizationValidationService oTokenizationValidationService;
+
+        public OTokenizationService(IOTokenizationValidationService oTokenizationValidationService)
+        {
+            this.oTokenizationValidationService = oTokenizationValidationService;
+        }
+
         public OToken OTokenize(OToken[] oTokens) =>
             TryCatch(() =>
             {
-                ValidateOTokens(oTokens);
+                oTokenizationValidationService.ValidateOTokens(oTokens);
 
                 OToken root = new()
                 {

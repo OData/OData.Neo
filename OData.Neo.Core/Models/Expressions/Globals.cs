@@ -3,7 +3,6 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using System.Linq;
 
 namespace OData.Neo.Core.Models.Expressions

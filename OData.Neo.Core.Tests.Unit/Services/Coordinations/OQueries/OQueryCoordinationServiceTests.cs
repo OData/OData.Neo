@@ -31,7 +31,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Coordinations.OQueries
         {
             this.oTokenizationOrchestrationServiceMock =
                 new Mock<IOTokenizationOrchestrationService>();
-            
+
             this.oQueryOrchestrationServiceMock =
                 new Mock<IOQueryOrchestrationService>();
 

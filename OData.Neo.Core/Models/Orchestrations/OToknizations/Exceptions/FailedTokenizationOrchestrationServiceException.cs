@@ -11,8 +11,8 @@ namespace OData.Neo.Core.Models.Orchestrations.OToknizations.Exceptions
     public class FailedTokenizationOrchestrationServiceException : Xeption
     {
         public FailedTokenizationOrchestrationServiceException(Exception innerException)
-            : base (message: "Failed tokenization service error occurred, contact support.",
+            : base(message: "Failed tokenization service error occurred, contact support.",
                   innerException)
-        {}
+        { }
     }
 }

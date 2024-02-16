@@ -1,17 +1,16 @@
-﻿//-----------------------------------------------------------------------
-// Copyright (c) .NET Foundation and Contributors. All rights reserved.
-// See License.txt in the project root for license information.
-//-----------------------------------------------------------------------
-
-using System;
-using FluentAssertions;
+﻿using OData.Neo.Core.Models.OTokens.Exceptions;
 using OData.Neo.Core.Models.OTokens;
-using OData.Neo.Core.Models.OTokens.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
+using FluentAssertions;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
 {
-    public partial class OTokenizationServiceTests
+    public partial class OTokenizationValidationServiceTests
     {
         [Fact]
         public void ShouldThrowValidationExceptionOnTokenizeIfOTokensIsNull()
@@ -27,7 +26,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
 
             // when
             Action oTokenizeAction = () =>
-                this.tokenizationService.OTokenize(invalidOTokens);
+                this.tokenizationValidationService.ValidateOTokens(invalidOTokens);
 
             OTokenValidationException actualOTokenValidationException =
                 Assert.Throws<OTokenValidationException>(
@@ -53,7 +52,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
 
             // when
             Action tokenizeAction = () =>
-                this.tokenizationService.OTokenize(
+                this.tokenizationValidationService.ValidateOTokens(
                     invalidProjectedTokens);
 
             OTokenValidationException actualProjectedTokenValidationException =
@@ -93,7 +92,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
 
             // when
             Action tokenizeAction = () =>
-                this.tokenizationService.OTokenize(
+                this.tokenizationValidationService.ValidateOTokens(
                     invalidOTokens);
 
             OTokenValidationException actualOTokenValidationException =

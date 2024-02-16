@@ -46,7 +46,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
             int randomNumber = GetRandomNumber();
             string randomSqlVariable = CreateRandomString();
             List<string> properties = new List<string>();
-            
+
             string[] sqlProperties = Enumerable.Range(start: 0, count: randomNumber)
                 .Select(item =>
                 {
