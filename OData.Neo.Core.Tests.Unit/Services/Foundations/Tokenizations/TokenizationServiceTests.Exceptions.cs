@@ -3,9 +3,8 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
-using InternalMock.Extensions;
 using OData.Neo.Core.Models.Tokens.Exceptions;
+using System;
 using Xunit;
 
 
@@ -20,9 +19,9 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
             string someQuery = GetRandomWordValue();
             var exception = new Exception();
 
-            this.tokenizationService.Mock(
-                methodName: "ValidateOTokenQuery")
-                    .Throws(exception);
+            tokenizationValidationServiceMock.Setup(tokenizationValidationServiceMock =>
+                tokenizationValidationServiceMock.ValidateOTokenQuery(someQuery))
+                .Throws(exception);
 
             // when
             Action tokenizationAction = () =>
@@ -34,8 +33,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 
             Assert.True(otokenServiceException.InnerException
                 is FailedOTokenServiceException);
-
-            this.tokenizationService.ClearAllOtherCalls();
         }
     }
 }

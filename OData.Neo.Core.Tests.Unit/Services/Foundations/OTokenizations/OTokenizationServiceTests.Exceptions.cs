@@ -3,11 +3,11 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using FluentAssertions;
-using InternalMock.Extensions;
+using Moq;
 using OData.Neo.Core.Models.OTokens;
 using OData.Neo.Core.Models.OTokens.Exceptions;
+using System;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
@@ -31,9 +31,9 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
                 new OTokenServiceException(
                     failedOTokenServiceException);
 
-            this.tokenizationService.Mock(
-                methodName: "ValidateOTokens")
-                    .Throws(serviceException);
+            tokenizationValidationServiceMock.Setup(tokenizationValidationServiceMock =>
+                tokenizationValidationServiceMock.ValidateOTokens(It.IsAny<OToken[]>()))
+                .Throws(expectedOTokenServiceException);
 
             // when
             Action toknizationAction = () =>
@@ -47,8 +47,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
             // then
             actualOTokenValidationException.Should()
                 .BeEquivalentTo(expectedOTokenServiceException);
-
-            this.tokenizationService.ClearAllOtherCalls();
         }
     }
 }

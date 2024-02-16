@@ -36,7 +36,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OSqls
             };
         }
 
-        private static string GetRandomSqlQuery() =>
+        private static string CreateRandomSqlQuery() =>
             new MnemonicString().GetValue();
 
         private static Expression CreateMockedExpression() =>

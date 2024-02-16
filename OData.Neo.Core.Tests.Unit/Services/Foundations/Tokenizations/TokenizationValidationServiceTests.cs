@@ -1,28 +1,21 @@
-﻿//-----------------------------------------------------------------------
-// Copyright (c) .NET Foundation and Contributors. All rights reserved.
-// See License.txt in the project root for license information.
-//-----------------------------------------------------------------------
-
+﻿using OData.Neo.Core.Models.Tokens;
+using OData.Neo.Core.Services.Foundations.Tokenizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Moq;
-using OData.Neo.Core.Models.Tokens;
-using OData.Neo.Core.Services.Foundations.Tokenizations;
 using Tynamix.ObjectFiller;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Tokenizations
 {
-    public partial class TokenizationServiceTests
+    public partial class TokenizationValidationServiceTests
     {
         static readonly string[] separators = new string[] { "\'", " ", "=", "\\" };
-        readonly ITokenizationService tokenizationService;
-        readonly Mock<ITokenizationValidationService> tokenizationValidationServiceMock;
 
-        public TokenizationServiceTests()
+        private readonly ITokenizationValidationService tokenizationValidationService;
+
+        public TokenizationValidationServiceTests()
         {
-            tokenizationValidationServiceMock = new Mock<ITokenizationValidationService>();
-            tokenizationService = new TokenizationService(tokenizationValidationServiceMock.Object);
+            tokenizationValidationService = new TokenizationValidationService();
         }
 
         public static (string Query, Token[] Tokens) GetRandomQuery(int numberOfTokens = 25)
