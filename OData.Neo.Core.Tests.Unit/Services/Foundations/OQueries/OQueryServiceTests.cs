@@ -38,20 +38,20 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OQueries
             };
         }
 
-        private static string GetRandomString() =>
+        private static string CreateRandomString() =>
             new MnemonicString().GetValue();
 
         private static (List<string>, string) GenerateRandomSqlQueryProperties()
         {
             int randomNumber = GetRandomNumber();
-            string randomSqlVariable = GetRandomString();
+            string randomSqlVariable = CreateRandomString();
             List<string> properties = new List<string>();
             
             string[] sqlProperties = Enumerable.Range(start: 0, count: randomNumber)
                 .Select(item =>
                 {
                     string randomPropertyName =
-                        GetRandomString();
+                        CreateRandomString();
 
                     properties.Add(randomPropertyName);
 
