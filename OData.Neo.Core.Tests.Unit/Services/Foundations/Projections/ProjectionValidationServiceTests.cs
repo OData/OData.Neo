@@ -1,29 +1,21 @@
-﻿//-----------------------------------------------------------------------
-// Copyright (c) .NET Foundation and Contributors. All rights reserved.
-// See License.txt in the project root for license information.
-//-----------------------------------------------------------------------
-
-using System.Collections.Generic;
-using System.Linq;
-using Moq;
-using OData.Neo.Core.Models.ProjectedTokens;
+﻿using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Models.Tokens;
 using OData.Neo.Core.Services.Foundations.Projections;
+using System.Collections.Generic;
+using System.Linq;
 using Tynamix.ObjectFiller;
 using Xunit;
 using Randomizer = System.Random;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 {
-    public partial class ProjectionServiceTests
+    public partial class ProjectionValidationServiceTests
     {
-        private readonly Mock<IProjectionValidationService> projectionValidationServiceMock;
-        private readonly IProjectionService projectionService;
-
-        public ProjectionServiceTests()
+        private readonly IProjectionValidationService projectionValidationService;
+        
+        public ProjectionValidationServiceTests()
         {
-            projectionValidationServiceMock = new Mock<IProjectionValidationService>();
-            projectionService = new ProjectionService(projectionValidationServiceMock.Object);
+            projectionValidationService = new ProjectionValidationService();
         }
 
         public static TheoryData<ProjectedToken[], ProjectedToken[]> ProjectedTokens()

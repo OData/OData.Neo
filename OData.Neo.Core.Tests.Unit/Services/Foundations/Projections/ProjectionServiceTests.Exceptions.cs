@@ -3,11 +3,10 @@
 // See License.txt in the project root for license information.
 //-----------------------------------------------------------------------
 
-using System;
 using FluentAssertions;
-using InternalMock.Extensions;
 using OData.Neo.Core.Models.ProjectedTokens;
 using OData.Neo.Core.Models.ProjectedTokens.Exceptions;
+using System;
 using Xunit;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
@@ -31,9 +30,9 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
                 new ProjectedTokenServiceException(
                     failedProjectedTokenServiceException);
 
-            this.projectionService.Mock(
-                methodName: "ValidateProjectedTokens")
-                    .Throws(serviceException);
+            projectionValidationServiceMock.Setup(projectionValidationServiceMock =>
+                projectionValidationServiceMock.ValidateProjectedTokens(someProjectedTokens))
+                .Throws(expectedProjectedTokenServiceException);
 
             // when
             Action projectTokensAction = () =>
@@ -47,8 +46,6 @@ namespace OData.Neo.Core.Tests.Unit.Services.Foundations.Projections
 
             actualProjectedTokenValidationException.InnerException.Should()
                 .BeOfType<FailedProjectedTokenServiceException>();
-
-            this.projectionService.ClearAllOtherCalls();
         }
     }
 }

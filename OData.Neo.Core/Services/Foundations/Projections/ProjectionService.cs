@@ -9,10 +9,17 @@ namespace OData.Neo.Core.Services.Foundations.Projections
 {
     public partial class ProjectionService : IProjectionService
     {
+        private readonly IProjectionValidationService projectionValidationService;
+
+        public ProjectionService(IProjectionValidationService projectionValidationService)
+        {
+            this.projectionValidationService = projectionValidationService;
+        }
+
         public ProjectedToken[] ProjectTokens(ProjectedToken[] projectedTokens) =>
         TryCatch(() =>
         {
-            ValidateProjectedTokens(projectedTokens);
+            projectionValidationService.ValidateProjectedTokens(projectedTokens);
 
             foreach (var projectedToken in projectedTokens)
             {

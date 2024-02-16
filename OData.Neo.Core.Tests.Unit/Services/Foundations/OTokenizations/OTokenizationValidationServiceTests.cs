@@ -1,26 +1,19 @@
-﻿//-----------------------------------------------------------------------
-// Copyright (c) .NET Foundation and Contributors. All rights reserved.
-// See License.txt in the project root for license information.
-//-----------------------------------------------------------------------
-
+﻿using OData.Neo.Core.Models.OTokens;
+using OData.Neo.Core.Services.Foundations.OTokenizations;
 using System.Collections.Generic;
 using System.Linq;
-using Moq;
-using OData.Neo.Core.Models.OTokens;
-using OData.Neo.Core.Services.Foundations.OTokenizations;
 using Tynamix.ObjectFiller;
 using Randomizer = System.Random;
 
 namespace OData.Neo.Core.Tests.Unit.Services.Foundations.OTokenizations
 {
-    public partial class OTokenizationServiceTests
+    public partial class OTokenizationValidationServiceTests
     {
-        private readonly IOTokenizationService tokenizationService;
-        private readonly Mock<IOTokenizationValidationService> tokenizationValidationServiceMock;
-        public OTokenizationServiceTests()
+        private readonly IOTokenizationValidationService tokenizationValidationService;
+
+        public OTokenizationValidationServiceTests()
         {
-            this.tokenizationValidationServiceMock = new Mock<IOTokenizationValidationService>();
-            this.tokenizationService = new OTokenizationService(tokenizationValidationServiceMock.Object);
+            tokenizationValidationService = new OTokenizationValidationService();
         }
 
         private static OToken[] CreateRandomOTokens(OToken addedOToken)

@@ -12,15 +12,21 @@ namespace OData.Neo.Core.Services.Foundations.Tokenizations
 {
     public partial class TokenizationService : ITokenizationService
     {
+        readonly ITokenizationValidationService tokenizationValidationService;
         readonly char[] SeparatorChars = new char[] { '\'', ' ', '=', '\\' };
 
-        public Token[] Tokenize(string rawQuery) =>
-        TryCatch(() =>
+        public TokenizationService(ITokenizationValidationService tokenizationValidationService)
         {
-            ValidateOTokenQuery(rawQuery);
+            this.tokenizationValidationService = tokenizationValidationService;
+        }
 
-            return OTokenize(rawQuery, SeparatorChars).ToArray();
-        });
+        public Token[] Tokenize(string rawQuery) =>
+            TryCatch(() =>
+            {
+                tokenizationValidationService.ValidateOTokenQuery(rawQuery);
+
+                return OTokenize(rawQuery, SeparatorChars).ToArray();
+            });
 
         private static IEnumerable<Token> OTokenize(string rawQuery, char[] separatorChars)
         {
