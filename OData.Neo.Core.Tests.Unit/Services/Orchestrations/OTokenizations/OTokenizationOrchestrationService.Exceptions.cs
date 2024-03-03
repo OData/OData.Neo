@@ -22,7 +22,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
             Xeption dependencyValidationException)
         {
             // given
-            string someQuery = GetRandomString();
+            string someQuery = CreateRandomString();
 
             var expectedOTokenizeOrchestrationDependencyValidationException =
                 new OTokenizationOrchestrationDependencyValidationException(
@@ -69,7 +69,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
             Xeption dependencyException)
         {
             // given
-            string someQuery = GetRandomString();
+            string someQuery = CreateRandomString();
 
             var expectedOTokenizationOrchestrationDependencyException =
                 new OTokenizationOrchestrationDependencyException(
@@ -114,7 +114,7 @@ namespace OData.Neo.Core.Tests.Unit.Services.Orchestrations.OTokenizations
         public void ShouldThrowServiceExceptionOnOTokenizeIfServiceErrorOccurs()
         {
             // given
-            string someQuery = GetRandomString();
+            string someQuery = CreateRandomString();
             var serviceException = new Exception();
 
             var failedTokenizationOrchestrationServiceException =
